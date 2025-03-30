@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mywords/common/components/primary_button.dart';
+import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/modules/onboarding/models/onboarding_model.dart';
+import 'package:mywords/utils/extensions/extended_context.dart';
 
 class OnboardingPage extends StatefulWidget {
   @override
@@ -7,22 +11,8 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final PageController _pageController = PageController();
-  int _currentIndex = 0;
-
-  final List<Color> _screenColors = [
-    Colors.blue.shade400,
-    Colors.purple.shade400,
-    Colors.green.shade400,
-  ];
-
-  final List<String> _titles = ['Onboarding One', 'Onboarding Two', 'Onboarding Three', 'Onboarding Four'];
-
-  final List<String> _images = [
-    'assets/images/png/onboarding_mockup_one.png',
-    'assets/images/png/onboarding_mockup_two.png',
-    'assets/images/png/onboarding_mockup_three.png',
-    'assets/images/png/onboarding_mockup_four.png',
-  ];
+  int _currentPage = 0;
+  final items = OnboardingModel.items;
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +23,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
           Positioned.fill(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: _images.length,
+              itemCount: items.length,
               onPageChanged: (index) {
-                setState(() => _currentIndex = index);
+                setState(() => _currentPage = index);
               },
               itemBuilder: (context, index) => Container(
                 padding: EdgeInsets.all(18) + EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
                 child: Image.asset(
-                  _images[index],
+                  items[index].image,
                 ),
               ),
             ),
@@ -52,54 +42,48 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Container(
               decoration: BoxDecoration(color: Colors.white),
               width: double.infinity,
-              height: 280,
+              height: 290,
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    _titles[_currentIndex],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
+                  Text(items[_currentPage].title,
+                      textAlign: TextAlign.center,
+                      style: context.textTheme.headlineLarge?.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      )),
                   SizedBox(height: 16),
                   Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
-                    maxLines: 3,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                      height: 1.5,
-                    ),
-                  ),
-                  SizedBox(height: 18),
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
+                      maxLines: 3,
+                      textAlign: TextAlign.center,
+                      style: context.textTheme.bodyMedium?.copyWith(height: 1.5)),
+                  SizedBox(height: 22),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
-                      _images.length,
+                      items.length,
                       (index) => Container(
-                        width: _currentIndex == index ? 24 : 8,
+                        width: _currentPage == index ? 24 : 8,
                         height: 8,
                         margin: EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
-                          color: _currentIndex == index ? Color(0xff601FBE) : Colors.grey[300],
+                          color: _currentPage == index ? context.colorScheme.primary : Color(0xffE7E7E7),
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 18),
+                  SizedBox(height: 22),
                   Row(
                     children: [
                       Expanded(
-                        child: PrimaryButton(
-                          onTap: () {},
+                        child: PrimaryButton.filled(
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
+                          },
                           title: 'Skip',
                           backgroundColor: Color(0xffF6F0FF),
                           textColor: Colors.black,
@@ -108,8 +92,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                       SizedBox(width: 16),
                       Expanded(
-                        child: PrimaryButton(
-                          onTap: () {},
+                        child: PrimaryButton.filled(
+                          onTap: () {
+                            if (_currentPage < 3) {
+                              _pageController.nextPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              );
+                            } else {
+                              Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
+                            }
+                          },
                           title: 'Continue',
                         ),
                       ),
@@ -123,40 +116,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       ),
     );
   }
-}
-
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({
-    super.key,
-    required this.title,
-    required this.onTap,
-    this.textColor = const Color(0xffFFFFFF),
-    this.backgroundColor = const Color(0xffCE4AEF),
-    this.fontWeight = FontWeight.w500,
-  });
-
-  final String title;
-  final VoidCallback onTap;
-  final Color backgroundColor;
-  final Color textColor;
-  final FontWeight fontWeight;
 
   @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      child: Text(
-        title,
-        style: TextStyle(color: textColor, fontSize: 16, fontWeight: fontWeight),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        minimumSize: Size(double.infinity, 56),
-        shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
-        ),
-      ),
-    );
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

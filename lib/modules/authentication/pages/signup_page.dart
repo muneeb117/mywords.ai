@@ -8,8 +8,8 @@ import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
 import 'package:mywords/modules/authentication/widgets/remember_me_and_forgot_pwd_widget.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatelessWidget {
+  const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,21 @@ class LoginPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AuthHeaderWidget(title: 'Login'),
+            AuthHeaderWidget(title: 'Join Us Today'),
             SizedBox(height: 18),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text('Full Name', style: context.textTheme.titleMedium),
+                    SizedBox(height: 8),
+                    CustomTextFormField(
+                      hintText: 'Your full name',
+                      prefixIconPath: 'assets/images/svg/ic_email.svg',
+                      hasPrefixIcon: false,
+                    ),
+                    SizedBox(height: 12),
                     Text('Email', style: context.textTheme.titleMedium),
                     SizedBox(height: 8),
                     CustomTextFormField(
@@ -39,14 +47,16 @@ class LoginPage extends StatelessWidget {
                       hintText: 'Password',
                       prefixIconPath: 'assets/images/svg/ic_lock.svg',
                     ),
+                    SizedBox(height: 12),
+                    Text('Confirm Password', style: context.textTheme.titleMedium),
                     SizedBox(height: 8),
-                    RememberMeAndForgotPasswordTile(
-                      onRememberMeTap: () {},
-                      onForgotPasswordTap: () {},
+                    CustomTextFormField(
+                      hintText: 'Confirm Password',
+                      prefixIconPath: 'assets/images/svg/ic_lock.svg',
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 16),
                     PrimaryButton.gradient(
-                      title: 'Sign in',
+                      title: 'Sign Up',
                       onTap: () {
                         // todo :: Implement sign-in
                       },
@@ -61,20 +71,21 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't have an account?",
+                          "Already have an account?",
                           style: context.textTheme.bodyMedium?.copyWith(
                             color: context.colorScheme.onSurface,
                           ),
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, RouteManager.signup);
+                            Navigator.pushReplacementNamed(context, RouteManager.login);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
                             child: Text(
-                              'Sign Up',
-                              style: context.textTheme.titleMedium?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
+                              'Login',
+                              style: context.textTheme.titleMedium
+                                  ?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
                             ),
                           ),
                         )
@@ -84,7 +95,6 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             )
-
           ],
         ),
       ),

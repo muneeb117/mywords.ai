@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mywords/modules/authentication/pages/login_page.dart';
+import 'package:mywords/modules/authentication/pages/signup_page.dart';
 import 'package:mywords/modules/home/pages/home_page.dart';
 import 'package:mywords/modules/onboarding/pages/onboarding_page.dart';
 import 'package:mywords/modules/startup/pages/splash_page.dart';
@@ -10,6 +11,7 @@ class RouteManager {
   static const String splash = '/splash';
   static const String onboarding = '/onboarding';
   static const String login = '/login';
+  static const String signup = '/signup';
   static const String home = '/home';
 
   // Route generator
@@ -21,6 +23,8 @@ class RouteManager {
         return CupertinoPageRoute(builder: (_) =>  OnboardingPage());
       case login:
         return CupertinoPageRoute(builder: (_) => const LoginPage());
+      case signup:
+        return CupertinoPageRoute(builder: (_) => const SignupPage());
       case home:
         return CupertinoPageRoute(builder: (_) => const HomePage());
       default:

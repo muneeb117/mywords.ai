@@ -14,11 +14,11 @@ class SplashPage extends StatelessWidget {
       child: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state is ShowLogin) {
-            Navigator.pushReplacementNamed(context, RouteManager.login);
+            Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
           } else if (state is ShowHome) {
-            Navigator.pushReplacementNamed(context, RouteManager.home);
+            Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
           } else if (state is ShowOnboarding) {
-            Navigator.pushReplacementNamed(context, RouteManager.onboarding);
+            Navigator.pushNamedAndRemoveUntil(context, RouteManager.onboarding, (route) => false);
           }
         },
         child: SplashWidget(),
