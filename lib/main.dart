@@ -16,7 +16,7 @@ class MyWordsApp extends StatelessWidget {
       title: 'MyWords.ai',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      darkTheme: darkTheme,
+      darkTheme: lightTheme,
       initialRoute: RouteManager.splash,
       onGenerateRoute: RouteManager.generateRoute,
     );

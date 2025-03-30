@@ -5,7 +5,6 @@ import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
-import 'package:mywords/modules/authentication/widgets/remember_me_and_forgot_pwd_widget.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class SignupPage extends StatelessWidget {
