@@ -52,6 +52,7 @@ class LoginPage extends StatelessWidget {
                       title: 'Sign in',
                       onTap: () {
                         // todo :: Implement sign-in
+                        Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
                       },
                       fontWeight: FontWeight.bold,
                     ),

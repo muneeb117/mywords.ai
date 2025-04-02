@@ -57,7 +57,8 @@ class SignupPage extends StatelessWidget {
                     PrimaryButton.gradient(
                       title: 'Sign Up',
                       onTap: () {
-                        // todo :: Implement sign-in
+                        // todo :: Implement sign-up
+                        Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
                       },
                       fontWeight: FontWeight.bold,
                     ),
