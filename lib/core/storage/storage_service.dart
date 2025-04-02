@@ -17,8 +17,8 @@ class StorageService {
     await preferences.setBool(key, value);
   }
 
-  bool getBool(String key) {
-    return preferences.getBool(key) ?? false;
+  bool? getBool(String key) {
+    return preferences.getBool(key);
   }
 
   int getInt(String key) {

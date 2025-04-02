@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/constants/app_keys.dart';
+import 'package:mywords/core/di/service_locator.dart';
+import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
@@ -74,7 +77,8 @@ class LoginPage extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
                             child: Text(
                               'Sign Up',
-                              style: context.textTheme.titleMedium?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
+                              style: context.textTheme.titleMedium
+                                  ?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
                             ),
                           ),
                         )
@@ -84,7 +88,6 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             )
-
           ],
         ),
       ),
