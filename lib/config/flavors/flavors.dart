@@ -1,6 +1,6 @@
-import 'package:mywords/config/flavors/base_config.dart';
-import 'package:mywords/config/flavors/dev_config.dart';
-import 'package:mywords/config/flavors/prod_config.dart';
+import 'package:mywords/config/flavors/env_config/base_config.dart';
+import 'package:mywords/config/flavors/env_config/dev_config.dart';
+import 'package:mywords/config/flavors/env_config/prod_config.dart';
 
 enum AppEnv { dev, prod }
 

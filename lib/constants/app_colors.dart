@@ -7,5 +7,9 @@ class AppColors {
   static const Color textPrimary = Color(0xFF150A3D);
   static const Color textSecondary = Color(0xFF616161);
   static const Color indicatorActive = Color(0xff601FBE);
+  static const Color green = Color(0xff45C646);
+  static const Color greenBg = Color(0xffECF9EC);
+  static const Color orange = Color(0xffF47D42);
+  static const Color orangeBg = Color(0xffFEF2EC);
   static const Color indicatorInactive = Colors.grey;
 }

@@ -13,6 +13,7 @@ class RouteManager {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String home = '/home';
+  static const String setting = '/setting';
 
   // Route generator
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,12 +21,14 @@ class RouteManager {
       case splash:
         return CupertinoPageRoute(builder: (_) => const SplashPage());
       case onboarding:
-        return CupertinoPageRoute(builder: (_) =>  OnboardingPage());
+        return CupertinoPageRoute(builder: (_) => OnboardingPage());
       case login:
         return CupertinoPageRoute(builder: (_) => const LoginPage());
       case signup:
         return CupertinoPageRoute(builder: (_) => const SignupPage());
       case home:
+        return CupertinoPageRoute(builder: (_) => const HomePage());
+      case setting:
         return CupertinoPageRoute(builder: (_) => const HomePage());
       default:
         return _errorRoute();

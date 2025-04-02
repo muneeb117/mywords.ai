@@ -30,6 +30,7 @@ class SplashCubit extends Cubit<SplashState> {
   }
 
   Future<bool> _checkUserAuthentication() async {
-    return false;
+    // todo :: Implement the core auth logic
+    return true;
   }
 }
