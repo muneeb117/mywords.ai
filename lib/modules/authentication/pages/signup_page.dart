@@ -13,89 +13,97 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: AuthHeaderWidget(title: 'Join Us Today'),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AuthHeaderWidget(title: 'Join Us Today'),
-            SizedBox(height: 18),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Full Name', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      hintText: 'Your full name',
-                      prefixIconPath: 'assets/images/svg/ic_email.svg',
-                      hasPrefixIcon: false,
-                    ),
-                    SizedBox(height: 12),
-                    Text('Email', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      hintText: 'Email',
-                      prefixIconPath: 'assets/images/svg/ic_email.svg',
-                    ),
-                    SizedBox(height: 12),
-                    Text('Password', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      hintText: 'Password',
-                      prefixIconPath: 'assets/images/svg/ic_lock.svg',
-                    ),
-                    SizedBox(height: 12),
-                    Text('Confirm Password', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      hintText: 'Confirm Password',
-                      prefixIconPath: 'assets/images/svg/ic_lock.svg',
-                    ),
-                    SizedBox(height: 16),
-                    PrimaryButton.gradient(
-                      title: 'Sign Up',
-                      onTap: () {
-                        // todo :: Implement sign-up
-                        Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
-                      },
-                      fontWeight: FontWeight.bold,
-                    ),
-                    OrDividerWidget(),
-                    GoogleAuthButton(onTap: () {
-                      // todo :: Implement google auth
-                    }),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account?",
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context, RouteManager.login);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
-                            child: Text(
-                              'Login',
-                              style: context.textTheme.titleMedium
-                                  ?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Join Us Today',
+                style: context.textTheme.headlineMedium?.copyWith(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            )
-          ],
+              SizedBox(height: 16),
+              Text('Full Name', style: context.textTheme.titleMedium),
+              SizedBox(height: 8),
+              CustomTextFormField(
+                hintText: 'Your full name',
+                prefixIconPath: 'assets/images/svg/ic_email.svg',
+                hasPrefixIcon: false,
+              ),
+              SizedBox(height: 12),
+              Text('Email', style: context.textTheme.titleMedium),
+              SizedBox(height: 8),
+              CustomTextFormField(
+                hintText: 'Email',
+                prefixIconPath: 'assets/images/svg/ic_email.svg',
+              ),
+              SizedBox(height: 12),
+              Text('Password', style: context.textTheme.titleMedium),
+              SizedBox(height: 8),
+              CustomTextFormField(
+                hintText: 'Password',
+                prefixIconPath: 'assets/images/svg/ic_lock.svg',
+              ),
+              SizedBox(height: 12),
+              Text('Confirm Password', style: context.textTheme.titleMedium),
+              SizedBox(height: 8),
+              CustomTextFormField(
+                hintText: 'Confirm Password',
+                prefixIconPath: 'assets/images/svg/ic_lock.svg',
+              ),
+              SizedBox(height: 16),
+              PrimaryButton.gradient(
+                title: 'Sign Up',
+                onTap: () {
+                  // todo :: Implement sign-up
+                  Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                },
+                fontWeight: FontWeight.bold,
+              ),
+              OrDividerWidget(),
+              GoogleAuthButton(onTap: () {
+                // todo :: Implement google auth
+              }),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account?",
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: context.colorScheme.onSurface,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, RouteManager.login);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
+                      child: Text(
+                        'Login',
+                        style:
+                            context.textTheme.titleMedium?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

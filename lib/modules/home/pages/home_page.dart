@@ -12,12 +12,20 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: HomeHeader(),
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: MediaQuery.paddingOf(context).top),
-          HomeHeader(),
-          Divider(color: Color(0xffEEEEEE)),
+
+          SizedBox(height: 4),
+          Divider(color: Color(0xffEEEEEE), height: 0),
           SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -37,7 +45,7 @@ class HomePage extends StatelessWidget {
               style: context.textTheme.titleMedium,
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 8),
           HomeToolWidget(
             onTap: () {
               Navigator.pushNamed(context, RouteManager.writer);

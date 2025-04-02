@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 extension ExtendedContext on BuildContext {
-
   TextTheme get textTheme => Theme.of(this).textTheme;
 
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
+
+  ThemeData get theme => Theme.of(this);
 
   bool get isDark => Theme.of(this).colorScheme.brightness == Brightness.dark;
 

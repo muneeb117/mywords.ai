@@ -17,79 +17,87 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: AuthHeaderWidget(title: 'Login'),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AuthHeaderWidget(title: 'Login'),
-            SizedBox(height: 18),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Email', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      hintText: 'Email',
-                      prefixIconPath: 'assets/images/svg/ic_email.svg',
-                    ),
-                    SizedBox(height: 12),
-                    Text('Password', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomTextFormField(
-                      hintText: 'Password',
-                      prefixIconPath: 'assets/images/svg/ic_lock.svg',
-                    ),
-                    SizedBox(height: 8),
-                    RememberMeAndForgotPasswordTile(
-                      onRememberMeTap: () {},
-                      onForgotPasswordTap: () {},
-                    ),
-                    SizedBox(height: 8),
-                    PrimaryButton.gradient(
-                      title: 'Sign in',
-                      onTap: () {
-                        // todo :: Implement sign-in
-                        Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
-                      },
-                      fontWeight: FontWeight.bold,
-                    ),
-                    OrDividerWidget(),
-                    GoogleAuthButton(onTap: () {
-                      // todo :: Implement google auth
-                    }),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account?",
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: context.colorScheme.onSurface,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context, RouteManager.signup);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
-                            child: Text(
-                              'Sign Up',
-                              style: context.textTheme.titleMedium
-                                  ?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Login',
+                style: context.textTheme.headlineMedium?.copyWith(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            )
-          ],
+              // AuthHeaderWidget(title: 'Login'),
+              SizedBox(height: 16),
+              Text('Email', style: context.textTheme.titleMedium),
+              SizedBox(height: 8),
+              CustomTextFormField(
+                hintText: 'Email',
+                prefixIconPath: 'assets/images/svg/ic_email.svg',
+              ),
+              SizedBox(height: 12),
+              Text('Password', style: context.textTheme.titleMedium),
+              SizedBox(height: 8),
+              CustomTextFormField(
+                hintText: 'Password',
+                prefixIconPath: 'assets/images/svg/ic_lock.svg',
+              ),
+              SizedBox(height: 8),
+              RememberMeAndForgotPasswordTile(
+                onRememberMeTap: () {},
+                onForgotPasswordTap: () {},
+              ),
+              SizedBox(height: 8),
+              PrimaryButton.gradient(
+                title: 'Sign in',
+                onTap: () {
+                  // todo :: Implement sign-in
+                  Navigator.pushNamed(context, RouteManager.home);
+                },
+                fontWeight: FontWeight.bold,
+              ),
+              OrDividerWidget(),
+              GoogleAuthButton(onTap: () {
+                // todo :: Implement google auth
+              }),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: context.colorScheme.onSurface,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, RouteManager.signup);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
+                      child: Text(
+                        'Sign Up',
+                        style: context.textTheme.titleMedium?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
