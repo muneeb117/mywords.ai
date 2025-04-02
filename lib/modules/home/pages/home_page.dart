@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/modules/home/widgets/current_plan_widget.dart';
 import 'package:mywords/modules/home/widgets/home_header.dart';
 import 'package:mywords/modules/home/widgets/hours_saved_widget.dart';
@@ -38,23 +39,29 @@ class HomePage extends StatelessWidget {
           ),
           SizedBox(height: 16),
           HomeToolWidget(
+            onTap: () {
+              Navigator.pushNamed(context, RouteManager.writer);
+            },
             title: 'AI Writer',
             description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
-            onTap: () {},
             imageAssetPath: 'assets/images/png/img_ai_writer.png',
           ),
           SizedBox(height: 10),
           HomeToolWidget(
+            onTap: () {
+              Navigator.pushNamed(context, RouteManager.humanizer);
+            },
             title: 'AI Humanizer',
             description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
-            onTap: () {},
             imageAssetPath: 'assets/images/png/img_ai_humanizer.png',
           ),
           SizedBox(height: 10),
           HomeToolWidget(
+            onTap: () {
+              Navigator.pushNamed(context, RouteManager.detector);
+            },
             title: 'AI Detector',
             description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
-            onTap: () {},
             imageAssetPath: 'assets/images/png/img_ai_detector.png',
           ),
         ],
@@ -81,7 +88,7 @@ class HomeToolWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(

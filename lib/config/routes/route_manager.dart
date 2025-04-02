@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
+import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_page.dart';
+import 'package:mywords/modules/ai_writer/pages/ai_writer_page.dart';
 import 'package:mywords/modules/authentication/pages/login_page.dart';
 import 'package:mywords/modules/authentication/pages/signup_page.dart';
 import 'package:mywords/modules/home/pages/home_page.dart';
 import 'package:mywords/modules/onboarding/pages/onboarding_page.dart';
+import 'package:mywords/modules/settings/pages/settings_page.dart';
 import 'package:mywords/modules/startup/pages/splash_page.dart';
 
 class RouteManager {
@@ -13,6 +17,9 @@ class RouteManager {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String home = '/home';
+  static const String writer = '/writer';
+  static const String humanizer = '/humanizer';
+  static const String detector = '/detector';
   static const String setting = '/setting';
 
   // Route generator
@@ -29,7 +36,13 @@ class RouteManager {
       case home:
         return CupertinoPageRoute(builder: (_) => const HomePage());
       case setting:
-        return CupertinoPageRoute(builder: (_) => const HomePage());
+        return CupertinoPageRoute(builder: (_) => const SettingsPage());
+      case writer:
+        return CupertinoPageRoute(builder: (_) => const AiWriterPage());
+      case humanizer:
+        return CupertinoPageRoute(builder: (_) => const AiHumanizerPage());
+      case detector:
+        return CupertinoPageRoute(builder: (_) => const AiDetectorPage());
       default:
         return _errorRoute();
     }
