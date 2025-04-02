@@ -7,7 +7,7 @@ class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
 
   Future<void> init() async {
-    await Future.delayed(const Duration(milliseconds: 1800));
+    await Future.delayed(const Duration(seconds: 10));
 
     final bool isNewUser = await _checkIfNewUser();
     final bool isUserLoggedIn = await _checkUserAuthentication();

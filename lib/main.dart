@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mywords/config/flavors/flavors.dart';
 import 'package:mywords/config/routes/route_manager.dart';
-import 'package:mywords/config/themes/dark_theme.dart';
 import 'package:mywords/config/themes/light_theme.dart';
+import 'package:mywords/core/di/service_locator.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initDependencies(AppEnv.dev);
+
   runApp(const MyWordsApp());
 }
 
