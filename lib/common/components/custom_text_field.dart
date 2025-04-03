@@ -11,7 +11,10 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final String prefixIconPath;
   final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
   final bool hasPrefixIcon;
+  final bool autocorrect;
+  final bool enableSuggestions;
 
   const CustomTextFormField({
     Key? key,
@@ -22,7 +25,11 @@ class CustomTextFormField extends StatelessWidget {
     required this.hintText,
     required this.prefixIconPath,
     this.keyboardType,
+    this.textInputAction,
+    this.autocorrect = true,
+    this.enableSuggestions = true,
     this.hasPrefixIcon = true,
+
   }) : super(key: key);
 
   @override
@@ -31,7 +38,11 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       autofocus: autofocus,
+      autocorrect: autocorrect,
+      enableSuggestions: enableSuggestions,
+      validator: validator,
       keyboardType: keyboardType,
+      textInputAction: textInputAction,
       style: context.textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
       decoration: InputDecoration(
         filled: true,
@@ -48,7 +59,7 @@ class CustomTextFormField extends StatelessWidget {
                 child: SvgPicture.asset(prefixIconPath),
               )
             : null,
-        contentPadding: const EdgeInsets.symmetric(vertical: 16,horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
