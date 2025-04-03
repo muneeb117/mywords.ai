@@ -6,8 +6,8 @@ enum ButtonType { filled, outlined, gradient }
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton.filled({
     super.key,
-    required this.title,
     required this.onTap,
+    required this.title,
     this.textColor = Colors.white,
     this.backgroundColor = const Color(0xffCE4AEF),
     this.fontWeight = FontWeight.w500,
@@ -16,8 +16,8 @@ class PrimaryButton extends StatelessWidget {
 
   const PrimaryButton.outlined({
     super.key,
-    required this.title,
     required this.onTap,
+    required this.title,
     this.textColor = const Color(0xffCE4AEF),
     this.backgroundColor = Colors.transparent,
     this.fontWeight = FontWeight.w500,
@@ -26,8 +26,8 @@ class PrimaryButton extends StatelessWidget {
 
   const PrimaryButton.gradient({
     super.key,
-    required this.title,
     required this.onTap,
+    required this.title,
     this.textColor = Colors.white,
     this.gradientColors = const [Color(0xffCE4AEF), Color(0xff601FBE)],
     this.fontWeight = FontWeight.w500,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class AuthHeaderWidget extends StatelessWidget {
-  const AuthHeaderWidget({super.key,required this.title});
-  final String title;
+class TopAppIconAndTitleWidget extends StatelessWidget {
+  const TopAppIconAndTitleWidget({super.key});
+
 
   @override
   Widget build(BuildContext context) {

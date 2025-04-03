@@ -12,4 +12,5 @@ class AppColors {
   static const Color orange = Color(0xffF47D42);
   static const Color orangeBg = Color(0xffFEF2EC);
   static const Color indicatorInactive = Colors.grey;
+  static const Color white = Colors.white;
 }

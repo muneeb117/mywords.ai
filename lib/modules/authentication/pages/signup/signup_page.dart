@@ -19,7 +19,7 @@ class SignupPage extends StatelessWidget {
         backgroundColor: context.theme.scaffoldBackgroundColor,
         title: Padding(
           padding: const EdgeInsets.only(top: 10.0),
-          child: AuthHeaderWidget(title: 'Join Us Today'),
+          child: TopAppIconAndTitleWidget(),
         ),
       ),
       body: Padding(
@@ -69,7 +69,8 @@ class SignupPage extends StatelessWidget {
                 title: 'Sign Up',
                 onTap: () {
                   // todo :: Implement sign-up
-                  Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                  // Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                  Navigator.pushReplacementNamed(context, RouteManager.twoFactorSignup);
                 },
                 fontWeight: FontWeight.bold,
               ),
@@ -95,8 +96,7 @@ class SignupPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
                       child: Text(
                         'Login',
-                        style:
-                            context.textTheme.titleMedium?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
+                        style: context.textTheme.titleMedium?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
                       ),
                     ),
                   )

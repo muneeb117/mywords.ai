@@ -4,7 +4,10 @@ import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_page.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_page.dart';
 import 'package:mywords/modules/authentication/pages/login_page.dart';
-import 'package:mywords/modules/authentication/pages/signup_page.dart';
+import 'package:mywords/modules/authentication/pages/signup/enter_otp_signup_page.dart';
+import 'package:mywords/modules/authentication/pages/signup/signup_confirmation_page.dart';
+import 'package:mywords/modules/authentication/pages/signup/signup_page.dart';
+import 'package:mywords/modules/authentication/pages/signup/two_factor_signup_page.dart';
 import 'package:mywords/modules/home/pages/home_page.dart';
 import 'package:mywords/modules/onboarding/pages/onboarding_page.dart';
 import 'package:mywords/modules/settings/pages/settings_page.dart';
@@ -16,6 +19,9 @@ class RouteManager {
   static const String onboarding = '/onboarding';
   static const String login = '/login';
   static const String signup = '/signup';
+  static const String twoFactorSignup = '/twoFactorSignup';
+  static const String enterOtpSignup = '/enterOtpSignup';
+  static const String signupConfirmation = '/signupConfirmation';
   static const String home = '/home';
   static const String writer = '/writer';
   static const String humanizer = '/humanizer';
@@ -33,6 +39,12 @@ class RouteManager {
         return CupertinoPageRoute(builder: (_) => const LoginPage());
       case signup:
         return CupertinoPageRoute(builder: (_) => const SignupPage());
+      case twoFactorSignup:
+        return CupertinoPageRoute(builder: (_) => const TwoFactorSignupPage());
+      case enterOtpSignup:
+        return CupertinoPageRoute(builder: (_) => const EnterOtpSignupPage());
+      case signupConfirmation:
+        return CupertinoPageRoute(builder: (_) => const SignupConfirmationPage());
       case home:
         return CupertinoPageRoute(builder: (_) => const HomePage());
       case setting:

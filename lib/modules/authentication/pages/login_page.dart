@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
         backgroundColor: context.theme.scaffoldBackgroundColor,
         title: Padding(
           padding: const EdgeInsets.only(top: 10.0),
-          child: AuthHeaderWidget(title: 'Login'),
+          child: TopAppIconAndTitleWidget(),
         ),
       ),
       body: Padding(
