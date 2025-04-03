@@ -70,7 +70,7 @@ class SignupPage extends StatelessWidget {
                 onTap: () {
                   // todo :: Implement sign-up
                   // Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
-                  Navigator.pushReplacementNamed(context, RouteManager.twoFactorSignup);
+                  Navigator.pushReplacementNamed(context, RouteManager.signupConfirmation);
                 },
                 fontWeight: FontWeight.bold,
               ),
