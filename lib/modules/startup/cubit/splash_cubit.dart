@@ -10,6 +10,7 @@ class SplashCubit extends Cubit<SplashState> {
 
   SplashCubit({required this.storageService}) : super(SplashInitial());
 
+
   Future<void> init() async {
     await Future.delayed(const Duration(milliseconds: 1800));
 
