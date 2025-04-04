@@ -8,7 +8,11 @@ class DioClient extends DioForNative {
   String? _authToken;
 
   void setToken(String token) {
-    this._authToken = token;
+    _authToken = token;
+  }
+
+  void clearToken() {
+    _authToken = null;
   }
 
   DioClient({required Flavors flavors}) : _flavors = flavors {
@@ -16,9 +20,17 @@ class DioClient extends DioForNative {
       baseUrl: _flavors.config.baseUrl,
       responseType: ResponseType.json,
     );
+
+    if (_flavors.config.isDebug) {
+      interceptors.add(LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+      ));
+    }
+
     interceptors.add(
       InterceptorsWrapper(onRequest: (options, handler) {
-        if (_authToken != null) {
+        if (_authToken != null && _authToken != '') {
           options.headers.putIfAbsent('Authorization', () => 'Bearer $_authToken');
         }
         return handler.next(options);

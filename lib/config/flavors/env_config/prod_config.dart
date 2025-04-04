@@ -6,6 +6,9 @@ class ProdConfig implements BaseConfig {
   String get baseUrl => 'https://api.com';
 
   @override
+  bool get isDebug => false;
+
+  @override
   bool get reportErrors => true;
 
   @override

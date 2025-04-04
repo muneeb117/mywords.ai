@@ -6,6 +6,9 @@ class DevConfig implements BaseConfig {
   String get baseUrl => 'https://api.com';
 
   @override
+  bool get isDebug => true;
+
+  @override
   bool get reportErrors => false;
 
   @override
