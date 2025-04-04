@@ -3,34 +3,83 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class CustomTextFormField extends StatelessWidget {
+enum InputFieldType { regular, email, password }
+
+class InputField extends StatelessWidget {
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final bool autofocus;
   final String hintText;
   final String prefixIconPath;
+  final String? suffixIconPath;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final bool hasPrefixIcon;
+  final bool obscureText;
   final bool autocorrect;
   final bool enableSuggestions;
+  final VoidCallback? onSuffixIconTap;
+  final InputFieldType inputFieldType;
 
-  const CustomTextFormField({
+  const InputField({
     Key? key,
     this.controller,
     this.onChanged,
     this.validator,
+    this.obscureText = false,
     this.autofocus = false,
     required this.hintText,
     required this.prefixIconPath,
+    this.suffixIconPath,
+    this.onSuffixIconTap,
     this.keyboardType,
     this.textInputAction,
     this.autocorrect = true,
     this.enableSuggestions = true,
     this.hasPrefixIcon = true,
+  })  : inputFieldType = InputFieldType.regular,
+        super(key: key);
 
-  }) : super(key: key);
+  // Email field constructor
+  const InputField.email({
+    Key? key,
+    this.controller,
+    this.onChanged,
+    this.validator,
+    this.autofocus = false,
+    String this.hintText = 'Email Address',
+    this.textInputAction = TextInputAction.next,
+  })  : hasPrefixIcon = true,
+        prefixIconPath = 'assets/images/svg/ic_email.svg',
+        suffixIconPath = null,
+        onSuffixIconTap = null,
+        keyboardType = TextInputType.emailAddress,
+        obscureText = false,
+        autocorrect = false,
+        enableSuggestions = true,
+        inputFieldType = InputFieldType.email,
+        super(key: key);
+
+  // Password field constructor
+  const InputField.password({
+    Key? key,
+    this.controller,
+    this.onChanged,
+    this.validator,
+    this.autofocus = false,
+    String this.hintText = 'Password',
+    this.suffixIconPath,
+    this.onSuffixIconTap,
+    this.textInputAction = TextInputAction.done,
+    this.obscureText = true,
+  })  : hasPrefixIcon = true,
+        prefixIconPath = 'assets/images/svg/ic_lock.svg',
+        keyboardType = TextInputType.visiblePassword,
+        autocorrect = false,
+        enableSuggestions = false,
+        inputFieldType = InputFieldType.password,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +90,7 @@ class CustomTextFormField extends StatelessWidget {
       autocorrect: autocorrect,
       enableSuggestions: enableSuggestions,
       validator: validator,
+      obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       style: context.textTheme.bodyMedium?.copyWith(color: AppColors.textPrimary),
@@ -60,6 +110,24 @@ class CustomTextFormField extends StatelessWidget {
               )
             : null,
         contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        suffixIcon: suffixIconPath == null || suffixIconPath == ''
+            ? null
+            : InkWell(
+                onTap: () {
+                  onSuffixIconTap?.call();
+                },
+                child: Container(
+                  // color: Colors.green,
+                  padding: const EdgeInsets.only(right: 14.0, left: 14),
+                  child: SvgPicture.asset(
+                    suffixIconPath!,
+                    colorFilter: ColorFilter.mode(AppColors.black, BlendMode.srcIn),
+                  ),
+                ),
+              ),
+        suffixIconConstraints: suffixIconPath == null || suffixIconPath == ''
+            ? null
+            : BoxConstraints(minHeight: 46, minWidth: 46, maxWidth: 46, maxHeight: 46),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
@@ -77,7 +145,7 @@ class CustomTextFormField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: Colors.grey.shade300,
+            color: context.colorScheme.secondary,
             width: 1,
           ),
         ),

@@ -1,6 +1,21 @@
 part of 'login_cubit.dart';
 
-@immutable
-sealed class LoginState {}
+class LoginState {
+  final bool isPasswordHidden;
 
-final class LoginInitial extends LoginState {}
+  LoginState({
+    required this.isPasswordHidden,
+  });
+
+  factory LoginState.initial() {
+    return LoginState(isPasswordHidden: true);
+  }
+
+  LoginState copyWith({
+    bool? isPasswordHidden,
+  }) {
+    return LoginState(
+      isPasswordHidden: isPasswordHidden ?? this.isPasswordHidden,
+    );
+  }
+}

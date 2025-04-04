@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
+  LoginCubit() : super(LoginState.initial());
+
+  void togglePassword() {
+    emit(state.copyWith(isPasswordHidden: !state.isPasswordHidden));
+  }
 }
