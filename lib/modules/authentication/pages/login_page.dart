@@ -6,6 +6,7 @@ import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
+import 'package:mywords/modules/authentication/widgets/auto_login.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
 import 'package:mywords/modules/authentication/widgets/remember_me_and_forgot_pwd_widget.dart';
@@ -130,9 +131,15 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       OrDividerWidget(),
-                      GoogleAuthButton(onTap: () {
+                      AutoLoginButton(onTap: () {
+                        final email = 'shams@yopmail.com';
+                        final password = 'Password@123';
+                        context.read<LoginCubit>().login(email, password);
                         // todo :: Implement google auth
                       }),
+                      // SizedBox(height: 8),
+                      // GoogleAuthButton(onTap: () {
+                      // }),
                       SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

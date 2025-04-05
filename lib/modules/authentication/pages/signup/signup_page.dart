@@ -149,6 +149,7 @@ class _SignupPageState extends State<SignupPage> {
                               return PrimaryButton.gradient(
                                 title: 'Sign Up',
                                 isLoading: state.signupStatus == SignupStatus.loading,
+                                enableShrinkAnimation: true,
                                 onTap: () {
                                   bool isFormValidated = _formKey.currentState?.validate() == true;
                                   if (isFormValidated) {
