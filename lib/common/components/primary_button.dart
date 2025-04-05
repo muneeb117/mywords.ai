@@ -89,50 +89,50 @@ class PrimaryButton extends StatelessWidget {
         );
         break;
     }
-
-    return Center(
-      child: Ink(
-        decoration: decoration,
-        child: InkWell(
-          onTap: isLoading ? null : onTap,
-          borderRadius: BorderRadius.circular(6),
-          child: AnimatedContainer(
-            width: isLoading && enableShrinkAnimation ? 56 : MediaQuery.of(context).size.width,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            height: 56,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(8)),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: isLoading
-                ? LoadingIndicator(bgColor: indicatorColor)
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (iconPath != null)
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0, top: 1),
-                            child: SvgPicture.asset(iconPath!),
-                          ),
-                        ),
+    Widget button = Ink(
+      decoration: decoration,
+      child: InkWell(
+        onTap: isLoading ? null : onTap,
+        borderRadius: BorderRadius.circular(6),
+        child: AnimatedContainer(
+          width: isLoading && enableShrinkAnimation ? 56 : MediaQuery.of(context).size.width,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          height: 56,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(8)),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: isLoading
+              ? LoadingIndicator(bgColor: indicatorColor)
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (iconPath != null)
                       Flexible(
-                        child: Text(
-                          title,
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: buttonType == ButtonType.filled ? textColor : textColor,
-                            fontSize: 16,
-                            fontWeight: fontWeight,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0, top: 1),
+                          child: SvgPicture.asset(iconPath!),
                         ),
                       ),
-                    ],
-                  ),
-          ),
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: buttonType == ButtonType.filled ? textColor : textColor,
+                          fontSize: 16,
+                          fontWeight: fontWeight,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
+
+    return enableShrinkAnimation ? Center(child: button) : button;
   }
 }

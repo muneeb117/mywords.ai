@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
@@ -20,6 +21,8 @@ class _AiWriterPageState extends State<AiWriterPage> {
 
   @override
   Widget build(BuildContext context) {
+    double bottomPadding = MediaQuery.of(context).padding.bottom;
+    bool hasBottomSafeArea = bottomPadding > 0;
     return BlocProvider(
       create: (context) => AiWriterCubit(),
       child: Builder(
@@ -36,71 +39,87 @@ class _AiWriterPageState extends State<AiWriterPage> {
                 ),
               ),
             ),
+            bottomNavigationBar: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+              child: PrimaryButton.filled(
+                onTap: () {},
+                title: 'Continue',
+                textColor: context.colorScheme.primary,
+                backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
             body: Column(
               children: [
                 StepIndicator(currentStep: 1),
                 SizedBox(height: 16),
-                BlocConsumer<AiWriterCubit, AiWriterState>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                Flexible(
+                  child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
+                      child: SingleChildScrollView(
+                        child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                          listener: (context, state) {
+                            // TODO: implement listener
+                          },
+                          builder: (context, state) {
+                            return SingleChildScrollView(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        'Input',
-                                        style: context.textTheme.titleLarge
-                                            ?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
-                                      ),
-                                      Spacer(),
-                                      Text.rich(
-                                        TextSpan(
-                                            text: '${state.wordCount}',
-                                            style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
-                                            children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Input',
+                                              style: context.textTheme.titleLarge
+                                                  ?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
+                                            ),
+                                            Spacer(),
+                                            Text.rich(
                                               TextSpan(
-                                                text: '/800 Words',
-                                                style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
-                                              )
-                                            ]),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 14),
-                                  Text(
-                                    'Please briefly describe your prompt *',
-                                    style: context.textTheme.bodySmall?.copyWith(
-                                      color: context.colorScheme.onSurface,
-                                      height: 1.5
+                                                  text: '${state.wordCount}',
+                                                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
+                                                  children: [
+                                                    TextSpan(
+                                                      text: '/800 Words',
+                                                      style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
+                                                    )
+                                                  ]),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 14),
+                                        Text(
+                                          'Please briefly describe your prompt *',
+                                          style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),
+                                        ),
+                                      ],
                                     ),
                                   ),
+                                  AiTextField(
+                                    onChanged: (nextValue) {
+                                      context.read<AiWriterCubit>().updateText(nextValue);
+                                    },
+                                    textEditingController: aiWriterController,
+                                  ),
+                                  LabeledIconsRow(
+                                    onSampleTextCallback: () {},
+                                    onUploadFileCallBack: () {},
+                                    onPasteTextCallBack: () {},
+                                  ),
+                                  SizedBox(height: 14),
                                 ],
                               ),
-                            ),
-
-                            AiTextField(
-                              onChanged: (nextValue) {
-                                context.read<AiWriterCubit>().updateText(nextValue);
-                              },
-                              textEditingController: aiWriterController,
-                            ),
-                            LabeledIconsRow(
-                              onSampleTextCallback: () {},
-                              onUploadFileCallBack: () {},
-                              onPasteTextCallBack: () {},
-                            ),
-                          ],
-                        ));
-                  },
+                            );
+                          },
+                        ),
+                      )),
                 )
               ],
             ),

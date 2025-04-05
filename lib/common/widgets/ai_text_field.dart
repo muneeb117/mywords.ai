@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiTextField extends StatelessWidget {
@@ -22,15 +23,18 @@ class AiTextField extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: TextFormField(
-              maxLines: null,
-              expands: true,
-              style: TextStyle(
-                color: context.colorScheme.onSurface,
-              ),
-              cursorColor: context.colorScheme.onSurface.withOpacity(0.5),
-              controller: textEditingController,
-              decoration: InputDecoration(border: InputBorder.none),
-              onChanged: onChanged),
+            maxLines: null,
+            expands: true,
+            style: TextStyle(
+              color: context.colorScheme.onSurface,
+            ),
+            cursorColor: context.colorScheme.onSurface.withOpacity(0.5),
+            controller: textEditingController,
+            decoration: InputDecoration(border: InputBorder.none),
+            onChanged: onChanged,
+            textInputAction: TextInputAction.done,
+            textCapitalization: TextCapitalization.words,
+          ),
         ),
         Visibility(
           visible: textEditingController.text.isEmpty,

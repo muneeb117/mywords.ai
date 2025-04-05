@@ -103,7 +103,7 @@ class _SignupPageState extends State<SignupPage> {
                             onSuffixIconTap: () {
                               context.read<SignupCubit>().togglePassword();
                             },
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Password is required';
