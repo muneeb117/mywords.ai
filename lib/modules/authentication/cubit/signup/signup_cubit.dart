@@ -12,11 +12,17 @@ class SignupCubit extends Cubit<SignupState> {
         super(SignupState.initial());
 
   void togglePassword() {
-    emit(state.copyWith(isPasswordHidden: !state.isPasswordHidden));
+    emit(state.copyWith(
+      signupStatus: SignupStatus.initial,
+      isPasswordHidden: !state.isPasswordHidden,
+    ));
   }
 
   void toggleConfirmPassword() {
-    emit(state.copyWith(isConfirmPasswordHidden: !state.isConfirmPasswordHidden));
+    emit(state.copyWith(
+      signupStatus: SignupStatus.initial,
+      isConfirmPasswordHidden: !state.isConfirmPasswordHidden,
+    ));
   }
 
   Future<void> signup(String fullName, String email, String password) async {

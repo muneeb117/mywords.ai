@@ -1,4 +1,4 @@
 class ApiEndpoints {
   static const signup = '/api/signup';
-  static const login = '/api/login';
+  static const login = '/api/auth/signin';
 }

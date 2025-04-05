@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
+      create: (context) => LoginCubit(authRepository: sl()),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -102,17 +103,30 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: 8),
 
-                      PrimaryButton.gradient(
-                        title: 'Sign in',
-                        onTap: () {
-                          // If left side evaluates to null, and null == true is false
-                          bool isFormValidated = _formKey.currentState?.validate() == true;
-                          if (isFormValidated) {
-                            final email = emailController.text.trim();
-                            final password = passwordController.text.trim();
+                      BlocConsumer<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state.loginStatus == LoginStatus.success) {
+                            Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                          } else if (state.loginStatus == LoginStatus.failed) {
+                            context.showSnackBar(state.errorMsg);
                           }
                         },
-                        fontWeight: FontWeight.bold,
+                        builder: (context, state) {
+                          return PrimaryButton.gradient(
+                            title: 'Sign in',
+                            isLoading: state.loginStatus == LoginStatus.loading,
+                            onTap: () {
+                              // If left side evaluates to null, and null == true is false
+                              bool isFormValidated = _formKey.currentState?.validate() == true;
+                              if (isFormValidated) {
+                                final email = emailController.text.toLowerCase().trim();
+                                final password = passwordController.text.trim();
+                                context.read<LoginCubit>().login(email, password);
+                              }
+                            },
+                            fontWeight: FontWeight.bold,
+                          );
+                        },
                       ),
                       OrDividerWidget(),
                       GoogleAuthButton(onTap: () {

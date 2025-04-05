@@ -153,7 +153,7 @@ class _SignupPageState extends State<SignupPage> {
                                   bool isFormValidated = _formKey.currentState?.validate() == true;
                                   if (isFormValidated) {
                                     final fullName = fullNameController.text;
-                                    final email = emailController.text.trim();
+                                    final email = emailController.text.toLowerCase().trim();
                                     final password = passwordTextController.text.trim();
                                     context.read<SignupCubit>().signup(fullName, email, password);
                                   }

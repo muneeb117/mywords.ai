@@ -13,6 +13,24 @@ class AuthRepository {
     required DioClient dioClient,
   }) : _dioClient = dioClient;
 
+  Future<Either<ApiError, String>> login(String email, String password) async {
+    try {
+      final response = await _dioClient.post(
+        ApiEndpoints.login,
+        data: {'email': email, 'password': password},
+      );
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['token'] != null) {
+        return Right(response.data['token']);
+      }
+      return Left(ApiError(
+        errorMsg: 'Server Error, Please try again',
+        code: response.statusCode ?? 0,
+      ));
+    } catch (e, stackTrace) {
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Login');
+    }
+  }
+
   Future<Either<ApiError, int>> signup(String fullName, String email, String password) async {
     try {
       final response = await _dioClient.post(
