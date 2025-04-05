@@ -1,38 +1,40 @@
 part of 'signup_cubit.dart';
 
+enum SignupStatus { initial, loading, success, failed }
+
 class SignupState {
   final bool isPasswordHidden;
   final bool isConfirmPasswordHidden;
-  final String password;
-  final String confirmPassword;
+  final SignupStatus signupStatus;
+  final String errorMsg;
 
   SignupState({
     required this.isPasswordHidden,
     required this.isConfirmPasswordHidden,
-    required this.password,
-    required this.confirmPassword,
+    required this.signupStatus,
+    required this.errorMsg,
   });
 
   factory SignupState.initial() {
     return SignupState(
       isPasswordHidden: true,
       isConfirmPasswordHidden: true,
-      password: '',
-      confirmPassword: '',
+      signupStatus: SignupStatus.initial,
+      errorMsg: '',
     );
   }
 
   SignupState copyWith({
     bool? isPasswordHidden,
     bool? isConfirmPasswordHidden,
-    String? password,
-    String? confirmPassword,
+    SignupStatus? signupStatus,
+    String? errorMsg,
   }) {
     return SignupState(
       isPasswordHidden: isPasswordHidden ?? this.isPasswordHidden,
       isConfirmPasswordHidden: isConfirmPasswordHidden ?? this.isConfirmPasswordHidden,
-      password: password ?? this.password,
-      confirmPassword: confirmPassword ?? this.confirmPassword,
+      signupStatus: signupStatus ?? this.signupStatus,
+      errorMsg: errorMsg ?? this.errorMsg,
     );
   }
 }

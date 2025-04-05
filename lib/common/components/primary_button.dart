@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 enum ButtonType { filled, outlined, gradient }
@@ -9,6 +10,7 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     required this.title,
     this.textColor = Colors.white,
+    this.isLoading = false,
     this.backgroundColor = const Color(0xffCE4AEF),
     this.fontWeight = FontWeight.w500,
   })  : buttonType = ButtonType.filled,
@@ -18,6 +20,7 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.title,
+    this.isLoading = false,
     this.textColor = const Color(0xffCE4AEF),
     this.backgroundColor = Colors.transparent,
     this.fontWeight = FontWeight.w500,
@@ -29,6 +32,7 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     required this.title,
     this.textColor = Colors.white,
+    this.isLoading = false,
     this.gradientColors = const [Color(0xffCE4AEF), Color(0xff601FBE)],
     this.fontWeight = FontWeight.w500,
   })  : buttonType = ButtonType.gradient,
@@ -38,6 +42,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color backgroundColor;
   final Color textColor;
+  final bool isLoading;
   final FontWeight fontWeight;
   final List<Color>? gradientColors;
   final ButtonType buttonType;
@@ -76,21 +81,23 @@ class PrimaryButton extends StatelessWidget {
     return Ink(
       decoration: decoration,
       child: InkWell(
-        onTap: onTap,
+        onTap: isLoading ? null : onTap,
         borderRadius: BorderRadius.circular(6),
         child: Container(
           height: 56,
           alignment: Alignment.center,
           decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            title,
-            style: context.textTheme.bodyMedium?.copyWith(
-              color: buttonType == ButtonType.filled ? textColor : textColor,
-              fontSize: 16,
-              fontWeight: fontWeight,
-            ),
-          ),
+          child: isLoading
+              ? LoadingIndicator()
+              : Text(
+                  title,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: buttonType == ButtonType.filled ? textColor : textColor,
+                    fontSize: 16,
+                    fontWeight: fontWeight,
+                  ),
+                ),
         ),
       ),
     );

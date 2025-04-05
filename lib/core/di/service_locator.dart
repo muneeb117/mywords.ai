@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mywords/config/flavors/flavors.dart';
 import 'package:mywords/core/network/dio_client.dart';
 import 'package:mywords/core/storage/storage_service.dart';
+import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/utils/logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,8 @@ Future<void> initDependencies(AppEnv appEnv) async {
 
   // Register network layer
   sl.registerLazySingleton<DioClient>(() => DioClient(flavors: sl()));
+
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepository(dioClient: sl()));
 
   // Wait for async registrations to complete
   await sl.allReady();

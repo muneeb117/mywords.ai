@@ -59,6 +59,7 @@ class InputField extends StatelessWidget {
         autocorrect = false,
         enableSuggestions = true,
         inputFieldType = InputFieldType.email,
+
         super(key: key);
 
   // Password field constructor
@@ -79,6 +80,7 @@ class InputField extends StatelessWidget {
         autocorrect = false,
         enableSuggestions = false,
         inputFieldType = InputFieldType.password,
+
         super(key: key);
 
   @override
@@ -90,6 +92,7 @@ class InputField extends StatelessWidget {
       autocorrect: autocorrect,
       enableSuggestions: enableSuggestions,
       validator: validator,
+
       obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,

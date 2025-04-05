@@ -46,7 +46,7 @@ class SignupConfirmationPage extends StatelessWidget {
               SizedBox(height: 150),
               PrimaryButton.filled(
                 onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                  Navigator.pushReplacementNamed(context, RouteManager.login);
                 },
                 title: 'Finish',
                 fontWeight: FontWeight.w700,

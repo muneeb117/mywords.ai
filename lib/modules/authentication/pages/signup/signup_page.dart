@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/signup/signup_cubit.dart';
+import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
+import 'package:mywords/utils/extensions/email_validator.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class SignupPage extends StatefulWidget {
@@ -27,7 +30,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignupCubit(),
+      create: (context) => SignupCubit(authRepository: sl()),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -65,6 +68,13 @@ class _SignupPageState extends State<SignupPage> {
                             prefixIconPath: 'assets/images/svg/ic_email.svg',
                             hasPrefixIcon: false,
                             controller: fullNameController,
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Name is required';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(height: 12),
                           Text('Email', style: context.textTheme.titleMedium),
@@ -72,6 +82,14 @@ class _SignupPageState extends State<SignupPage> {
                           InputField.email(
                             hintText: 'Email',
                             controller: emailController,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Email is required';
+                              } else if (!value.isValidEmail) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(height: 12),
                           Text('Password', style: context.textTheme.titleMedium),
@@ -119,20 +137,30 @@ class _SignupPageState extends State<SignupPage> {
                             },
                           ),
                           SizedBox(height: 16),
-                          PrimaryButton.gradient(
-                            title: 'Sign Up',
-                            onTap: () {
-                              bool isFormValidated = _formKey.currentState?.validate() == true;
-                              if (isFormValidated) {
-                                final fullName = fullNameController.text;
-                                final email = emailController.text.trim();
-                                final password = passwordTextController.text.trim();
-                                final confirmPassword = confirmPasswordTextController.text.trim();
-
+                          BlocConsumer<SignupCubit, SignupState>(
+                            listener: (context, state) {
+                              if (state.signupStatus == SignupStatus.success) {
                                 Navigator.pushReplacementNamed(context, RouteManager.signupConfirmation);
+                              } else if (state.signupStatus == SignupStatus.failed) {
+                                context.showSnackBar(state.errorMsg);
                               }
                             },
-                            fontWeight: FontWeight.bold,
+                            builder: (context, state) {
+                              return PrimaryButton.gradient(
+                                title: 'Sign Up',
+                                isLoading: state.signupStatus == SignupStatus.loading,
+                                onTap: () {
+                                  bool isFormValidated = _formKey.currentState?.validate() == true;
+                                  if (isFormValidated) {
+                                    final fullName = fullNameController.text;
+                                    final email = emailController.text.trim();
+                                    final password = passwordTextController.text.trim();
+                                    context.read<SignupCubit>().signup(fullName, email, password);
+                                  }
+                                },
+                                fontWeight: FontWeight.bold,
+                              );
+                            },
                           ),
                           OrDividerWidget(),
                           GoogleAuthButton(onTap: () {
