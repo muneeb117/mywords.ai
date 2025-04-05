@@ -22,7 +22,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OnboardingCubit(storageService: sl()),
+      create: (context) => OnboardingCubit(sessionRepository: sl()),
       child: Scaffold(
         backgroundColor: Color(0xff601FBE),
         body: Stack(
@@ -91,7 +91,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             Expanded(
                               child: PrimaryButton.filled(
                                 onTap: () {
-                                  context.read<OnboardingCubit>().completeOnboarding();
+                                  context.read<OnboardingCubit>().complete();
                                   Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
                                 },
                                 title: 'Skip',
@@ -110,7 +110,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                       curve: Curves.easeInOut,
                                     );
                                   } else {
-                                    context.read<OnboardingCubit>().completeOnboarding();
+                                    context.read<OnboardingCubit>().complete();
                                     sl<StorageService>().setBool(AppKeys.isNewUser, false);
                                     Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
                                   }

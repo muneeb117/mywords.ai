@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mywords/constants/app_keys.dart';
-import 'package:mywords/core/storage/storage_service.dart';
+
+import 'package:mywords/modules/authentication/repository/session_repository.dart';
 
 class OnboardingCubit extends Cubit<void> {
-  final StorageService storageService;
+  final SessionRepository _sessionRepository;
 
-  OnboardingCubit({required this.storageService}) : super(null);
+  OnboardingCubit({required SessionRepository sessionRepository})
+      : _sessionRepository = sessionRepository,
+        super(null);
 
-  void completeOnboarding() {
-    storageService.setBool(AppKeys.isNewUser, false);
+  void complete() {
+    _sessionRepository.completeOnboarding();
   }
 }

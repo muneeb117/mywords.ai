@@ -2,20 +2,22 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/storage/storage_service.dart';
+import 'package:mywords/modules/authentication/repository/session_repository.dart';
 
 part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
-  final StorageService storageService;
+  final SessionRepository _sessionRepository;
 
-  SplashCubit({required this.storageService}) : super(SplashInitial());
-
+  SplashCubit({required SessionRepository sessionRepository})
+      : _sessionRepository = sessionRepository,
+        super(SplashInitial());
 
   Future<void> init() async {
     await Future.delayed(const Duration(milliseconds: 1800));
 
-    final bool isNewUser = _checkIfNewUser();
-    final bool isUserLoggedIn = await _checkUserAuthentication();
+    final bool isNewUser = _sessionRepository.checkIfNewUser();
+    final bool isUserLoggedIn = await _sessionRepository.isUserLoggedIn();
 
     if (isNewUser) {
       emit(ShowOnboarding());
@@ -24,14 +26,5 @@ class SplashCubit extends Cubit<SplashState> {
     } else {
       emit(ShowLogin());
     }
-  }
-
-  bool _checkIfNewUser() {
-    return storageService.getBool(AppKeys.isNewUser) ?? true;
-  }
-
-  Future<bool> _checkUserAuthentication() async {
-    // todo :: Implement the core auth logic
-    return false;
   }
 }

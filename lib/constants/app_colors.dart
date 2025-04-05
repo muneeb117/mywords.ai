@@ -9,8 +9,10 @@ class AppColors {
   static const Color indicatorActive = Color(0xff601FBE);
   static const Color green = Color(0xff45C646);
   static const Color greenBg = Color(0xffECF9EC);
-  static const Color orange = Color(0xffF47D42);
+  static const Color darkOrangeBg = Color(0xffFFECE5);
   static const Color orangeBg = Color(0xffFEF2EC);
+  static const Color orange = Color(0xffF47D42);
+  static const Color darkOrange = Color(0xffFF3D00);
   static const Color indicatorInactive = Colors.grey;
   static const Color white = Colors.white;
   static const Color black = Colors.black;
