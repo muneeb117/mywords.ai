@@ -33,7 +33,7 @@ class AiTextField extends StatelessWidget {
             decoration: InputDecoration(border: InputBorder.none),
             onChanged: onChanged,
             textInputAction: TextInputAction.done,
-            textCapitalization: TextCapitalization.words,
+            textCapitalization: TextCapitalization.sentences,
           ),
         ),
         Visibility(

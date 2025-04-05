@@ -57,7 +57,12 @@ class _AiWriterPageState extends State<AiWriterPage> {
                 Flexible(
                   child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Color(0xffDADADA),
+                        ),
+                      ),
                       child: SingleChildScrollView(
                         child: BlocConsumer<AiWriterCubit, AiWriterState>(
                           listener: (context, state) {
@@ -68,40 +73,7 @@ class _AiWriterPageState extends State<AiWriterPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Input',
-                                              style: context.textTheme.titleLarge
-                                                  ?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
-                                            ),
-                                            Spacer(),
-                                            Text.rich(
-                                              TextSpan(
-                                                  text: '${state.wordCount}',
-                                                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
-                                                  children: [
-                                                    TextSpan(
-                                                      text: '/800 Words',
-                                                      style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
-                                                    )
-                                                  ]),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 14),
-                                        Text(
-                                          'Please briefly describe your prompt *',
-                                          style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  _TextFieldHeader(wordCount: state.wordCount),
                                   AiTextField(
                                     onChanged: (nextValue) {
                                       context.read<AiWriterCubit>().updateText(nextValue);
@@ -125,6 +97,50 @@ class _AiWriterPageState extends State<AiWriterPage> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+
+class _TextFieldHeader extends StatelessWidget {
+  const _TextFieldHeader({super.key,required this.wordCount});
+  final int wordCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return   Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                'Input',
+                style: context.textTheme.titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
+              ),
+              Spacer(),
+              Text.rich(
+                TextSpan(
+                    text: '${wordCount}',
+                    style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
+                    children: [
+                      TextSpan(
+                        text: '/800 Words',
+                        style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
+                      )
+                    ]),
+              ),
+            ],
+          ),
+          SizedBox(height: 14),
+          Text(
+            'Please briefly describe your prompt *',
+            style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),
+          ),
+        ],
       ),
     );
   }
