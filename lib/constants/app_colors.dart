@@ -12,6 +12,8 @@ class AppColors {
   static const Color darkOrangeBg = Color(0xffFFECE5);
   static const Color orangeBg = Color(0xffFEF2EC);
   static const Color orange = Color(0xffF47D42);
+  static const Color purple = Color(0xff601FBE);
+  static Color purpleBg = Color(0xffCE4AEF).withOpacity(0.10);
   static const Color darkOrange = Color(0xffFF3D00);
   static const Color indicatorInactive = Colors.grey;
   static const Color white = Colors.white;
