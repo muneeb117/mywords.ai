@@ -3,9 +3,9 @@ import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class StepIndicator extends StatelessWidget {
-  const StepIndicator({super.key, required this.currentStep});
+  const StepIndicator({super.key, required this.activeSteps});
 
-  final int currentStep;
+  final List<int> activeSteps;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class StepIndicator extends StatelessWidget {
       child: Row(
         children: [
           StepIndicatorRoundedComponent(
-            isActive: true,
+            isActive: activeSteps.contains(1),
             stepNumber: '1',
             stepTitle: 'Prompt',
           ),
@@ -32,7 +32,7 @@ class StepIndicator extends StatelessWidget {
           )),
           SizedBox(width: 6),
           StepIndicatorRoundedComponent(
-            isActive: false,
+            isActive: activeSteps.contains(2),
             stepNumber: '2',
             stepTitle: 'Purpose',
           ),
@@ -44,7 +44,7 @@ class StepIndicator extends StatelessWidget {
           )),
           SizedBox(width: 6),
           StepIndicatorRoundedComponent(
-            isActive: false,
+            isActive: activeSteps.contains(3),
             stepNumber: '3',
             stepTitle: 'Output',
           ),

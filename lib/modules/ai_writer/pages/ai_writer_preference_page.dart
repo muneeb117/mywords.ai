@@ -7,16 +7,17 @@ import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
+import 'package:mywords/modules/ai_writer/pages/ai_writer_output_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class AiWriterPage extends StatefulWidget {
-  const AiWriterPage({super.key});
+class AiWriterPreferencePage extends StatefulWidget {
+  const AiWriterPreferencePage({super.key});
 
   @override
-  State<AiWriterPage> createState() => _AiWriterPageState();
+  State<AiWriterPreferencePage> createState() => _AiWriterPreferencePageState();
 }
 
-class _AiWriterPageState extends State<AiWriterPage> {
+class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
   final TextEditingController aiWriterController = TextEditingController();
 
   @override
@@ -32,7 +33,7 @@ class _AiWriterPageState extends State<AiWriterPage> {
               backgroundColor: AppColors.white,
               surfaceTintColor: Colors.transparent,
               title: Text(
-                'AI Writer',
+                'AI Preference',
                 style: context.textTheme.headlineSmall?.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -43,16 +44,24 @@ class _AiWriterPageState extends State<AiWriterPage> {
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
               child: PrimaryButton.filled(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => AiWriterOutputPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
                 title: 'Continue',
                 textColor: context.colorScheme.primary,
-                backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+                backgroundColor: Color(0xffD24DEE),
                 fontWeight: FontWeight.w700,
               ),
             ),
             body: Column(
               children: [
-                StepIndicator(currentStep: 1),
+                StepIndicator(activeSteps: [1, 2]),
                 SizedBox(height: 16),
                 Flexible(
                   child: Container(

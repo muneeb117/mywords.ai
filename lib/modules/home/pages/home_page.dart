@@ -23,7 +23,6 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           SizedBox(height: 4),
           Divider(color: Color(0xffEEEEEE), height: 0),
           SizedBox(height: 16),
@@ -48,7 +47,7 @@ class HomePage extends StatelessWidget {
           SizedBox(height: 8),
           HomeToolWidget(
             onTap: () {
-              Navigator.pushNamed(context, RouteManager.writer);
+              Navigator.pushNamed(context, RouteManager.aiWriterInput);
             },
             title: 'AI Writer',
             description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',

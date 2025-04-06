@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_page.dart';
-import 'package:mywords/modules/ai_writer/pages/ai_writer_page.dart';
+import 'package:mywords/modules/ai_writer/pages/ai_writer_input_page.dart';
+import 'package:mywords/modules/ai_writer/pages/ai_writer_output_page.dart';
 import 'package:mywords/modules/authentication/pages/login_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/enter_otp_signup_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/signup_confirmation_page.dart';
@@ -23,7 +24,7 @@ class RouteManager {
   static const String enterOtpSignup = '/enterOtpSignup';
   static const String signupConfirmation = '/signupConfirmation';
   static const String home = '/home';
-  static const String writer = '/writer';
+  static const String aiWriterInput = '/aiWriterInput';
   static const String humanizer = '/humanizer';
   static const String detector = '/detector';
   static const String setting = '/setting';
@@ -49,8 +50,10 @@ class RouteManager {
         return CupertinoPageRoute(builder: (_) => const HomePage());
       case setting:
         return CupertinoPageRoute(builder: (_) => const SettingsPage());
-      case writer:
-        return CupertinoPageRoute(builder: (_) => const AiWriterPage());
+
+      /// The [preference] and [output] ai-writer routes are being called with [PageRouteBuilder]
+      case aiWriterInput:
+        return CupertinoPageRoute(builder: (_) => const AiWriterInputPage());
       case humanizer:
         return CupertinoPageRoute(builder: (_) => const AiHumanizerPage());
       case detector:
