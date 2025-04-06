@@ -41,13 +41,13 @@ class PrimaryButton extends StatelessWidget {
     required this.title,
     this.textColor = Colors.white,
     this.isLoading = false,
+    this.iconPath,
     this.gradientColors = const [Color(0xffCE4AEF), Color(0xff601FBE)],
     this.enableShrinkAnimation = false,
     this.indicatorColor = AppColors.white,
     this.fontWeight = FontWeight.w500,
   })  : buttonType = ButtonType.gradient,
-        backgroundColor = Colors.transparent,
-        iconPath = null;
+        backgroundColor = Colors.transparent;
 
   final String title;
   final VoidCallback onTap;

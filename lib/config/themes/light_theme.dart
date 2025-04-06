@@ -14,6 +14,7 @@ ThemeData _getTheme() {
       surface: AppColors.background,
       onSurface: AppColors.textPrimary,
       outline: AppColors.textSecondary,
+      error: AppColors.error
     ),
     textTheme: _getTextTheme(),
   );

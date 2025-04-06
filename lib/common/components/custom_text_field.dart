@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
@@ -19,6 +20,7 @@ class InputField extends StatelessWidget {
   final bool obscureText;
   final bool autocorrect;
   final bool enableSuggestions;
+  final List<TextInputFormatter>? inputFormatters;
   final VoidCallback? onSuffixIconTap;
   final InputFieldType inputFieldType;
 
@@ -38,6 +40,7 @@ class InputField extends StatelessWidget {
     this.autocorrect = true,
     this.enableSuggestions = true,
     this.hasPrefixIcon = true,
+    this.inputFormatters,
   })  : inputFieldType = InputFieldType.regular,
         super(key: key);
 
@@ -50,6 +53,7 @@ class InputField extends StatelessWidget {
     this.autofocus = false,
     String this.hintText = 'Email Address',
     this.textInputAction = TextInputAction.next,
+    this.inputFormatters,
   })  : hasPrefixIcon = true,
         prefixIconPath = 'assets/images/svg/ic_email.svg',
         suffixIconPath = null,
@@ -59,7 +63,6 @@ class InputField extends StatelessWidget {
         autocorrect = false,
         enableSuggestions = true,
         inputFieldType = InputFieldType.email,
-
         super(key: key);
 
   // Password field constructor
@@ -74,13 +77,13 @@ class InputField extends StatelessWidget {
     this.onSuffixIconTap,
     this.textInputAction = TextInputAction.done,
     this.obscureText = true,
+    this.inputFormatters,
   })  : hasPrefixIcon = true,
         prefixIconPath = 'assets/images/svg/ic_lock.svg',
         keyboardType = TextInputType.visiblePassword,
         autocorrect = false,
         enableSuggestions = false,
         inputFieldType = InputFieldType.password,
-
         super(key: key);
 
   @override
@@ -92,7 +95,7 @@ class InputField extends StatelessWidget {
       autocorrect: autocorrect,
       enableSuggestions: enableSuggestions,
       validator: validator,
-
+      inputFormatters: inputFormatters,
       obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
@@ -120,7 +123,6 @@ class InputField extends StatelessWidget {
                   onSuffixIconTap?.call();
                 },
                 child: Container(
-                  // color: Colors.green,
                   padding: const EdgeInsets.only(right: 14.0, left: 14),
                   child: SvgPicture.asset(
                     suffixIconPath!,
@@ -134,14 +136,14 @@ class InputField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: Colors.grey.shade200,
+            color: Color(0xffEDEDED),
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: Colors.grey.shade200,
+            color: Color(0xffEDEDED),
             width: 1,
           ),
         ),

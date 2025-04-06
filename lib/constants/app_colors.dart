@@ -18,4 +18,5 @@ class AppColors {
   static const Color indicatorInactive = Colors.grey;
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static const Color error = Color(0xffef4444);
 }
