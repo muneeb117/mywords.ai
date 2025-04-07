@@ -22,95 +22,88 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
   Widget build(BuildContext context) {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
-    return BlocProvider(
-      create: (context) => AiWriterCubit(),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.white,
-              surfaceTintColor: Colors.transparent,
-              title: Text(
-                'AI Writer',
-                style: context.textTheme.headlineSmall?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        surfaceTintColor: Colors.transparent,
+        title: Text(
+          'AI Writer',
+          style: context.textTheme.headlineSmall?.copyWith(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          StepIndicator(activeSteps: [1, 2, 3]),
+          SizedBox(height: 16),
+          Flexible(
+            child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Color(0xffDADADA),
+                  ),
                 ),
-              ),
-            ),
-            body: Column(
-              children: [
-                StepIndicator(activeSteps: [1, 2, 3]),
-                SizedBox(height: 16),
-                Flexible(
-                  child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Color(0xffDADADA),
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: BlocConsumer<AiWriterCubit, AiWriterState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                          },
-                          builder: (context, state) {
-                            return SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
-                                    child: Text(
-                                      'Output',
-                                      style: context.textTheme.titleLarge?.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: context.colorScheme.onSurface,
-                                      ),
-                                    ),
-                                  ),
-                                  Divider(
-                                    color: Color(0xffDADADA),
-                                    height: 0,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 300,
-                                    padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                                    child: SingleChildScrollView(
-                                        child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 16.0),
-                                      child: Text(
-                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                                        style: context.textTheme.titleMedium,
-                                      ),
-                                    )),
-                                    decoration: BoxDecoration(),
-                                  ),
-                                ],
+                child: SingleChildScrollView(
+                  child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
+                              child: Text(
+                                'Output',
+                                style: context.textTheme.titleLarge?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: context.colorScheme.onSurface,
+                                ),
                               ),
-                            );
-                          },
+                            ),
+                            Divider(
+                              color: Color(0xffDADADA),
+                              height: 0,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 300,
+                              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+                              child: SingleChildScrollView(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 16.0),
+                                    child: Text(
+                                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                                      style: context.textTheme.titleMedium,
+                                    ),
+                                  )),
+                              decoration: BoxDecoration(),
+                            ),
+                          ],
                         ),
-                      )),
-                ),
-                SizedBox(height: 16),
-                _InfoStaticWidget(),
-              ],
-            ),
-            bottomNavigationBar: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-              child: PrimaryButton.gradient(
-                onTap: () {},
-                title: 'Humanize Text',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          );
-        },
+                      );
+                    },
+                  ),
+                )),
+          ),
+          SizedBox(height: 16),
+          _InfoStaticWidget(),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+        child: PrimaryButton.gradient(
+          onTap: () {},
+          title: 'Humanize Text',
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }

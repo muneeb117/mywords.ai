@@ -1,0 +1,34 @@
+import 'dart:io';
+
+import 'package:dartz/dartz.dart';
+import 'package:mywords/constants/api_endpoints.dart';
+import 'package:mywords/core/exceptions/api_error.dart';
+import 'package:mywords/core/exceptions/error_handler.dart';
+import 'package:mywords/core/network/dio_client.dart';
+import 'package:mywords/modules/ai_writer/models/ai_writer_input.dart';
+
+class AiWriterRepository {
+  final DioClient _dioClient;
+
+  AiWriterRepository({
+    required DioClient dioClient,
+  }) : _dioClient = dioClient;
+
+  Future<Either<ApiError, String>> write(AiWriterInput aiWriterInput) async {
+    try {
+      final response = await _dioClient.post(
+        ApiEndpoints.aiWriter,
+        data: aiWriterInput.toJson(),
+      );
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['token'] != null) {
+        return Right(response.data['token']);
+      }
+      return Left(ApiError(
+        errorMsg: 'Server Error, Please try again',
+        code: response.statusCode ?? 0,
+      ));
+    } catch (e, stackTrace) {
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Login');
+    }
+  }
+}

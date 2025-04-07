@@ -103,7 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                         onForgotPasswordTap: () {},
                       ),
                       SizedBox(height: 8),
-
                       BlocConsumer<LoginCubit, LoginState>(
                         listener: (context, state) {
                           if (state.loginStatus == LoginStatus.success) {

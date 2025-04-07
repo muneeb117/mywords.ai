@@ -24,88 +24,81 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
   Widget build(BuildContext context) {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
-    return BlocProvider(
-      create: (context) => AiWriterCubit(),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.white,
-              surfaceTintColor: Colors.transparent,
-              title: Text(
-                'AI Writer',
-                style: context.textTheme.headlineSmall?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        surfaceTintColor: Colors.transparent,
+        title: Text(
+          'AI Writer',
+          style: context.textTheme.headlineSmall?.copyWith(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+        child: PrimaryButton.filled(
+          onTap: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => AiWriterPreferencePage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+            );
+          },
+          title: 'Continue',
+          textColor: context.colorScheme.primary,
+          backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      body: Column(
+        children: [
+          StepIndicator(activeSteps: [1]),
+          SizedBox(height: 16),
+          Flexible(
+            child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Color(0xffDADADA),
+                  ),
                 ),
-              ),
-            ),
-            bottomNavigationBar: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-              child: PrimaryButton.filled(
-                onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => AiWriterPreferencePage(),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-                },
-                title: 'Continue',
-                textColor: context.colorScheme.primary,
-                backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            body: Column(
-              children: [
-                StepIndicator(activeSteps: [1]),
-                SizedBox(height: 16),
-                Flexible(
-                  child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Color(0xffDADADA),
+                child: SingleChildScrollView(
+                  child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _TextFieldHeader(wordCount: state.wordCount),
+                            AiTextField(
+                              onChanged: (nextValue) {
+                                context.read<AiWriterCubit>().updateText(nextValue);
+                              },
+                              textEditingController: aiWriterController,
+                            ),
+                            LabeledIconsRow(
+                              onSampleTextCallback: () {},
+                              onUploadFileCallBack: () {},
+                              onPasteTextCallBack: () {},
+                            ),
+                            SizedBox(height: 14),
+                          ],
                         ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: BlocConsumer<AiWriterCubit, AiWriterState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                          },
-                          builder: (context, state) {
-                            return SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _TextFieldHeader(wordCount: state.wordCount),
-                                  AiTextField(
-                                    onChanged: (nextValue) {
-                                      context.read<AiWriterCubit>().updateText(nextValue);
-                                    },
-                                    textEditingController: aiWriterController,
-                                  ),
-                                  LabeledIconsRow(
-                                    onSampleTextCallback: () {},
-                                    onUploadFileCallBack: () {},
-                                    onPasteTextCallBack: () {},
-                                  ),
-                                  SizedBox(height: 14),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )),
-                )
-              ],
-            ),
-          );
-        },
+                      );
+                    },
+                  ),
+                )),
+          )
+        ],
       ),
     );
   }
