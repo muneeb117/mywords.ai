@@ -98,7 +98,9 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
                                 final sampleText = AiSampleText.samplePrompt;
                                 _putTextOnBoard(sampleText);
                               },
-                              onUploadFileCallBack: () {},
+                              onUploadFileCallBack: () {
+
+                              },
                               onPasteTextCallBack: () async {
                                 final clipboardData = await Clipboard.getData('text/plain');
                                 final text = clipboardData?.text;
