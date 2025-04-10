@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
+import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_preference_page.dart';
@@ -19,6 +21,12 @@ class AiWriterInputPage extends StatefulWidget {
 
 class _AiWriterInputPageState extends State<AiWriterInputPage> {
   final TextEditingController aiWriterController = TextEditingController();
+
+  void _putTextOnBoard(String text) {
+    setState(() {
+      aiWriterController.text = text;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +94,18 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
                               textEditingController: aiWriterController,
                             ),
                             LabeledIconsRow(
-                              onSampleTextCallback: () {},
+                              onSampleTextCallback: () {
+                                final sampleText = AiSampleText.samplePrompt;
+                                _putTextOnBoard(sampleText);
+                              },
                               onUploadFileCallBack: () {},
-                              onPasteTextCallBack: () {},
+                              onPasteTextCallBack: () async {
+                                final clipboardData = await Clipboard.getData('text/plain');
+                                final text = clipboardData?.text;
+                                if (text?.isNotEmpty ?? false) {
+                                  _putTextOnBoard(text!);
+                                }
+                              },
                             ),
                             SizedBox(height: 14),
                           ],
