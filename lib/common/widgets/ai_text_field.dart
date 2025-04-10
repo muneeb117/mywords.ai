@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiTextField extends StatelessWidget {

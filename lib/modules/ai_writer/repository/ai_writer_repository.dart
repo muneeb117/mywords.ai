@@ -14,21 +14,22 @@ class AiWriterRepository {
     required DioClient dioClient,
   }) : _dioClient = dioClient;
 
-  Future<Either<ApiError, String>> write(AiWriterInput aiWriterInput) async {
+  Future<Either<ApiError, String>> generate({required Map<String, dynamic> data}) async {
     try {
       final response = await _dioClient.post(
         ApiEndpoints.aiWriter,
-        data: aiWriterInput.toJson(),
+        data: data,
       );
-      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['token'] != null) {
-        return Right(response.data['token']);
+
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
+        return Right(response.data['generatedText']);
       }
       return Left(ApiError(
         errorMsg: 'Server Error, Please try again',
         code: response.statusCode ?? 0,
       ));
     } catch (e, stackTrace) {
-      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Login');
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'AI Writer');
     }
   }
 }

@@ -21,6 +21,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
   final TextEditingController aiWriterController = TextEditingController();
 
   String? writingPurpose = 'Essay';
+  String selectedLanguage = 'English';
   TextEditingController minWordCountController = TextEditingController();
   TextEditingController maxWordCountController = TextEditingController();
 
@@ -69,7 +70,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                   CustomDropdownWithoutIcon(
                     items: ['English'],
                     hint: 'Select Language',
-                    value: 'English',
+                    value: selectedLanguage,
                     onChanged: (val) {},
                   ),
                   SizedBox(height: 12),
@@ -80,6 +81,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                     hasPrefixIcon: false,
                     prefixIconPath: '',
                     keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
@@ -93,16 +95,19 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                     hasPrefixIcon: false,
                     prefixIconPath: '',
                     keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                     controller: maxWordCountController,
                   ),
                   SizedBox(height: 12),
-                  Text('Minimum 350 words, maximum 500 words.',
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: context.colorScheme.onSurface,
-                      )),
+                  Text(
+                    'Minimum 350 words, maximum 500 words.',
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.colorScheme.onSurface,
+                    ),
+                  ),
                 ],
               ),
             )
@@ -112,30 +117,49 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
       bottomNavigationBar: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
         padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-        child: PrimaryButton.gradient(
-          onTap: () {
-            final minText = minWordCountController.text.trim();
-            final maxText = maxWordCountController.text.trim();
-
-            final min = int.tryParse(minText);
-            final max = int.tryParse(maxText);
-
-            if (min == null || max == null || min < 350 || max > 500) {
-              context.showSnackBar('Please enter valid word limits!', isError: true);
-              return;
+        child: BlocConsumer<AiWriterCubit, AiWriterState>(
+          listener: (context, state) {
+            if (state.aiWriterStatus == AiWriterStatus.success) {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => AiWriterOutputPage(),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ),
+              );
+            }else if(state.aiWriterStatus == AiWriterStatus.failed){
+              context.showSnackBar(state.errorMsg);
             }
+          },
+          builder: (context, state) {
+            return PrimaryButton.gradient(
+              isLoading: state.aiWriterStatus == AiWriterStatus.loading,
+              onTap: () {
+                final minText = minWordCountController.text.trim();
+                final maxText = maxWordCountController.text.trim();
 
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => AiWriterOutputPage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
+                final min = int.tryParse(minText);
+                final max = int.tryParse(maxText);
+
+                if (min == null || max == null || min < 350 || max > 500) {
+                  context.showSnackBar('Please enter valid word limits!', isError: true);
+                  return;
+                }
+
+                final aiWriterCubit = context.read<AiWriterCubit>();
+                aiWriterCubit
+                  ..setWritingPurpose(writingPurpose!)
+                  ..setWritingLanguage(selectedLanguage)
+                  ..setMinWordLimit(min)
+                  ..setMaxWordLimit(max);
+
+                aiWriterCubit.generateOutput();
+              },
+              title: 'Generate Outline',
+              iconPath: 'assets/images/svg/ic_flag.svg',
+              fontWeight: FontWeight.w700,
             );
           },
-          title: 'Generate Outline',
-          iconPath: 'assets/images/svg/ic_flag.svg',
-          fontWeight: FontWeight.w700,
         ),
       ),
     );

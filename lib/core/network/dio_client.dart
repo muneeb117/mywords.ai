@@ -25,6 +25,9 @@ class DioClient extends DioForNative {
       interceptors.add(LogInterceptor(
         requestBody: true,
         responseBody: true,
+        responseHeader: false,
+        request: false,
+        requestHeader: false
       ));
     }
 

@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:mywords/constants/app_keys.dart';
-import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 
 part 'splash_state.dart';

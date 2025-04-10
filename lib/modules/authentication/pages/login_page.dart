@@ -7,7 +7,6 @@ import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/auto_login.dart';
-import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
 import 'package:mywords/modules/authentication/widgets/remember_me_and_forgot_pwd_widget.dart';
 import 'package:mywords/utils/extensions/email_validator.dart';

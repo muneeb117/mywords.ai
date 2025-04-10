@@ -5,7 +5,6 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/signup/signup_cubit.dart';
-import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';

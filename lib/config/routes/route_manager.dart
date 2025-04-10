@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_page.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_input_page.dart';
-import 'package:mywords/modules/ai_writer/pages/ai_writer_output_page.dart';
 import 'package:mywords/modules/authentication/pages/login_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/enter_otp_signup_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/signup_confirmation_page.dart';

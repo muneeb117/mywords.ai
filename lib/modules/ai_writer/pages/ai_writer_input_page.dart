@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
-
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
@@ -42,25 +41,6 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-        child: PrimaryButton.filled(
-          onTap: () {
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => AiWriterPreferencePage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
-            );
-          },
-          title: 'Continue',
-          textColor: context.colorScheme.primary,
-          backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-          fontWeight: FontWeight.w700,
         ),
       ),
       body: Column(
@@ -119,6 +99,32 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
           )
         ],
       ),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+        child: PrimaryButton.filled(
+          onTap: () {
+            final text = aiWriterController.text.trim();
+            if(text.isEmpty){
+              context.showSnackBar('Input field is required');
+              return;
+            }
+            context.read<AiWriterCubit>().setText(text);
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => AiWriterPreferencePage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+            );
+          },
+          title: 'Continue',
+          textColor: context.colorScheme.primary,
+          backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+
     );
   }
 }

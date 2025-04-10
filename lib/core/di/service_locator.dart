@@ -5,7 +5,6 @@ import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_writer/repository/ai_writer_repository.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
-import 'package:mywords/utils/logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;

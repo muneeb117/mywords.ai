@@ -20,7 +20,9 @@ class AuthRepository {
         data: {'email': email, 'password': password},
       );
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['token'] != null) {
-        return Right(response.data['token']);
+        final token = response.data['token'];
+        _dioClient.setToken(token);
+        return Right(token);
       }
       return Left(ApiError(
         errorMsg: 'Server Error, Please try again',

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 
 class OnboardingCubit extends Cubit<void> {
