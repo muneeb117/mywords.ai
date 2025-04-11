@@ -33,7 +33,7 @@ class CustomDropdownWithoutIcon extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: context.colorScheme.primary),
+          borderSide: BorderSide(color: context.colorScheme.secondary),
         ),
       ),
       icon: const SizedBox.shrink(),

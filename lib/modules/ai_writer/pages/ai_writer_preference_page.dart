@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/custom_dropdown_without_icon.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
@@ -30,88 +31,81 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(
-          'AI Writer',
-          style: context.textTheme.headlineSmall?.copyWith(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: 'AI Writer'),
       body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            StepIndicator(activeSteps: [1, 2]),
-            SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Select writing purpose *', style: context.textTheme.titleMedium),
-                  SizedBox(height: 8),
-                  CustomDropdownWithoutIcon(
-                    items: ['Essay', 'Letter', 'Email', 'Story', 'Article', 'Discussion Board/Question Response'],
-                    hint: 'Select Purpose',
-                    value: writingPurpose,
-                    onChanged: (value) {
-                      setState(() {
-                        writingPurpose = value;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 12),
-                  Text('Select a language *', style: context.textTheme.titleMedium),
-                  SizedBox(height: 8),
-                  CustomDropdownWithoutIcon(
-                    items: ['English'],
-                    hint: 'Select Language',
-                    value: selectedLanguage,
-                    onChanged: (val) {},
-                  ),
-                  SizedBox(height: 12),
-                  Text('Minimum Word Count *', style: context.textTheme.titleMedium),
-                  SizedBox(height: 8),
-                  InputField(
-                    hintText: 'Enter minimum word count',
-                    hasPrefixIcon: false,
-                    prefixIconPath: '',
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    controller: minWordCountController,
-                  ),
-                  SizedBox(height: 12),
-                  Text('Maximum Word Count *', style: context.textTheme.titleMedium),
-                  SizedBox(height: 8),
-                  InputField(
-                    hintText: 'Enter maximum word count',
-                    hasPrefixIcon: false,
-                    prefixIconPath: '',
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    controller: maxWordCountController,
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    'Minimum 350 words, maximum 500 words.',
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurface,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StepIndicator(activeSteps: [1, 2]),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Select writing purpose *', style: context.textTheme.titleMedium),
+                    SizedBox(height: 8),
+                    CustomDropdownWithoutIcon(
+                      items: ['Essay', 'Letter', 'Email', 'Story', 'Article', 'Discussion Board/Question Response'],
+                      hint: 'Select Purpose',
+                      value: writingPurpose,
+                      onChanged: (value) {
+                        setState(() {
+                          writingPurpose = value;
+                        });
+                      },
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                    SizedBox(height: 12),
+                    Text('Select a language *', style: context.textTheme.titleMedium),
+                    SizedBox(height: 8),
+                    CustomDropdownWithoutIcon(
+                      items: ['English'],
+                      hint: 'Select Language',
+                      value: selectedLanguage,
+                      onChanged: (val) {},
+                    ),
+                    SizedBox(height: 12),
+                    Text('Minimum Word Count *', style: context.textTheme.titleMedium),
+                    SizedBox(height: 8),
+                    InputField(
+                      hintText: 'Enter minimum word count',
+                      hasPrefixIcon: false,
+                      prefixIconPath: '',
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      controller: minWordCountController,
+                    ),
+                    SizedBox(height: 12),
+                    Text('Maximum Word Count *', style: context.textTheme.titleMedium),
+                    SizedBox(height: 8),
+                    InputField(
+                      hintText: 'Enter maximum word count',
+                      hasPrefixIcon: false,
+                      prefixIconPath: '',
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      controller: maxWordCountController,
+                    ),
+                    SizedBox(height: 12),
+                    Text(
+                      'Minimum 350 words, maximum 500 words.',
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.onSurface,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -127,7 +121,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                   reverseTransitionDuration: Duration.zero,
                 ),
               );
-            }else if(state.aiWriterStatus == AiWriterStatus.failed){
+            } else if (state.aiWriterStatus == AiWriterStatus.failed) {
               context.showSnackBar(state.errorMsg);
             }
           },

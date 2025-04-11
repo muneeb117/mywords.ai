@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:mywords/core/network/dio_client.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';

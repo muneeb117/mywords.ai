@@ -6,6 +6,7 @@ class AppColors {
   static const Color accent = Color(0xffCE4AEF);
   static const Color textPrimary = Color(0xFF150A3D);
   static const Color textSecondary = Color(0xFF616161);
+  static const Color grey = Color(0xFF9A9090);
   static const Color indicatorActive = Color(0xff601FBE);
   static const Color green = Color(0xff45C646);
   static const Color greenBg = Color(0xffECF9EC);

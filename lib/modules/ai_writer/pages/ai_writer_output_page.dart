@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/config/routes/route_manager.dart';
@@ -23,23 +24,14 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(
-          'AI Writer',
-          style: context.textTheme.headlineSmall?.copyWith(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          StepIndicator(activeSteps: [1, 2, 3]),
-          SizedBox(height: 16),
-          Flexible(
-            child: Container(
+      appBar: CustomAppBar(title: 'AI Writer'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            StepIndicator(activeSteps: [1, 2, 3]),
+            SizedBox(height: 16),
+            Container(
+                height: 250,
                 margin: EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -47,58 +39,58 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                     color: Color(0xffDADADA),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  child: BlocConsumer<AiWriterCubit, AiWriterState>(
-                    listener: (context, state) {
-                      // TODO: implement listener
-                    },
-                    builder: (context, state) {
-                      return SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
-                              child: Text(
-                                'Output',
-                                style: context.textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: context.colorScheme.onSurface,
-                                ),
-                              ),
+                child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                          child: Text(
+                            'Output',
+                            style: context.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: context.colorScheme.onSurface,
                             ),
-                            Divider(
-                              color: Color(0xffDADADA),
-                              height: 0,
-                            ),
-                            BlocBuilder<AiWriterCubit, AiWriterState>(
-                              builder: (context, state) {
-                                return Container(
-                                  width: double.infinity,
-                                  height: 300,
-                                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                                  child: SingleChildScrollView(
-                                      child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 16.0),
-                                    child: Text(
-                                      state.generatedText,
-                                      style: context.textTheme.titleMedium,
-                                    ),
-                                  )),
-                                  decoration: BoxDecoration(),
-                                );
-                              },
-                            ),
-                          ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
+                        Divider(
+                          color: Color(0xffDADADA),
+                          height: 0,
+                        ),
+                        Expanded(
+                          child: BlocBuilder<AiWriterCubit, AiWriterState>(
+                            builder: (context, state) {
+                              return Container(
+                                width: double.infinity,
+                                height: 300,
+                                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                child: SingleChildScrollView(
+                                  padding: EdgeInsets.only(top: 16),
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: Text(
+                                    state.generatedText,
+                                    style: context.textTheme.titleMedium,
+                                  ),
+                                )),
+                                decoration: BoxDecoration(),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 )),
-          ),
-          SizedBox(height: 16),
-          _InfoStaticWidget(),
-        ],
+            SizedBox(height: 16),
+            _InfoStaticWidget(),
+            SizedBox(height: 16),
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -154,19 +146,19 @@ class _InfoStaticWidget extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: ' by AI\n9/9 ',
-                            style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400, color: Color(0xffFC5A5A)),
+                            style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500, color: Color(0xffFC5A5A)),
                             children: [
                               TextSpan(
                                 text: 'sentences AI generated',
                                 style: context.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
                           )
                         ],
                       ),
-                      style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400),
+                      style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -192,8 +184,12 @@ class _InfoStaticWidget extends StatelessWidget {
                         SizedBox(width: 7),
                         Text(
                           'Human',
-                          style: context.textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w600, color: Color(0xff45C646), letterSpacing: 0, wordSpacing: 0),
+                          style: context.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff45C646),
+                            letterSpacing: 0,
+                            wordSpacing: 0,
+                          ),
                         ),
                         SizedBox(width: 15),
                         SvgPicture.asset('assets/images/svg/ic_likely_ai.svg'),
@@ -225,12 +221,12 @@ class _InfoStaticWidget extends StatelessWidget {
                           title: 'Content AI Scale',
                           assetPath: 'assets/images/svg/ic_human.svg',
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(width: 5),
                         AiServicesTile(
                           title: 'GPTZero',
                           assetPath: 'assets/images/svg/ic_gpt_loader.svg',
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(width: 5),
                         AiServicesTile(
                           title: 'ZERO GPT',
                           assetPath: 'assets/images/svg/ic_gpt_loader.svg',
@@ -245,12 +241,12 @@ class _InfoStaticWidget extends StatelessWidget {
                           title: 'OPENAI',
                           assetPath: 'assets/images/svg/ic_gpt_loader.svg',
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(width: 5),
                         AiServicesTile(
                           title: 'Turnitin',
                           assetPath: 'assets/images/svg/ic_human.svg',
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(width: 5),
                         AiServicesTile(
                           title: 'CopyLeaks',
                           assetPath: 'assets/images/svg/ic_human.svg',
@@ -291,12 +287,10 @@ class AiServicesTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(assetPath),
-          SizedBox(width: 8),
+          SizedBox(width: 6),
           Text(
             title,
-            style: context.textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11),
           ),
         ],
       ),

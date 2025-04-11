@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
@@ -17,17 +18,7 @@ class SettingsPage extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.white,
-              surfaceTintColor: Colors.transparent,
-              title: Text(
-                'Settings',
-                style: context.textTheme.headlineSmall?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
+            appBar: CustomAppBar(title: 'Settings'),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -46,7 +37,7 @@ class SettingsPage extends StatelessWidget {
                         return PrimaryButton.filled(
                           backgroundColor: AppColors.darkOrangeBg,
                           textColor: AppColors.darkOrange,
-                          indicatorColor: AppColors.darkOrange,
+                          indicatorColor: AppColors.primary,
                           fontWeight: FontWeight.w700,
                           enableShrinkAnimation: false,
                           isLoading: state.logoutStatus == LogoutStatus.loading,

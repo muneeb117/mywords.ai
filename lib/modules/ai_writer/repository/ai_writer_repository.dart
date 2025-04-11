@@ -5,7 +5,6 @@ import 'package:mywords/constants/api_endpoints.dart';
 import 'package:mywords/core/exceptions/api_error.dart';
 import 'package:mywords/core/exceptions/error_handler.dart';
 import 'package:mywords/core/network/dio_client.dart';
-import 'package:mywords/modules/ai_writer/models/ai_writer_input.dart';
 
 class AiWriterRepository {
   final DioClient _dioClient;

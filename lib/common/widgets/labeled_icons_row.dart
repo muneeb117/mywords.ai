@@ -21,28 +21,34 @@ class LabeledIconsRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
       child: Row(
         children: [
-          LabeledIconButton(
-            onPressed: onSampleTextCallback,
-            text: 'Sample Text',
-            assetImagePath: 'assets/images/svg/ic_sample_text.svg',
-            textColor: AppColors.orange,
-            bgColor: AppColors.orangeBg,
+          Expanded(
+            child: LabeledIconButton(
+              onPressed: onSampleTextCallback,
+              text: 'Sample Text',
+              assetImagePath: 'assets/images/svg/ic_sample_text.svg',
+              textColor: AppColors.orange,
+              bgColor: AppColors.orangeBg,
+            ),
           ),
-          Spacer(),
-          LabeledIconButton(
-            onPressed: onUploadFileCallBack,
-            text: 'Upload File',
-            assetImagePath: 'assets/images/svg/ic_upload_file.svg',
-            textColor: AppColors.purple,
-            bgColor: AppColors.purpleBg,
+          SizedBox(width: 7),
+          Expanded(
+            child: LabeledIconButton(
+              onPressed: onUploadFileCallBack,
+              text: 'Upload File',
+              assetImagePath: 'assets/images/svg/ic_upload_file.svg',
+              textColor: AppColors.purple,
+              bgColor: AppColors.purpleBg,
+            ),
           ),
-          Spacer(),
-          LabeledIconButton(
-            onPressed: onPasteTextCallBack,
-            text: 'Paste Text',
-            assetImagePath: 'assets/images/svg/ic_paste_text.svg',
-            textColor: AppColors.green,
-            bgColor: AppColors.greenBg,
+          SizedBox(width: 7),
+          Expanded(
+            child: LabeledIconButton(
+              onPressed: onPasteTextCallBack,
+              text: 'Paste Text',
+              assetImagePath: 'assets/images/svg/ic_paste_text.svg',
+              textColor: AppColors.green,
+              bgColor: AppColors.greenBg,
+            ),
           ),
         ],
       ),
@@ -72,7 +78,7 @@ class LabeledIconButton extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: bgColor,
@@ -80,12 +86,18 @@ class LabeledIconButton extends StatelessWidget {
               color: Color(0xffDADADA),
             )),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(assetImagePath),
             SizedBox(width: 8),
             Text(
               text,
-              style: context.textTheme.titleMedium?.copyWith(color: textColor, fontWeight: FontWeight.w500, fontSize: 13, letterSpacing: 0),
+              style: context.textTheme.titleMedium?.copyWith(
+                color: textColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                letterSpacing: 0,
+              ),
             ),
           ],
         ),

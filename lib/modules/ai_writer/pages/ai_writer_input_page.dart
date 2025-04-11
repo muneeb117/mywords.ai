@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
@@ -32,71 +33,59 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-        title: Text(
-          'AI Writer',
-          style: context.textTheme.headlineSmall?.copyWith(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: 'AI Writer'),
+
       body: Column(
         children: [
           StepIndicator(activeSteps: [1]),
           SizedBox(height: 16),
           Flexible(
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Color(0xffDADADA),
+            child: SingleChildScrollView(
+              child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Color(0xffDADADA),
+                    ),
                   ),
-                ),
-                child: SingleChildScrollView(
                   child: BlocConsumer<AiWriterCubit, AiWriterState>(
                     listener: (context, state) {
                       // TODO: implement listener
                     },
                     builder: (context, state) {
-                      return SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _TextFieldHeader(wordCount: state.wordCount),
-                            AiTextField(
-                              onChanged: (nextValue) {
-                                context.read<AiWriterCubit>().updateText(nextValue);
-                              },
-                              textEditingController: aiWriterController,
-                            ),
-                            LabeledIconsRow(
-                              onSampleTextCallback: () {
-                                final sampleText = AiSampleText.samplePrompt;
-                                _putTextOnBoard(sampleText);
-                              },
-                              onUploadFileCallBack: () {
-
-                              },
-                              onPasteTextCallBack: () async {
-                                final clipboardData = await Clipboard.getData('text/plain');
-                                final text = clipboardData?.text;
-                                if (text?.isNotEmpty ?? false) {
-                                  _putTextOnBoard(text!);
-                                }
-                              },
-                            ),
-                            SizedBox(height: 14),
-                          ],
-                        ),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _TextFieldHeader(wordCount: state.wordCount),
+                          AiTextField(
+                            onChanged: (nextValue) {
+                              context.read<AiWriterCubit>().updateText(nextValue);
+                            },
+                            textEditingController: aiWriterController,
+                          ),
+                          LabeledIconsRow(
+                            onSampleTextCallback: () {
+                              final sampleText = AiSampleText.samplePrompt;
+                              _putTextOnBoard(sampleText);
+                            },
+                            onUploadFileCallBack: () {},
+                            onPasteTextCallBack: () async {
+                              final clipboardData = await Clipboard.getData('text/plain');
+                              final text = clipboardData?.text;
+                              if (text?.isNotEmpty ?? false) {
+                                _putTextOnBoard(text!);
+                              }
+                            },
+                          ),
+                          // SizedBox(height: 14),
+                        ],
                       );
                     },
-                  ),
-                )),
-          )
+                  )),
+            ),
+          ),
+          SizedBox(height: 20),
         ],
       ),
       bottomNavigationBar: Container(
@@ -105,7 +94,7 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
         child: PrimaryButton.filled(
           onTap: () {
             final text = aiWriterController.text.trim();
-            if(text.isEmpty){
+            if (text.isEmpty) {
               context.showSnackBar('Input field is required');
               return;
             }
@@ -124,7 +113,6 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
           fontWeight: FontWeight.w700,
         ),
       ),
-
     );
   }
 }
