@@ -16,6 +16,7 @@ class InputField extends StatelessWidget {
   final String? suffixIconPath;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
+  final TextCapitalization textCapitalization;
   final bool hasPrefixIcon;
   final bool obscureText;
   final bool autocorrect;
@@ -41,6 +42,7 @@ class InputField extends StatelessWidget {
     this.enableSuggestions = true,
     this.hasPrefixIcon = true,
     this.inputFormatters,
+    this.textCapitalization = TextCapitalization.none,
   })  : inputFieldType = InputFieldType.regular,
         super(key: key);
 
@@ -62,6 +64,7 @@ class InputField extends StatelessWidget {
         obscureText = false,
         autocorrect = false,
         enableSuggestions = true,
+        textCapitalization = TextCapitalization.none,
         inputFieldType = InputFieldType.email,
         super(key: key);
 
@@ -83,6 +86,7 @@ class InputField extends StatelessWidget {
         keyboardType = TextInputType.visiblePassword,
         autocorrect = false,
         enableSuggestions = false,
+        textCapitalization = TextCapitalization.none,
         inputFieldType = InputFieldType.password,
         super(key: key);
 
@@ -94,6 +98,7 @@ class InputField extends StatelessWidget {
       autofocus: autofocus,
       autocorrect: autocorrect,
       enableSuggestions: enableSuggestions,
+      textCapitalization: textCapitalization,
       validator: validator,
       inputFormatters: inputFormatters,
       obscureText: obscureText,

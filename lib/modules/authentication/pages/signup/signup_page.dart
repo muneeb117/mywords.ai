@@ -68,6 +68,8 @@ class _SignupPageState extends State<SignupPage> {
                             hasPrefixIcon: false,
                             controller: fullNameController,
                             keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            textCapitalization: TextCapitalization.words,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Name is required';
@@ -152,6 +154,7 @@ class _SignupPageState extends State<SignupPage> {
                                 onTap: () {
                                   bool isFormValidated = _formKey.currentState?.validate() == true;
                                   if (isFormValidated) {
+                                    context.closeKeyboard();
                                     final fullName = fullNameController.text;
                                     final email = emailController.text.toLowerCase().trim();
                                     final password = passwordTextController.text.trim();

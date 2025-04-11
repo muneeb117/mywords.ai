@@ -118,6 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                               // If left side evaluates to null, and null == true is false
                               bool isFormValidated = _formKey.currentState?.validate() == true;
                               if (isFormValidated) {
+                                context.closeKeyboard();
                                 final email = emailController.text.toLowerCase().trim();
                                 final password = passwordController.text.trim();
                                 context.read<LoginCubit>().login(email, password);
