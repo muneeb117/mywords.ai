@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ class ApiError implements Exception {
   factory ApiError.fromDioException(DioException dioException) {
     final _log = logger(ApiError);
     if (dioException.response != null) {
-      _log.e('ApiError.fromDioException: ${dioException.response?.data}');
+      log('ApiError.fromDioException: ${dioException.response?.data}');
       switch (dioException.response?.statusCode) {
         case 401:
           return ApiError(

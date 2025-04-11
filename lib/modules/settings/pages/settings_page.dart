@@ -48,7 +48,7 @@ class SettingsPage extends StatelessWidget {
                           textColor: AppColors.darkOrange,
                           indicatorColor: AppColors.darkOrange,
                           fontWeight: FontWeight.w700,
-                          enableShrinkAnimation: true,
+                          enableShrinkAnimation: false,
                           isLoading: state.logoutStatus == LogoutStatus.loading,
                           iconPath: 'assets/images/svg/ic_logout.svg',
                           onTap: () {

@@ -15,9 +15,7 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => AiWriterCubit(
-            aiWriterRepository: sl(),
-          ),
+          create: (_) => AiWriterCubit(aiWriterRepository: sl()),
         ),
       ],
       child: const MyWordsApp(),

@@ -113,7 +113,6 @@ class _LoginPageState extends State<LoginPage> {
                         builder: (context, state) {
                           return PrimaryButton.gradient(
                             title: 'Sign in',
-                            enableShrinkAnimation: true,
                             isLoading: state.loginStatus == LoginStatus.loading,
                             onTap: () {
                               // If left side evaluates to null, and null == true is false

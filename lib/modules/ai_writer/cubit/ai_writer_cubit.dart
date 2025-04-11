@@ -53,17 +53,6 @@ class AiWriterCubit extends Cubit<AiWriterState> {
     };
   }
 
-  // curl -X POST https://your-api-endpoint \
-  //   -H "Content-Type: application/json" \
-  //   -d '{
-  //     "text": "The impact of AI on education",
-  //     "token": "your_jwt_token",
-  //     "writingPurpose": "essay",
-  //     "writingLanguage": "English",
-  //     "minWordLimit": 200,
-  //     "maxWordLimit": 300
-  //   }'
-
   void generateOutput() async {
     emit(state.copyWith(aiWriterStatus: AiWriterStatus.loading));
     final result = await _aiWriterRepository.generate(data: getMap());
