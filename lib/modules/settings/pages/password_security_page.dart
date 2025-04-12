@@ -21,9 +21,11 @@ class PasswordSecurityPage extends StatelessWidget {
             SizedBox(height: 16),
             Text('Your password needs to be at least 8 characters long.\nInclude some words and phrases to make it even more safer'),
             SizedBox(height: 16),
-            InputField.password(hintText: 'New password'),
+            InputField.password(hintText: 'New Password'),
             SizedBox(height: 16),
-            InputField.password(hintText: 'Confirm your password'),
+            InputField.password(
+              hintText: 'Confirm Your Password',
+            ),
           ],
         ),
       ),

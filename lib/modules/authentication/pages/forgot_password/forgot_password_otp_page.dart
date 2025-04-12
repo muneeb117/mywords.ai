@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:mywords/common/components/custom_appbar.dart';
+import 'package:mywords/common/components/primary_button.dart';
+import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:pinput/pinput.dart';
+
+class ForgotPasswordOtpPage extends StatefulWidget {
+  const ForgotPasswordOtpPage({super.key});
+
+  @override
+  State<ForgotPasswordOtpPage> createState() => _ForgotPasswordOtpPageState();
+}
+
+class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
+  TextEditingController otpController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(title: 'Enter OTP Code'),
+      body: Container(
+        margin: EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Check your email inbox or spam folder for a one-time passcode (OTP). Enter the code below.",
+                style: context.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(height: 26),
+              Pinput(
+                defaultPinTheme: defaultPinTheme,
+                focusedPinTheme: focusedPinTheme,
+                controller: otpController,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                onCompleted: (pin) => print(pin),
+              ),
+              SizedBox(height: 26),
+              Text("You can resend the code in 56 seconds", style: context.textTheme.bodyMedium),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text(
+                  "Resend",
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              PrimaryButton.filled(
+                title: 'Confirm',
+                onTap: () {
+                  final otp = otpController.text.trim();
+                  if (otp.isEmpty) {
+                    context.showSnackBar('Otp is required');
+                    return;
+                  }
+                  context.closeKeyboard();
+                  Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordReset);
+                },
+                fontWeight: FontWeight.bold,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+final defaultPinTheme = PinTheme(
+  width: 75,
+  height: 56,
+  textStyle: TextStyle(
+    fontSize: 16,
+    color: Color.fromRGBO(30, 60, 87, 1),
+    fontWeight: FontWeight.w600,
+  ),
+  decoration: BoxDecoration(
+    border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
+    borderRadius: BorderRadius.circular(10),
+  ),
+);
+
+final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+  border: Border.all(color: AppColors.accent),
+  borderRadius: BorderRadius.circular(10),
+);

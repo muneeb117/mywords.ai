@@ -99,7 +99,9 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: 8),
                       RememberMeAndForgotPasswordTile(
                         onRememberMeTap: () {},
-                        onForgotPasswordTap: () {},
+                        onForgotPasswordTap: () {
+                          Navigator.pushNamed(context, RouteManager.forgotPasswordEmail);
+                        },
                       ),
                       SizedBox(height: 8),
                       BlocConsumer<LoginCubit, LoginState>(

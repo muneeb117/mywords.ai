@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_page.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_input_page.dart';
+import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_email_page.dart';
+import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_otp_page.dart';
+import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_reset_page.dart';
+import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_success_page.dart';
 import 'package:mywords/modules/authentication/pages/login_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/enter_otp_signup_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/signup_confirmation_page.dart';
@@ -31,6 +35,10 @@ class RouteManager {
   static const String setting = '/setting';
   static const String accountSettings = '/accountSettings';
   static const String passwordSecurity = '/passwordSecurity';
+  static const String forgotPasswordEmail = '/forgotPasswordEmail';
+  static const String forgotPasswordOtp = '/forgotPasswordOtp';
+  static const String forgotPasswordReset = '/forgotPasswordReset';
+  static const String forgotPasswordSuccess = '/forgotPasswordSuccess';
 
   // Route generator
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -41,6 +49,14 @@ class RouteManager {
         return CupertinoPageRoute(builder: (_) => OnboardingPage());
       case login:
         return CupertinoPageRoute(builder: (_) => const LoginPage());
+      case forgotPasswordEmail:
+        return CupertinoPageRoute(builder: (_) => const ForgotPasswordEmailPage());
+      case forgotPasswordOtp:
+        return CupertinoPageRoute(builder: (_) => const ForgotPasswordOtpPage());
+      case forgotPasswordReset:
+        return CupertinoPageRoute(builder: (_) => const ForgotPasswordResetPage());
+      case forgotPasswordSuccess:
+        return CupertinoPageRoute(builder: (_) => const ForgotPasswordSuccessPage());
       case signup:
         return CupertinoPageRoute(builder: (_) => const SignupPage());
       case twoFactorSignup:
