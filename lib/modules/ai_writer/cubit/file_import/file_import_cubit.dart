@@ -31,8 +31,10 @@ class FileImportCubit extends Cubit<FileImportState> {
       String fileName = file.path.toLowerCase();
       String extractedText = '';
 
-      if (fileName.endsWith('.pdf') || fileName.endsWith('.docx')) {
+      if (fileName.endsWith('.pdf')) {
         extractedText = await _fileRepository.extractTextFromPdf(file);
+      } else if (fileName.endsWith('.docx')) {
+        extractedText = await _fileRepository.extractTextFromDocFile(file);
       } else {
         extractedText = 'Unsupported file format';
       }

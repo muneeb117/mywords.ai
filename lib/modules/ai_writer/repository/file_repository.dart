@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:docx_to_text/docx_to_text.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
@@ -39,11 +40,28 @@ class FileRepository {
 
   Future<String> extractTextFromPdf(File file) async {
     try {
-      PdfDocument document = PdfDocument(inputBytes: await file.readAsBytes());
-      PdfTextExtractor extractor = PdfTextExtractor(document);
-      String rawText = extractor.extractText();
+      final bytes = await file.readAsBytes();
+      final document = PdfDocument(inputBytes: bytes);
+      final extractor = PdfTextExtractor(document);
+
+      StringBuffer fullText = StringBuffer();
+
+      for (int i = 0; i < document.pages.count; i++) {
+        String pageText = extractor.extractText(startPageIndex: i, endPageIndex: i);
+        fullText.writeln(pageText);
+      }
+
       document.dispose();
-      return normalizeExtractedText(rawText);
+      return normalizeExtractedText(fullText.toString());
+    } catch (e) {
+      return 'Error extracting text from PDF: ${e.toString()}';
+    }
+  }
+  Future<String> extractTextFromDocFile(File file) async {
+    try {
+      final bytes = await file.readAsBytes();
+      final text = docxToText(bytes);
+      return text;
     } catch (e) {
       return 'Error extracting text from PDF: ${e.toString()}';
     }
