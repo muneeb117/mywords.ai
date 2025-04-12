@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:mywords/config/flavors/flavors.dart';
@@ -8,11 +11,12 @@ class DioClient extends DioForNative {
   String? _authToken;
 
   void setToken(String token) {
-    _authToken = token;
+    this._authToken = token;
+    log('Token set :: $token');
   }
 
   void clearToken() {
-    _authToken = null;
+    this._authToken = null;
   }
 
   DioClient({required Flavors flavors}) : _flavors = flavors {

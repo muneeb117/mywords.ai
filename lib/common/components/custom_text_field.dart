@@ -112,7 +112,7 @@ class InputField extends StatelessWidget {
         hintStyle: TextStyle(
           color: Color(0xff9E9E9E),
           fontSize: 14,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.w500,
         ),
         prefixIcon: hasPrefixIcon
             ? Padding(
@@ -141,14 +141,14 @@ class InputField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: Color(0xffEDEDED),
+            color: Color(0xffEAECF0),
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: Color(0xffEDEDED),
+            color: Color(0xffEAECF0),
             width: 1,
           ),
         ),

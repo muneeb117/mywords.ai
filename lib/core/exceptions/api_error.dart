@@ -14,9 +14,10 @@ class ApiError implements Exception {
   });
 
   factory ApiError.fromDioException(DioException dioException) {
+    print('dio exception is :: ${dioException}');
     final _log = logger(ApiError);
     if (dioException.response != null) {
-      log('ApiError.fromDioException: ${dioException.response?.data}');
+      log('ApiError.fromDioException: ${dioException.response}');
       switch (dioException.response?.statusCode) {
         case 401:
           return ApiError(

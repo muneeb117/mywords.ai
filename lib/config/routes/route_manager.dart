@@ -10,6 +10,8 @@ import 'package:mywords/modules/authentication/pages/signup/signup_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/two_factor_signup_page.dart';
 import 'package:mywords/modules/home/pages/home_page.dart';
 import 'package:mywords/modules/onboarding/pages/onboarding_page.dart';
+import 'package:mywords/modules/settings/pages/account_settings_page.dart';
+import 'package:mywords/modules/settings/pages/password_security_page.dart';
 import 'package:mywords/modules/settings/pages/settings_page.dart';
 import 'package:mywords/modules/startup/pages/splash_page.dart';
 
@@ -27,6 +29,8 @@ class RouteManager {
   static const String humanizer = '/humanizer';
   static const String detector = '/detector';
   static const String setting = '/setting';
+  static const String accountSettings = '/accountSettings';
+  static const String passwordSecurity = '/passwordSecurity';
 
   // Route generator
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -49,6 +53,10 @@ class RouteManager {
         return CupertinoPageRoute(builder: (_) => const HomePage());
       case setting:
         return CupertinoPageRoute(builder: (_) => const SettingsPage());
+      case accountSettings:
+        return CupertinoPageRoute(builder: (_) => const AccountSettingsPage());
+      case passwordSecurity:
+        return CupertinoPageRoute(builder: (_) => const PasswordSecurityPage());
 
       /// The [preference] and [output] ai-writer routes are being called with [PageRouteBuilder]
       case aiWriterInput:

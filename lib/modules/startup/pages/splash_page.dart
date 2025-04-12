@@ -11,7 +11,10 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SplashCubit(sessionRepository: sl())..init(),
+      create: (context) => SplashCubit(
+        sessionRepository: sl(),
+        dioClient: sl(),
+      )..init(),
       child: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state is ShowLogin) {

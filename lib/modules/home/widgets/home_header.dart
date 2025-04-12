@@ -35,7 +35,7 @@ class HomeHeader extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 4.0),
-              child: SvgPicture.asset('assets/images/svg/ic_settings.svg'),
+              child: SvgPicture.asset('assets/images/svg/ic_settings_nav.svg'),
             ),
           )
         ],
