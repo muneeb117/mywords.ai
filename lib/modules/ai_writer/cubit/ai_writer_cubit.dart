@@ -80,4 +80,16 @@ class AiWriterCubit extends Cubit<AiWriterState> {
   int countWords(String text) {
     return text.trim().isEmpty ? 0 : text.trim().split(RegExp(r'\s+')).length;
   }
+
+  void reset() {
+    // Reset internal fields
+    _text = '';
+    _writingPurpose = '';
+    _writingLanguage = '';
+    _minWordLimit = 0;
+    _maxWordLimit = 0;
+
+    // Reset state
+    emit(AiWriterState.initial());
+  }
 }
