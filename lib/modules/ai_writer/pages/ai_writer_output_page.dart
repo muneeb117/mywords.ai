@@ -5,7 +5,6 @@ import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/config/routes/route_manager.dart';
-import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
@@ -41,7 +40,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                 ),
                 child: BlocConsumer<AiWriterCubit, AiWriterState>(
                   listener: (context, state) {
-                    // TODO: implement listener
+                    
                   },
                   builder: (context, state) {
                     return Column(
@@ -72,7 +71,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                                   padding: EdgeInsets.only(top: 16),
                                     child: Padding(
                                   padding: const EdgeInsets.only(bottom: 16.0),
-                                  child: Text(
+                                  child: SelectableText(
                                     state.generatedText,
                                     style: context.textTheme.titleMedium,
                                   ),
@@ -122,7 +121,7 @@ class _InfoStaticWidget extends StatelessWidget {
       ),
       child: BlocConsumer<AiWriterCubit, AiWriterState>(
         listener: (context, state) {
-          // TODO: implement listener
+          
         },
         builder: (context, state) {
           return Column(

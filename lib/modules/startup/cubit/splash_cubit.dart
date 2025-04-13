@@ -19,12 +19,14 @@ class SplashCubit extends Cubit<SplashState> {
 
     final bool isNewUser = _sessionRepository.checkIfNewUser();
     final bool isUserLoggedIn = await _sessionRepository.isUserLoggedIn();
-    final String token = _sessionRepository.getToken() ?? '';
 
     if (isNewUser) {
       emit(ShowOnboarding());
     } else if (isUserLoggedIn) {
+      final String token = _sessionRepository.getToken() ?? '';
+      await Future.delayed(Duration(milliseconds: 50));
       _dioClient.setToken(token);
+      await Future.delayed(Duration(milliseconds: 50));
       emit(ShowHome());
     } else {
       emit(ShowLogin());

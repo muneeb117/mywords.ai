@@ -23,7 +23,7 @@ Future<void> initDependencies(AppEnv appEnv) async {
   );
 
   // Register network layer
-  sl.registerLazySingleton<DioClient>(() => DioClient(flavors: sl()));
+  sl.registerSingleton<DioClient>(DioClient(flavors: sl()));
 
   sl.registerLazySingleton<SessionRepository>(() => SessionRepository(storageService: sl()));
   sl.registerLazySingleton<AuthRepository>(() => AuthRepository(dioClient: sl()));

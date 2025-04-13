@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -6,18 +5,8 @@ import 'package:dio/io.dart';
 import 'package:mywords/config/flavors/flavors.dart';
 
 class DioClient extends DioForNative {
-  Flavors _flavors;
-
+  final Flavors _flavors;
   String? _authToken;
-
-  void setToken(String token) {
-    this._authToken = token;
-    log('Token set :: $token');
-  }
-
-  void clearToken() {
-    this._authToken = null;
-  }
 
   DioClient({required Flavors flavors}) : _flavors = flavors {
     options = BaseOptions(
@@ -27,21 +16,42 @@ class DioClient extends DioForNative {
 
     if (_flavors.config.isDebug) {
       interceptors.add(LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        request: false,
-        requestHeader: false
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          request: false,
+          requestHeader: true
       ));
     }
 
     interceptors.add(
-      InterceptorsWrapper(onRequest: (options, handler) {
-        if (_authToken != null && _authToken != '') {
-          options.headers.putIfAbsent('Authorization', () => 'Bearer $_authToken');
-        }
-        return handler.next(options);
-      }),
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          if (_authToken != null && _authToken!.isNotEmpty) {
+            options.headers.putIfAbsent('Authorization', () => 'Bearer $_authToken');
+            log('Adding token to request: $_authToken');
+          } else {
+            log('No token available for request to: ${options.path}');
+          }
+          return handler.next(options);
+        },
+        onError: (DioException e, handler) {
+          log('DioError: ${e.message} for ${e.requestOptions.path}');
+          return handler.next(e);
+        },
+      ),
     );
   }
+
+  void setToken(String token) {
+    _authToken = token;
+    log('Token set in DioClient: $token');
+  }
+
+  void clearToken() {
+    _authToken = null;
+    log('Token cleared in DioClient');
+  }
+
+  String? getToken() => _authToken;
 }

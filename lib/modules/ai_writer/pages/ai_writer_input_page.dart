@@ -1,7 +1,3 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,16 +65,20 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
                           _TextFieldHeader(wordCount: state.wordCount),
                           AiTextField(
                             onChanged: (nextValue) {
-                              context.read<AiWriterCubit>().updateText(nextValue);
+                              context
+                                  .read<AiWriterCubit>()
+                                  .updateText(nextValue);
                             },
                             textEditingController: aiWriterController,
                           ),
                           BlocConsumer<FileImportCubit, FileImportState>(
                             listener: (context, state) {
                               print('file state is :: $state');
-                              if (state.fileImportStatus == FileImportStatus.success) {
+                              if (state.fileImportStatus ==
+                                  FileImportStatus.success) {
                                 _putTextOnBoard(state.extractedText);
-                              } else if (state.fileImportStatus == FileImportStatus.failure) {
+                              } else if (state.fileImportStatus ==
+                                  FileImportStatus.failure) {
                                 context.showSnackBar(state.errorMsg);
                               }
                             },
@@ -97,7 +97,8 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
 
                                 /// On paste text
                                 onPasteTextCallBack: () async {
-                                  final clipboardData = await Clipboard.getData('text/plain');
+                                  final clipboardData =
+                                      await Clipboard.getData('text/plain');
                                   final text = clipboardData?.text;
                                   if (text?.isNotEmpty ?? false) {
                                     _putTextOnBoard(text!);
@@ -116,30 +117,41 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
           SizedBox(height: 20),
         ],
       ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-        child: PrimaryButton.filled(
-          onTap: () {
-            final text = aiWriterController.text.trim();
-            if (text.isEmpty) {
-              context.showSnackBar('Input field is required');
-              return;
-            }
-            context.read<AiWriterCubit>().setText(text);
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => AiWriterPreferencePage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ),
-            );
-          },
-          title: 'Continue',
-          textColor: context.colorScheme.primary,
-          backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-          fontWeight: FontWeight.w700,
-        ),
+      bottomNavigationBar: BlocBuilder<AiWriterCubit, AiWriterState>(
+        builder: (context, state) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding:
+                EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+            child: PrimaryButton.filled(
+              onTap: () {
+                final text = aiWriterController.text.trim();
+                if (text.isEmpty) {
+                  context.showSnackBar('Input field is required');
+                  return;
+                }
+                if (state.wordCount > 800) {
+                  context.showSnackBar('You have exceeded the maximum word limit of 800. Please shorten your text.');
+                  return;
+                }
+
+                context.read<AiWriterCubit>().setText(text);
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        AiWriterPreferencePage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              },
+              title: 'Continue',
+              textColor: context.colorScheme.primary,
+              backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+              fontWeight: FontWeight.w700,
+            ),
+          );
+        },
       ),
     );
   }
@@ -161,23 +173,31 @@ class _TextFieldHeader extends StatelessWidget {
             children: [
               Text(
                 'Input',
-                style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
+                style: context.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: context.colorScheme.onSurface),
               ),
               Spacer(),
               Text.rich(
-                TextSpan(text: '${wordCount}', style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange), children: [
-                  TextSpan(
-                    text: '/800 Words',
-                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
-                  )
-                ]),
+                TextSpan(
+                    text: '${wordCount}',
+                    style: context.textTheme.bodySmall
+                        ?.copyWith(color: AppColors.orange),
+                    children: [
+                      TextSpan(
+                        text: '/800 Words',
+                        style: context.textTheme.bodySmall
+                            ?.copyWith(color: context.colorScheme.onSurface),
+                      )
+                    ]),
               ),
             ],
           ),
           SizedBox(height: 14),
           Text(
             'Please briefly describe your prompt *',
-            style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),
+            style: context.textTheme.bodySmall
+                ?.copyWith(color: context.colorScheme.onSurface, height: 1.5),
           ),
         ],
       ),

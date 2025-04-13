@@ -6,7 +6,6 @@ import 'package:mywords/common/components/custom_dropdown_without_icon.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
-import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_output_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
