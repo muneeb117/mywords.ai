@@ -11,7 +11,6 @@ import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
-import 'package:mywords/modules/ai_writer/pages/ai_writer_preference_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiDetectorInputPage extends StatefulWidget {

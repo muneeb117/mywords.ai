@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
-import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';

@@ -6,13 +6,11 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
-import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
-import 'package:mywords/modules/ai_writer/pages/ai_writer_preference_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiHumanizerInputPage extends StatefulWidget {

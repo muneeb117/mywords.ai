@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_input_page.dart';
-import 'package:mywords/modules/ai_detector/pages/ai_detector_output_page.dart';
-import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_input_page.dart';
-import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_input_page.dart';
 import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_email_page.dart';
 import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_otp_page.dart';
