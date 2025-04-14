@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
+import 'package:mywords/modules/ai_detector/pages/ai_detector_input_page.dart';
+import 'package:mywords/modules/ai_detector/pages/ai_detector_output_page.dart';
+import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_input_page.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_input_page.dart';
@@ -31,9 +33,9 @@ class RouteManager {
   static const String signupConfirmation = '/signupConfirmation';
   static const String home = '/home';
   static const String aiWriterInput = '/aiWriterInput';
-  static const String humanizerInput = '/humanizerInput';
-  static const String humanizerOutput = '/humanizerOutput';
-  static const String detector = '/detector';
+  static const String aiHumanizerInput = '/aiHumanizerInput';
+  static const String aiDetectorInput = '/aiDetectorInput';
+  static const String detectorPreference = '/detectorPreference';
   static const String setting = '/setting';
   static const String accountSettings = '/accountSettings';
   static const String passwordSecurity = '/passwordSecurity';
@@ -79,12 +81,10 @@ class RouteManager {
       /// The [preference] and [output] ai-writer routes are being called with [PageRouteBuilder]
       case aiWriterInput:
         return CupertinoPageRoute(builder: (_) => const AiWriterInputPage());
-      case humanizerInput:
+      case aiHumanizerInput:
         return CupertinoPageRoute(builder: (_) => const AiHumanizerInputPage());
-      case humanizerOutput:
-        return CupertinoPageRoute(builder: (_) => const AiHumanizerOutputPage());
-      case detector:
-        return CupertinoPageRoute(builder: (_) => const AiDetectorPage());
+      case aiDetectorInput:
+        return CupertinoPageRoute(builder: (_) => const AiDetectorInputPage());
       default:
         return _errorRoute();
     }
