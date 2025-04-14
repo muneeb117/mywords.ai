@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
           SizedBox(height: 10),
           HomeToolWidget(
             onTap: () {
-              Navigator.pushNamed(context, RouteManager.humanizer);
+              Navigator.pushNamed(context, RouteManager.humanizerInput);
             },
             title: 'AI Humanizer',
             description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',

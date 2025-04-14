@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_page.dart';
-import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_page.dart';
+import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_input_page.dart';
+import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_input_page.dart';
 import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_email_page.dart';
 import 'package:mywords/modules/authentication/pages/forgot_password/forgot_password_otp_page.dart';
@@ -30,7 +31,8 @@ class RouteManager {
   static const String signupConfirmation = '/signupConfirmation';
   static const String home = '/home';
   static const String aiWriterInput = '/aiWriterInput';
-  static const String humanizer = '/humanizer';
+  static const String humanizerInput = '/humanizerInput';
+  static const String humanizerOutput = '/humanizerOutput';
   static const String detector = '/detector';
   static const String setting = '/setting';
   static const String accountSettings = '/accountSettings';
@@ -77,8 +79,10 @@ class RouteManager {
       /// The [preference] and [output] ai-writer routes are being called with [PageRouteBuilder]
       case aiWriterInput:
         return CupertinoPageRoute(builder: (_) => const AiWriterInputPage());
-      case humanizer:
-        return CupertinoPageRoute(builder: (_) => const AiHumanizerPage());
+      case humanizerInput:
+        return CupertinoPageRoute(builder: (_) => const AiHumanizerInputPage());
+      case humanizerOutput:
+        return CupertinoPageRoute(builder: (_) => const AiHumanizerOutputPage());
       case detector:
         return CupertinoPageRoute(builder: (_) => const AiDetectorPage());
       default:
