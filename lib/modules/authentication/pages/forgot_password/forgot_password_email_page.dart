@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 import 'package:mywords/utils/extensions/email_validator.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
@@ -16,6 +18,12 @@ class ForgotPasswordEmailPage extends StatefulWidget {
 class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
   TextEditingController emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ForgotPasswordCubit>().resetState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +59,32 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
                   },
                 ),
                 SizedBox(height: 20),
-                PrimaryButton.filled(
-                  title: 'Send OTP Code',
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordOtp);
-                    // If left side evaluates to null, and null == true is false
-                    bool isFormValidated = _formKey.currentState?.validate() == true;
-                    if (isFormValidated) {
-                      context.closeKeyboard();
-                      final email = emailController.text.toLowerCase().trim();
+                BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                  listener: (context, state) {
+                    if (state.step == ForgotPasswordStep.emailInput) {
+                      if (state.status == ForgotPasswordStatus.success) {
+                        Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordOtp);
+                      } else if (state.status == ForgotPasswordStatus.failure) {
+                        context.showSnackBar(state.errorMessage);
+                      }
                     }
                   },
-                  fontWeight: FontWeight.bold,
+                  builder: (context, state) {
+                    return PrimaryButton.filled(
+                      isLoading: state.step == ForgotPasswordStep.emailInput && state.status == ForgotPasswordStatus.loading,
+                      title: 'Send OTP Code',
+                      onTap: () {
+                        // If left side evaluates to null, and null == true is false
+                        bool isFormValidated = _formKey.currentState?.validate() == true;
+                        if (isFormValidated) {
+                          context.closeKeyboard();
+                          final email = emailController.text.toLowerCase().trim();
+                          context.read<ForgotPasswordCubit>().submitEmail(email);
+                        }
+                      },
+                      fontWeight: FontWeight.bold,
+                    );
+                  },
                 )
               ],
             ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:pinput/pinput.dart';
 
@@ -52,18 +54,32 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                 ),
               ),
               SizedBox(height: 10),
-              PrimaryButton.filled(
-                title: 'Confirm',
-                onTap: () {
-                  final otp = otpController.text.trim();
-                  if (otp.isEmpty) {
-                    context.showSnackBar('Otp is required');
-                    return;
+              BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                listener: (context, state) {
+                  if (state.step == ForgotPasswordStep.otpInput) {
+                    if (state.status == ForgotPasswordStatus.success) {
+                      Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordReset);
+                    } else if (state.status == ForgotPasswordStatus.failure) {
+                      context.showSnackBar(state.errorMessage);
+                    }
                   }
-                  context.closeKeyboard();
-                  Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordReset);
                 },
-                fontWeight: FontWeight.bold,
+                builder: (context, state) {
+                  return PrimaryButton.filled(
+                    title: 'Confirm',
+                    isLoading: state.step == ForgotPasswordStep.otpInput && state.status == ForgotPasswordStatus.loading,
+                    onTap: () {
+                      final otp = otpController.text.trim();
+                      if (otp.isEmpty) {
+                        context.showSnackBar('Otp is required');
+                        return;
+                      }
+                      context.closeKeyboard();
+                      context.read<ForgotPasswordCubit>().verifyOtp(otp);
+                    },
+                    fontWeight: FontWeight.bold,
+                  );
+                },
               )
             ],
           ),

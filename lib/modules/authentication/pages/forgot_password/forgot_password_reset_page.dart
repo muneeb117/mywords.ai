@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class ForgotPasswordResetPage extends StatefulWidget {
@@ -82,12 +84,31 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
                   },
                 ),
                 SizedBox(height: 24),
-                PrimaryButton.filled(
-                  title: 'Save New Password',
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordSuccess);
+                BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                  listener: (context, state) {
+                    if (state.step == ForgotPasswordStep.newPassword) {
+                      if (state.status == ForgotPasswordStatus.success) {
+                        Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordSuccess);
+                      } else if (state.status == ForgotPasswordStatus.failure) {
+                        context.showSnackBar(state.errorMessage);
+                      }
+                    }
                   },
-                  fontWeight: FontWeight.bold,
+                  builder: (context, state) {
+                    return PrimaryButton.filled(
+                      isLoading: state.step == ForgotPasswordStep.newPassword && state.status == ForgotPasswordStatus.loading,
+                      title: 'Save New Password',
+                      onTap: () {
+                        bool isFormValidated = _formKey.currentState?.validate() == true;
+                        if (isFormValidated) {
+                          context.closeKeyboard();
+                          final password = passwordController.text.toLowerCase().trim();
+                          context.read<ForgotPasswordCubit>().submitNewPassword(password);
+                        }
+                      },
+                      fontWeight: FontWeight.bold,
+                    );
+                  },
                 )
               ],
             ),

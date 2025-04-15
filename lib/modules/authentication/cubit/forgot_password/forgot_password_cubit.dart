@@ -57,6 +57,6 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   void resetState() {
-    emit(state.copyWith(status: ForgotPasswordStatus.initial, errorMessage: ''));
+    emit(ForgotPasswordState.initial());
   }
 }

@@ -6,6 +6,7 @@ import 'package:mywords/config/themes/light_theme.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
+import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,9 @@ void main() async {
         ),
         BlocProvider(
           create: (_) => FileImportCubit(fileRepository: sl()),
+        ),
+        BlocProvider(
+          create: (_) => ForgotPasswordCubit(forgotPasswordRepository: sl()),
         ),
       ],
       child: const MyWordsApp(),
