@@ -73,7 +73,7 @@ class SettingsPage extends StatelessWidget {
                       return PrimaryButton.filled(
                         backgroundColor: AppColors.darkOrangeBg,
                         textColor: AppColors.darkOrange,
-                        indicatorColor: AppColors.primary,
+                        indicatorColor: AppColors.black,
                         fontWeight: FontWeight.w700,
                         enableShrinkAnimation: false,
                         isLoading: state.logoutStatus == LogoutStatus.loading,
