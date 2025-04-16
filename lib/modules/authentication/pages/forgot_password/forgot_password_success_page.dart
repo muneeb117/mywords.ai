@@ -11,7 +11,7 @@ class ForgotPasswordSuccessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Confirmation'),
+      appBar: CustomAppBar(title: 'Confirmation', showLeading: false),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 16),
         child: Center(
