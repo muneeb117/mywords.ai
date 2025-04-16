@@ -5,7 +5,8 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/core/di/service_locator.dart';
-import 'package:mywords/modules/settings/cubit/logout_cubit.dart';
+import 'package:mywords/modules/settings/cubit/account_cubit.dart';
+import 'package:mywords/modules/settings/widgets/delete_account_dialog.dart';
 import 'package:mywords/modules/settings/widgets/settings_tile.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
@@ -15,7 +16,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LogoutCubit(sessionRepository: sl()),
+      create: (context) => AccountCubit(sessionRepository: sl()),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -54,18 +55,22 @@ class SettingsPage extends StatelessWidget {
                   ),
                   Divider(height: 0, color: Color(0xffEEEEEE)),
                   SettingsTile(
-                    onTap: () {},
+                    onTap: () {
+                      showDeleteAccountDialog(context, onConfirm: () {
+                        // context.read<AccountCubit>().deleteAccount();
+                      });
+                    },
                     title: 'Delete Account',
                     assetPath: 'assets/images/svg/ic_delete_acc.svg',
                     textColor: Color(0xffFF3D00),
                   ),
                   Divider(height: 0, color: Color(0xffEEEEEE)),
                   SizedBox(height: 24),
-                  BlocConsumer<LogoutCubit, LogoutState>(
+                  BlocConsumer<AccountCubit, AccountState>(
                     listener: (context, state) {
-                      if (state.logoutStatus == LogoutStatus.success) {
+                      if (state.accountStatus == AccountStatus.success) {
                         Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
-                      } else if (state.logoutStatus == LogoutStatus.failed) {
+                      } else if (state.accountStatus == AccountStatus.failed) {
                         context.showSnackBar(state.errorMsg);
                       }
                     },
@@ -76,10 +81,10 @@ class SettingsPage extends StatelessWidget {
                         indicatorColor: AppColors.black,
                         fontWeight: FontWeight.w700,
                         enableShrinkAnimation: false,
-                        isLoading: state.logoutStatus == LogoutStatus.loading,
+                        isLoading: state.accountStatus == AccountStatus.loading,
                         iconPath: 'assets/images/svg/ic_logout.svg',
                         onTap: () {
-                          context.read<LogoutCubit>().logout();
+                          context.read<AccountCubit>().logout();
                         },
                         title: 'Logout',
                       );
