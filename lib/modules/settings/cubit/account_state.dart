@@ -1,6 +1,13 @@
 part of 'account_cubit.dart';
 
-enum AccountStatus { initial, loading, success, failed }
+enum AccountStatus {
+  initial,
+  deleting,
+  loggingOut,
+  deleteSuccess,
+  logoutSuccess,
+  failed,
+}
 
 class AccountState {
   final AccountStatus accountStatus;
