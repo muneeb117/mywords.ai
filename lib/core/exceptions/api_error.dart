@@ -19,6 +19,11 @@ class ApiError implements Exception {
     if (dioException.response != null) {
       log('ApiError.fromDioException: ${dioException.response}');
       switch (dioException.response?.statusCode) {
+        case 400:
+          return ApiError(
+            code: dioException.response?.statusCode,
+            errorMsg: dioException.response?.data['error'],
+          );
         case 401:
           return ApiError(
             code: dioException.response?.statusCode,

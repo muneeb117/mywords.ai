@@ -4,6 +4,8 @@ import 'package:mywords/utils/extensions/either_extension.dart';
 
 part 'forgot_password_state.dart';
 
+/// We use 'step' to track the user's current position in the forgot password flow.
+
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final ForgotPasswordRepository _forgotPasswordRepository;
 
@@ -12,13 +14,13 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         super(ForgotPasswordState.initial());
 
   void submitEmail(String email) async {
-    emit(state.copyWith(status: ForgotPasswordStatus.loading));
+    emit(state.copyWith(status: ForgotPasswordStatus.loading, step: ForgotPasswordStep.emailInput));
 
     final result = await _forgotPasswordRepository.submitEmail(email);
 
     result.handle(
-      onSuccess: (String token) async {
-        emit(state.copyWith(email: email, step: ForgotPasswordStep.emailInput, status: ForgotPasswordStatus.success));
+      onSuccess: (String result) async {
+        emit(state.copyWith(email: email, status: ForgotPasswordStatus.success));
       },
       onError: (error) {
         emit(state.copyWith(status: ForgotPasswordStatus.failure, errorMessage: error.errorMsg));
@@ -27,13 +29,13 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   void verifyOtp(String otp) async {
-    emit(state.copyWith(status: ForgotPasswordStatus.loading));
+    emit(state.copyWith(status: ForgotPasswordStatus.loading,step: ForgotPasswordStep.otpInput));
 
     final result = await _forgotPasswordRepository.verifyOtp(state.email, otp);
 
     result.handle(
-      onSuccess: (String token) async {
-        emit(state.copyWith(otp: otp, step: ForgotPasswordStep.otpInput, status: ForgotPasswordStatus.success));
+      onSuccess: (String result) async {
+        emit(state.copyWith(otp: otp,  status: ForgotPasswordStatus.success));
       },
       onError: (error) {
         emit(state.copyWith(status: ForgotPasswordStatus.failure, errorMessage: error.errorMsg));
@@ -42,13 +44,13 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   void submitNewPassword(String newPassword) async {
-    emit(state.copyWith(status: ForgotPasswordStatus.loading));
+    emit(state.copyWith(status: ForgotPasswordStatus.loading,step: ForgotPasswordStep.newPassword));
 
     final result = await _forgotPasswordRepository.resetPassword(state.email, state.otp, newPassword);
 
     result.handle(
-      onSuccess: (String token) async {
-        emit(state.copyWith(newPassword: newPassword, step: ForgotPasswordStep.newPassword, status: ForgotPasswordStatus.success));
+      onSuccess: (String result) async {
+        emit(state.copyWith(newPassword: newPassword, status: ForgotPasswordStatus.success));
       },
       onError: (error) {
         emit(state.copyWith(status: ForgotPasswordStatus.failure, errorMessage: error.errorMsg));

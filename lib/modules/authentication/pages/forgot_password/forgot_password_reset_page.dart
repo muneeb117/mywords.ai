@@ -102,7 +102,7 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
                         bool isFormValidated = _formKey.currentState?.validate() == true;
                         if (isFormValidated) {
                           context.closeKeyboard();
-                          final password = passwordController.text.toLowerCase().trim();
+                          final password = passwordController.text.trim();
                           context.read<ForgotPasswordCubit>().submitNewPassword(password);
                         }
                       },

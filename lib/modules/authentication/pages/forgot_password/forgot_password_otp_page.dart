@@ -40,7 +40,10 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                 focusedPinTheme: focusedPinTheme,
                 controller: otpController,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                onCompleted: (pin) => print(pin),
+                onCompleted: (pin) {
+                  final otp = pin.trim();
+                  context.read<ForgotPasswordCubit>().verifyOtp(otp);
+                },
               ),
               SizedBox(height: 26),
               Text("You can resend the code in 56 seconds", style: context.textTheme.bodyMedium),
