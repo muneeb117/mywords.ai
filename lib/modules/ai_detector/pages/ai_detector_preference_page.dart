@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
-import 'package:mywords/common/components/custom_dropdown_without_icon.dart';
-import 'package:mywords/common/components/custom_text_field.dart';
+
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
-import 'package:mywords/modules/ai_detector/cubit/ai_humanize_cubit.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_output_page.dart';
-import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiDetectorPreferencePage extends StatefulWidget {
@@ -19,13 +17,6 @@ class AiDetectorPreferencePage extends StatefulWidget {
 }
 
 class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
-  final TextEditingController aiWriterController = TextEditingController();
-
-  String? writingPurpose = 'Essay';
-  String selectedLanguage = 'English';
-  TextEditingController minWordCountController = TextEditingController();
-  TextEditingController maxWordCountController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
@@ -45,7 +36,6 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
               ),
               SizedBox(height: 16),
               Container(
-                  height: 250,
                   margin: EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
@@ -53,7 +43,7 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
                       color: Color(0xffDADADA),
                     ),
                   ),
-                  child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                  child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
                     listener: (context, state) {},
                     builder: (context, state) {
                       return Column(
@@ -62,7 +52,7 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                             child: Text(
-                              'Output',
+                              'Select Preference',
                               style: context.textTheme.titleLarge?.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: context.colorScheme.onSurface,
@@ -73,27 +63,27 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
                             color: Color(0xffDADADA),
                             height: 0,
                           ),
-                          Expanded(
-                            child: BlocBuilder<AiWriterCubit, AiWriterState>(
-                              builder: (context, state) {
-                                return Container(
-                                  width: double.infinity,
-                                  height: 300,
-                                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                  child: SingleChildScrollView(
-                                      padding: EdgeInsets.only(top: 16),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(bottom: 16.0),
-                                        child: SelectableText(
-                                          state.generatedText,
-                                          style: context.textTheme.titleMedium,
-                                        ),
-                                      )),
-                                  decoration: BoxDecoration(),
-                                );
-                              },
-                            ),
+                          SizedBox(height: 16),
+                          DetectorPreferenceTile(
+                            title: 'ChatGPT',
+                            isSelected: state.modelPreference == 'ChatGPT',
                           ),
+                          SizedBox(height: 8),
+                          DetectorPreferenceTile(
+                            title: 'GPT-4',
+                            isSelected: state.modelPreference == 'GPT-4',
+                          ),
+                          SizedBox(height: 8),
+                          DetectorPreferenceTile(
+                            title: 'Human',
+                            isSelected: state.modelPreference == 'Human',
+                          ),
+                          SizedBox(height: 8),
+                          DetectorPreferenceTile(
+                            title: 'Human + AI',
+                            isSelected: state.modelPreference == 'Human + AI',
+                          ),
+                          SizedBox(height: 16),
                         ],
                       );
                     },
@@ -123,16 +113,6 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
             return PrimaryButton.gradient(
               isLoading: state.aiDetectorStatus == AiDetectorStatus.loading,
               onTap: () {
-                final minText = minWordCountController.text.trim();
-                final maxText = maxWordCountController.text.trim();
-
-                final min = int.tryParse(minText);
-                final max = int.tryParse(maxText);
-
-                if (min == null || max == null || min < 350 || max > 500) {
-                  context.showSnackBar('Please enter valid word limits!', isError: true);
-                  return;
-                }
                 context.read<AiDetectorCubit>().detectText();
               },
               title: 'Generate Outline',
@@ -140,6 +120,41 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
               fontWeight: FontWeight.w700,
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class DetectorPreferenceTile extends StatelessWidget {
+  const DetectorPreferenceTile({
+    super.key,
+    required this.title,
+    required this.isSelected,
+  });
+
+  final String title;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.read<AiDetectorCubit>().setPreference(title);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        alignment: Alignment.centerLeft,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: isSelected ? context.colorScheme.secondary.withOpacity(0.10) : Colors.transparent,
+          border: Border.all(color: Color(0xffEAECF0)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          title,
+          style: context.textTheme.titleMedium?.copyWith(color: isSelected ? context.colorScheme.primary : null),
         ),
       ),
     );

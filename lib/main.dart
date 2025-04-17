@@ -4,7 +4,7 @@ import 'package:mywords/config/flavors/flavors.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/config/themes/light_theme.dart';
 import 'package:mywords/core/di/service_locator.dart';
-import 'package:mywords/modules/ai_detector/cubit/ai_humanize_cubit.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';

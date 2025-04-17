@@ -28,7 +28,7 @@ class AiDetectorRepository {
         code: response.statusCode ?? 0,
       ));
     } catch (e, stackTrace) {
-      return ErrorHandler.handleError<String>(e, stackTrace, context: 'AI Writer');
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'AI Detector');
     }
   }
 }

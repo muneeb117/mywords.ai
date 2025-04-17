@@ -5,7 +5,7 @@ import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_detector/repository/ai_detector_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
-part 'ai_humanize_state.dart';
+part 'ai_detector_state.dart';
 
 class AiDetectorCubit extends Cubit<AiDetectorState> {
   final AiDetectorRepository _aiDetectorRepository;
@@ -20,10 +20,15 @@ class AiDetectorCubit extends Cubit<AiDetectorState> {
     _text = value;
   }
 
+  void setPreference(String preference) {
+    emit(state.copyWith(modelPreference: preference));
+  }
+
   Map<String, dynamic> getMap() {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
     return {
       "text": _text,
+      "isProEngine": false,
       "token": token,
     };
   }

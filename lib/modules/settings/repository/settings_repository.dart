@@ -33,11 +33,8 @@ class SettingsRepository {
   }
 
   Future<Either<ApiError, String>> deleteAccount() async {
-    /// remove this line
-    await Future.delayed(Duration(seconds: 3));
-    return Right("Account deleted successfully");
     try {
-      final response = await _dioClient.post(
+      final response = await _dioClient.delete(
         ApiEndpoints.deleteAccount,
       );
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {

@@ -8,7 +8,7 @@ import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
-import 'package:mywords/modules/ai_detector/cubit/ai_humanize_cubit.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
@@ -22,7 +22,7 @@ class AiDetectorInputPage extends StatefulWidget {
 }
 
 class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
-  final TextEditingController aiWriterController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
 
   @override
   void initState() {
@@ -31,8 +31,8 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
   }
 
   void _putTextOnBoard(String text) {
-    aiWriterController.text = text;
-    context.read<AiDetectorCubit>().updateText(aiWriterController.text);
+    textController.text = text;
+    context.read<AiDetectorCubit>().updateText(textController.text);
   }
 
   @override
@@ -73,7 +73,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
                             onChanged: (nextValue) {
                               context.read<AiDetectorCubit>().updateText(nextValue);
                             },
-                            textEditingController: aiWriterController,
+                            textEditingController: textController,
                           ),
                           BlocConsumer<FileImportCubit, FileImportState>(
                             listener: (context, state) {
@@ -125,7 +125,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
             padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
             child: PrimaryButton.filled(
               onTap: () {
-                final text = aiWriterController.text.trim();
+                final text = textController.text.trim();
                 if (text.isEmpty) {
                   context.showSnackBar('Input field is required');
                   return;
