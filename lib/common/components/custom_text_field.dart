@@ -21,6 +21,7 @@ class InputField extends StatelessWidget {
   final bool obscureText;
   final bool autocorrect;
   final bool enableSuggestions;
+  final bool? enabled;
   final List<TextInputFormatter>? inputFormatters;
   final VoidCallback? onSuffixIconTap;
   final InputFieldType inputFieldType;
@@ -38,6 +39,7 @@ class InputField extends StatelessWidget {
     this.onSuffixIconTap,
     this.keyboardType,
     this.textInputAction,
+    this.enabled,
     this.autocorrect = true,
     this.enableSuggestions = true,
     this.hasPrefixIcon = true,
@@ -53,10 +55,12 @@ class InputField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.autofocus = false,
+    this.enabled,
     String this.hintText = 'Email Address',
+    this.hasPrefixIcon = true,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters,
-  })  : hasPrefixIcon = true,
+  })  :
         prefixIconPath = 'assets/images/svg/ic_email.svg',
         suffixIconPath = null,
         onSuffixIconTap = null,
@@ -75,6 +79,7 @@ class InputField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.autofocus = false,
+    this.enabled,
     String this.hintText = 'Password',
     this.suffixIconPath,
     this.onSuffixIconTap,
@@ -97,6 +102,7 @@ class InputField extends StatelessWidget {
       onChanged: onChanged,
       autofocus: autofocus,
       autocorrect: autocorrect,
+      enabled: enabled,
       enableSuggestions: enableSuggestions,
       textCapitalization: textCapitalization,
       validator: validator,

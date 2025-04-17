@@ -51,4 +51,24 @@ class SettingsRepository {
       return ErrorHandler.handleError<String>(e, stackTrace, context: 'Delete Account');
     }
   }
+
+  Future<Either<ApiError, String>> getProfile() async {
+    /// remove this line
+    await Future.delayed(Duration(seconds: 3));
+    return Right("Profile fetched successfully");
+    try {
+      final response = await _dioClient.post(
+        ApiEndpoints.getProfile,
+      );
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
+        return Right("Get profile successfully");
+      }
+      return Left(ApiError(
+        errorMsg: 'Unable to get Profile. Please try again.',
+        code: response.statusCode ?? 0,
+      ));
+    } catch (e, stackTrace) {
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Get Profile');
+    }
+  }
 }
