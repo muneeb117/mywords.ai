@@ -55,10 +55,10 @@ class _AccountSettingsViewState extends State<AccountSettingsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: RoundedImage(imageUrl: null),
-                ),
-                SizedBox(height: 16),
+                // Center(
+                //   child: RoundedImage(imageUrl: null),
+                // ),
+                SizedBox(height: 10),
                 Text('Full Name', style: context.textTheme.titleMedium),
                 SizedBox(height: 8),
                 InputField(

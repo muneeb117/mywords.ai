@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
 import 'package:mywords/config/routes/route_manager.dart';
-import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
+import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiHumanizerOutputPage extends StatefulWidget {
@@ -16,11 +17,12 @@ class AiHumanizerOutputPage extends StatefulWidget {
 }
 
 class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
-  final TextEditingController aiWriterController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    double bottomPadding = MediaQuery.of(context).padding.bottom;
+    double bottomPadding = MediaQuery
+        .of(context)
+        .padding
+        .bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
     return Scaffold(
       appBar: CustomAppBar(title: 'AI Humanizer'),
@@ -38,7 +40,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                     color: Color(0xffDADADA),
                   ),
                 ),
-                child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
                   listener: (context, state) {},
                   builder: (context, state) {
                     return Column(
@@ -59,7 +61,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                           height: 0,
                         ),
                         Expanded(
-                          child: BlocBuilder<AiWriterCubit, AiWriterState>(
+                          child: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
                             builder: (context, state) {
                               return Container(
                                 width: double.infinity,
@@ -89,30 +91,37 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-        child: Row(
-          children: [
-            Text('0 Words', style: context.textTheme.titleMedium),
-            SizedBox(width: 48),
-            Expanded(
-              child: PrimaryButton.filled(
-                  onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+      bottomNavigationBar: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
+        builder: (context, state) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+            child: Row(
+              children: [
+                Text('${state.generatedOutputWordCount} Words', style: context.textTheme.titleMedium),
+                SizedBox(width: 48),
+                Expanded(
+                  child: PrimaryButton.filled(
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                      },
+                      title: 'Check for AI',
+                      fontWeight: FontWeight.w700,
+                      backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+                      textColor: context.colorScheme.primary),
+                ),
+                SizedBox(width: 5),
+                IconButton(
+                  icon: SvgPicture.asset('assets/images/svg/ic_copy.svg'),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: state.generatedText));
+                    context.showSnackBar('Copied to Clipboard!');
                   },
-                  title: 'Check for AI',
-                  fontWeight: FontWeight.w700,
-                  backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-                  textColor: context.colorScheme.primary),
+                )
+              ],
             ),
-            SizedBox(width: 5),
-            IconButton(
-              icon: SvgPicture.asset('assets/images/svg/ic_copy.svg'),
-              onPressed: () {},
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -131,7 +140,7 @@ class _InfoStaticWidget extends StatelessWidget {
           color: Color(0xffDADADA),
         ),
       ),
-      child: BlocConsumer<AiWriterCubit, AiWriterState>(
+      child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Column(

@@ -8,8 +8,9 @@ import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
-import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
+
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
@@ -21,17 +22,17 @@ class AiHumanizerInputPage extends StatefulWidget {
 }
 
 class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
-  final TextEditingController aiWriterController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    context.read<AiWriterCubit>().reset();
+    context.read<AiHumanizerCubit>().reset();
   }
 
   void _putTextOnBoard(String text) {
-    aiWriterController.text = text;
-    context.read<AiWriterCubit>().updateText(aiWriterController.text);
+    textController.text = text;
+    context.read<AiHumanizerCubit>().updateText(textController.text);
   }
 
   @override
@@ -54,9 +55,19 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                       color: Color(0xffDADADA),
                     ),
                   ),
-                  child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                  child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
                     listener: (context, state) {
-                      // TODO: implement listener
+                      if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) => AiHumanizerOutputPage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
+                        context.showSnackBar(state.errorMsg);
+                      }
                     },
                     builder: (context, state) {
                       return Column(
@@ -65,9 +76,9 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                           _TextFieldHeader(wordCount: state.wordCount),
                           AiTextField(
                             onChanged: (nextValue) {
-                              context.read<AiWriterCubit>().updateText(nextValue);
+                              context.read<AiHumanizerCubit>().updateText(nextValue);
                             },
-                            textEditingController: aiWriterController,
+                            textEditingController: textController,
                           ),
                           BlocConsumer<FileImportCubit, FileImportState>(
                             listener: (context, state) {
@@ -112,14 +123,15 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
           SizedBox(height: 20),
         ],
       ),
-      bottomNavigationBar: BlocBuilder<AiWriterCubit, AiWriterState>(
+      bottomNavigationBar: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
         builder: (context, state) {
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 16.0),
             padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
             child: PrimaryButton.filled(
+              isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
               onTap: () {
-                final text = aiWriterController.text.trim();
+                final text = textController.text.trim();
                 if (text.isEmpty) {
                   context.showSnackBar('Input field is required');
                   return;
@@ -128,15 +140,8 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                   context.showSnackBar('You have exceeded the maximum word limit of 800. Please shorten your text.');
                   return;
                 }
-
-                context.read<AiWriterCubit>().setText(text);
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => AiHumanizerOutputPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
+                context.read<AiHumanizerCubit>().setText(text);
+                context.read<AiHumanizerCubit>().humanizeText();
               },
               title: 'Continue',
               textColor: context.colorScheme.primary,

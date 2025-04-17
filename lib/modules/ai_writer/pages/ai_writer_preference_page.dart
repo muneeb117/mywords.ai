@@ -36,7 +36,12 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StepIndicator(activeSteps: [1, 2]),
+              StepIndicator(
+                activeSteps: [1, 2],
+                leftText: 'Prompt',
+                centerText: 'Purpose',
+                rightText: 'Output',
+              ),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),

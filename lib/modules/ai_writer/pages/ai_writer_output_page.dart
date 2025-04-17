@@ -27,7 +27,12 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            StepIndicator(activeSteps: [1, 2, 3]),
+            StepIndicator(
+              activeSteps: [1, 2, 3],
+              leftText: 'Prompt',
+              centerText: 'Purpose',
+              rightText: 'Output',
+            ),
             SizedBox(height: 16),
             Container(
                 height: 250,
@@ -39,9 +44,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                   ),
                 ),
                 child: BlocConsumer<AiWriterCubit, AiWriterState>(
-                  listener: (context, state) {
-                    
-                  },
+                  listener: (context, state) {},
                   builder: (context, state) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,14 +71,14 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                                 height: 300,
                                 padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                                 child: SingleChildScrollView(
-                                  padding: EdgeInsets.only(top: 16),
+                                    padding: EdgeInsets.only(top: 16),
                                     child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 16.0),
-                                  child: SelectableText(
-                                    state.generatedText,
-                                    style: context.textTheme.titleMedium,
-                                  ),
-                                )),
+                                      padding: const EdgeInsets.only(bottom: 16.0),
+                                      child: SelectableText(
+                                        state.generatedText,
+                                        style: context.textTheme.titleMedium,
+                                      ),
+                                    )),
                                 decoration: BoxDecoration(),
                               );
                             },
@@ -120,9 +123,7 @@ class _InfoStaticWidget extends StatelessWidget {
         ),
       ),
       child: BlocConsumer<AiWriterCubit, AiWriterState>(
-        listener: (context, state) {
-          
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

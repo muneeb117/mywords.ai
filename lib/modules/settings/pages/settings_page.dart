@@ -64,13 +64,13 @@ class SettingsPage extends StatelessWidget {
                             assetPath: 'assets/images/svg/ic_privacy_policy.svg',
                           ),
                           Divider(height: 0, color: Color(0xffEEEEEE)),
-                          SettingsTile(
-                            onTap: () {
-                              Navigator.pushNamed(context, RouteManager.passwordSecurity);
-                            },
-                            title: 'Passwords Security',
-                            assetPath: 'assets/images/svg/ic_password_security.svg',
-                          ),
+                          // SettingsTile(
+                          //   onTap: () {
+                          //     Navigator.pushNamed(context, RouteManager.passwordSecurity);
+                          //   },
+                          //   title: 'Passwords Security',
+                          //   assetPath: 'assets/images/svg/ic_password_security.svg',
+                          // ),
                           Divider(height: 0, color: Color(0xffEEEEEE)),
                           SettingsTile(
                             onTap: () {

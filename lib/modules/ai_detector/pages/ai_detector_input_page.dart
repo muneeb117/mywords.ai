@@ -8,6 +8,7 @@ import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
@@ -26,12 +27,12 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
   @override
   void initState() {
     super.initState();
-    context.read<AiWriterCubit>().reset();
+    context.read<AiDetectorCubit>().reset();
   }
 
   void _putTextOnBoard(String text) {
     aiWriterController.text = text;
-    context.read<AiWriterCubit>().updateText(aiWriterController.text);
+    context.read<AiDetectorCubit>().updateText(aiWriterController.text);
   }
 
   @override
@@ -42,7 +43,12 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
       appBar: CustomAppBar(title: 'AI Detector'),
       body: Column(
         children: [
-          StepIndicator(activeSteps: [1]),
+          StepIndicator(
+            activeSteps: [1],
+            leftText: 'Input',
+            centerText: 'Preference',
+            rightText: 'Output',
+          ),
           SizedBox(height: 16),
           Flexible(
             child: SingleChildScrollView(
@@ -54,7 +60,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
                       color: Color(0xffDADADA),
                     ),
                   ),
-                  child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                  child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
                     listener: (context, state) {
                       // TODO: implement listener
                     },
@@ -65,7 +71,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
                           _TextFieldHeader(wordCount: state.wordCount),
                           AiTextField(
                             onChanged: (nextValue) {
-                              context.read<AiWriterCubit>().updateText(nextValue);
+                              context.read<AiDetectorCubit>().updateText(nextValue);
                             },
                             textEditingController: aiWriterController,
                           ),
@@ -112,7 +118,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
           SizedBox(height: 20),
         ],
       ),
-      bottomNavigationBar: BlocBuilder<AiWriterCubit, AiWriterState>(
+      bottomNavigationBar: BlocBuilder<AiDetectorCubit, AiDetectorState>(
         builder: (context, state) {
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -129,7 +135,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
                   return;
                 }
 
-                context.read<AiWriterCubit>().setText(text);
+                context.read<AiDetectorCubit>().setText(text);
                 Navigator.of(context).push(
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) => AiDetectorPreferencePage(),
