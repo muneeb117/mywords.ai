@@ -8,9 +8,11 @@ import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/core/di/service_locator.dart';
 
 import 'package:mywords/modules/settings/cubit/account_cubit/account_cubit.dart';
+import 'package:mywords/modules/settings/pages/privacy_policy/privacy_policy_page.dart';
 import 'package:mywords/modules/settings/widgets/delete_account_dialog.dart';
 import 'package:mywords/modules/settings/widgets/settings_tile.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -55,7 +57,11 @@ class SettingsPage extends StatelessWidget {
                           ),
                           Divider(height: 0, color: Color(0xffEEEEEE)),
                           SettingsTile(
-                            onTap: () {},
+                            onTap: () {
+                              // launchUrl(Uri.parse('https://google.com/'));
+
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicyPage()));
+                            },
                             title: 'Privacy Policy',
                             assetPath: 'assets/images/svg/ic_privacy_policy.svg',
                           ),
