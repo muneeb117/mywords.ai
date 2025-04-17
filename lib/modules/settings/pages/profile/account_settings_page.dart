@@ -46,15 +46,17 @@ class _AccountSettingsViewState extends State<AccountSettingsView> {
           if (state.getProfileStatus == GetProfileStatus.loading) {
             return LoadingIndicator(bgColor: context.colorScheme.onSurface);
           }
+          if (state.getProfileStatus == GetProfileStatus.success) {
+            fullNameController.text = state.fullName;
+            emailController.text = state.email;
+          }
           return Container(
             margin: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: RoundedImage(
-                    imageUrl: null,
-                  ),
+                  child: RoundedImage(imageUrl: null),
                 ),
                 SizedBox(height: 16),
                 Text('Full Name', style: context.textTheme.titleMedium),

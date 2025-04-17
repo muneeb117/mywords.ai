@@ -52,23 +52,23 @@ class SettingsRepository {
     }
   }
 
-  Future<Either<ApiError, String>> getProfile() async {
+  Future<Either<ApiError, ({String name, String email})>> getProfile() async {
     /// remove this line
-    await Future.delayed(Duration(seconds: 3));
-    return Right("Profile fetched successfully");
+    // await Future.delayed(Duration(seconds: 3));
+    // return Right("Profile fetched successfully");
     try {
-      final response = await _dioClient.post(
+      final response = await _dioClient.get(
         ApiEndpoints.getProfile,
       );
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
-        return Right("Get profile successfully");
+        return Right((name: response.data['name'], email: response.data['email']));
       }
       return Left(ApiError(
         errorMsg: 'Unable to get Profile. Please try again.',
         code: response.statusCode ?? 0,
       ));
     } catch (e, stackTrace) {
-      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Get Profile');
+      return ErrorHandler.handleError(e, stackTrace, context: 'Get Profile');
     }
   }
 }

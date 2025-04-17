@@ -17,7 +17,11 @@ class GetProfileCubit extends Cubit<GetProfileState> {
 
     result.handle(
       onSuccess: (result) async {
-        emit(state.copyWith(getProfileStatus: GetProfileStatus.success));
+        emit(state.copyWith(
+          fullName: result.name,
+          email: result.email,
+          getProfileStatus: GetProfileStatus.success,
+        ));
       },
       onError: (error) {
         emit(state.copyWith(getProfileStatus: GetProfileStatus.failed, errorMsg: error.errorMsg));
