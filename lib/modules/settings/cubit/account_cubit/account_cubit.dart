@@ -30,7 +30,6 @@ class AccountCubit extends Cubit<AccountState> {
 
     result.handle(
       onSuccess: (result) async {
-        _settingsRepository.deleteAccount();
         await _sessionRepository.clearSession();
         emit(state.copyWith(accountStatus: AccountStatus.deleteSuccess));
       },

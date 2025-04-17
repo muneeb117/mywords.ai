@@ -6,7 +6,8 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/core/di/service_locator.dart';
-import 'package:mywords/modules/settings/cubit/account_cubit.dart';
+
+import 'package:mywords/modules/settings/cubit/account_cubit/account_cubit.dart';
 import 'package:mywords/modules/settings/widgets/delete_account_dialog.dart';
 import 'package:mywords/modules/settings/widgets/settings_tile.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
@@ -17,10 +18,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AccountCubit(
-        sessionRepository: sl(),
-        settingsRepository: sl()
-      ),
+      create: (context) => AccountCubit(sessionRepository: sl(), settingsRepository: sl()),
       child: Builder(
         builder: (context) {
           return BlocConsumer<AccountCubit, AccountState>(
@@ -99,7 +97,7 @@ class SettingsPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (true)
+                  if (isAccountDeleting)
                     Container(
                       color: Colors.black.withOpacity(0.15),
                       child: LoadingIndicator(bgColor: AppColors.black),

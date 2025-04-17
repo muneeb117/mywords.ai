@@ -11,8 +11,30 @@ class SettingsRepository {
 
   SettingsRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
+  Future<Either<ApiError, String>> changePassword(String password, String newPassword) async {
+    // remove this line
+    await Future.delayed(Duration(seconds: 3));
+    return Right("Password changed successfully");
+    try {
+      final response = await _dioClient.post(
+        ApiEndpoints.changePassword,
+        data: {'password': password, 'newPassword': newPassword},
+      );
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
+        return Right("Password changed successfully");
+      }
+      return Left(ApiError(
+        errorMsg: 'Unable to change Password. Please try again.',
+        code: response.statusCode ?? 0,
+      ));
+    } catch (e, stackTrace) {
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Change Password');
+    }
+  }
+
   Future<Either<ApiError, String>> deleteAccount() async {
     /// remove this line
+    await Future.delayed(Duration(seconds: 3));
     return Right("Account deleted successfully");
     try {
       final response = await _dioClient.post(
