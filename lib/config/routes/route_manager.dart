@@ -14,8 +14,9 @@ import 'package:mywords/modules/authentication/pages/signup/signup_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/two_factor_signup_page.dart';
 import 'package:mywords/modules/home/pages/home_page.dart';
 import 'package:mywords/modules/onboarding/pages/onboarding_page.dart';
-import 'package:mywords/modules/settings/pages/account_settings_page.dart';
-import 'package:mywords/modules/settings/pages/password_security_page.dart';
+import 'package:mywords/modules/settings/pages/privacy_policy/privacy_policy_page.dart';
+import 'package:mywords/modules/settings/pages/profile/account_settings_page.dart';
+import 'package:mywords/modules/settings/pages/change_password/password_security_page.dart';
 import 'package:mywords/modules/settings/pages/settings_page.dart';
 import 'package:mywords/modules/startup/pages/splash_page.dart';
 
@@ -40,6 +41,7 @@ class RouteManager {
   static const String forgotPasswordOtp = '/forgotPasswordOtp';
   static const String forgotPasswordReset = '/forgotPasswordReset';
   static const String forgotPasswordSuccess = '/forgotPasswordSuccess';
+  static const String privacyPolicy = '/privacyPolicy';
 
   // Route generator
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -82,6 +84,8 @@ class RouteManager {
         return CupertinoPageRoute(builder: (_) => const AiHumanizerInputPage());
       case aiDetectorInput:
         return CupertinoPageRoute(builder: (_) => const AiDetectorInputPage());
+      case privacyPolicy:
+        return CupertinoPageRoute(builder: (_) => const PrivacyPolicyPage());
       default:
         return _errorRoute();
     }

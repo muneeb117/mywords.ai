@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
+import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PrivacyPolicyPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               value: _progress,
               minHeight: 2,
               backgroundColor: Colors.grey.shade300,
-              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primary),
+              valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.primary),
             ),
           Expanded(
             child: WebViewWidget(controller: _controller),

@@ -58,9 +58,7 @@ class SettingsPage extends StatelessWidget {
                           Divider(height: 0, color: Color(0xffEEEEEE)),
                           SettingsTile(
                             onTap: () {
-                              // launchUrl(Uri.parse('https://google.com/'));
-
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicyPage()));
+                              Navigator.pushNamed(context, RouteManager.privacyPolicy);
                             },
                             title: 'Privacy Policy',
                             assetPath: 'assets/images/svg/ic_privacy_policy.svg',
