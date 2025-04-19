@@ -8,14 +8,13 @@ ThemeData _getTheme() {
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
-      primary: AppColors.primary,
-      secondary: AppColors.accent,
-      surface: AppColors.background,
-      onSurface: AppColors.textPrimary,
-      outline: AppColors.textSecondary,
-      error: AppColors.error
-    ),
+        seedColor: AppColors.primary,
+        primary: AppColors.primary,
+        secondary: AppColors.accent,
+        surface: AppColors.background,
+        onSurface: AppColors.textPrimary,
+        outline: AppColors.textSecondary,
+        error: AppColors.error),
     textTheme: _getTextTheme(),
   );
 }

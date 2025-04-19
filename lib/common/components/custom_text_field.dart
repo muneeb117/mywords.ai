@@ -60,8 +60,7 @@ class InputField extends StatelessWidget {
     this.hasPrefixIcon = true,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters,
-  })  :
-        prefixIconPath = 'assets/images/svg/ic_email.svg',
+  })  : prefixIconPath = 'assets/images/svg/ic_email.svg',
         suffixIconPath = null,
         onSuffixIconTap = null,
         keyboardType = TextInputType.emailAddress,

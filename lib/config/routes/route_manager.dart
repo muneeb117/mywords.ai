@@ -14,9 +14,9 @@ import 'package:mywords/modules/authentication/pages/signup/signup_page.dart';
 import 'package:mywords/modules/authentication/pages/signup/two_factor_signup_page.dart';
 import 'package:mywords/modules/home/pages/home_page.dart';
 import 'package:mywords/modules/onboarding/pages/onboarding_page.dart';
+import 'package:mywords/modules/settings/pages/change_password/password_security_page.dart';
 import 'package:mywords/modules/settings/pages/privacy_policy/privacy_policy_page.dart';
 import 'package:mywords/modules/settings/pages/profile/account_settings_page.dart';
-import 'package:mywords/modules/settings/pages/change_password/password_security_page.dart';
 import 'package:mywords/modules/settings/pages/settings_page.dart';
 import 'package:mywords/modules/startup/pages/splash_page.dart';
 

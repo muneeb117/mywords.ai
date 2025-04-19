@@ -29,7 +29,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         ),
       )
       ..loadRequest(
-        Uri.parse('https://www.google.com'), // replace with your actual URL
+        Uri.parse('https://sites.google.com/view/mywords-ai/home'),
       );
   }
 

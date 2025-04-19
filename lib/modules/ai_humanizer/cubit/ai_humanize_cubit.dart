@@ -3,7 +3,6 @@ import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_humanizer/repository/ai_humanizer_repository.dart';
-
 import 'package:mywords/utils/extensions/either_extension.dart';
 
 part 'ai_humanize_state.dart';

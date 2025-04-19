@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
-
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';

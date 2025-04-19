@@ -28,7 +28,6 @@ extension ExtendedContext on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         backgroundColor: backgroundColor ?? Colors.black87,
-
         content: Text(
           message,
           style: TextStyle(color: foregroundColor),

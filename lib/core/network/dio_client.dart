@@ -15,13 +15,7 @@ class DioClient extends DioForNative {
     );
 
     if (_flavors.config.isDebug) {
-      interceptors.add(LogInterceptor(
-          requestBody: true,
-          responseBody: true,
-          responseHeader: false,
-          request: false,
-          requestHeader: true
-      ));
+      interceptors.add(LogInterceptor(requestBody: true, responseBody: true, responseHeader: false, request: false, requestHeader: true));
     }
 
     interceptors.add(

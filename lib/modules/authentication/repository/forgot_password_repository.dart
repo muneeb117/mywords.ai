@@ -8,6 +8,7 @@ import 'package:mywords/core/network/dio_client.dart';
 
 class ForgotPasswordRepository {
   final DioClient _dioClient;
+
   ForgotPasswordRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<Either<ApiError, String>> submitEmail(String email) async {

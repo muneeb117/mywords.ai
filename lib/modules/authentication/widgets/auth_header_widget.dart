@@ -4,7 +4,6 @@ import 'package:mywords/utils/extensions/extended_context.dart';
 class TopAppIconAndTitleWidget extends StatelessWidget {
   const TopAppIconAndTitleWidget({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,10 +27,8 @@ class TopAppIconAndTitleWidget extends StatelessWidget {
               )
             ],
           ),
-
         ],
       ),
     );
   }
 }
-

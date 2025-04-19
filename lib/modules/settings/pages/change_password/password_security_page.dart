@@ -6,7 +6,6 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/settings/cubit/change_password/change_password_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class PasswordSecurityPage extends StatefulWidget {
   const PasswordSecurityPage({super.key});

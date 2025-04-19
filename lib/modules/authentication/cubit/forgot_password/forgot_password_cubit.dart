@@ -29,13 +29,13 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   void verifyOtp(String otp) async {
-    emit(state.copyWith(status: ForgotPasswordStatus.loading,step: ForgotPasswordStep.otpInput));
+    emit(state.copyWith(status: ForgotPasswordStatus.loading, step: ForgotPasswordStep.otpInput));
 
     final result = await _forgotPasswordRepository.verifyOtp(state.email, otp);
 
     result.handle(
       onSuccess: (String result) async {
-        emit(state.copyWith(otp: otp,  status: ForgotPasswordStatus.success));
+        emit(state.copyWith(otp: otp, status: ForgotPasswordStatus.success));
       },
       onError: (error) {
         emit(state.copyWith(status: ForgotPasswordStatus.failure, errorMessage: error.errorMsg));
@@ -44,7 +44,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   void submitNewPassword(String newPassword) async {
-    emit(state.copyWith(status: ForgotPasswordStatus.loading,step: ForgotPasswordStep.newPassword));
+    emit(state.copyWith(status: ForgotPasswordStatus.loading, step: ForgotPasswordStep.newPassword));
 
     final result = await _forgotPasswordRepository.resetPassword(state.email, state.otp, newPassword);
 

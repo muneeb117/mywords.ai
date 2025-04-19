@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:mywords/modules/settings/repository/settings_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 

@@ -6,13 +6,10 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/core/di/service_locator.dart';
-
 import 'package:mywords/modules/settings/cubit/account_cubit/account_cubit.dart';
-import 'package:mywords/modules/settings/pages/privacy_policy/privacy_policy_page.dart';
 import 'package:mywords/modules/settings/widgets/delete_account_dialog.dart';
 import 'package:mywords/modules/settings/widgets/settings_tile.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

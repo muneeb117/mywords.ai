@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/loading_indicator.dart';
-import 'package:mywords/common/widgets/rounded_image.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/settings/cubit/get_profile/get_profile_cubit.dart';
 import 'package:mywords/utils/extensions/email_validator.dart';

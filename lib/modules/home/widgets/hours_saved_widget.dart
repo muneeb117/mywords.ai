@@ -25,8 +25,7 @@ class HoursSavedWidget extends StatelessWidget {
               Container(
                 child: Text(
                   'Hours Saved',
-                  style: context.textTheme.titleSmall
-                      ?.copyWith(fontSize: 10, color: AppColors.orange, fontWeight: FontWeight.bold),
+                  style: context.textTheme.titleSmall?.copyWith(fontSize: 10, color: AppColors.orange, fontWeight: FontWeight.bold),
                 ),
                 padding: EdgeInsets.all(4),
                 decoration: BoxDecoration(

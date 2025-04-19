@@ -10,7 +10,6 @@ import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
-
 import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 

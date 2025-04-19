@@ -57,6 +57,7 @@ class FileRepository {
       return 'Error extracting text from PDF: ${e.toString()}';
     }
   }
+
   Future<String> extractTextFromDocFile(File file) async {
     try {
       final bytes = await file.readAsBytes();

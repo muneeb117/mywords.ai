@@ -11,8 +11,6 @@ class AiTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final Function(String)? onChanged;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Stack(

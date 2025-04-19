@@ -6,11 +6,9 @@ class StepIndicatorHumanizer extends StatelessWidget {
   StepIndicatorHumanizer({
     super.key,
     required this.activeSteps,
-
   });
 
   final List<int> activeSteps;
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,6 @@ class StepIndicatorHumanizer extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2.0),
             child: Divider(thickness: 1, color: Color(0xff94A3B8)),
           )),
-
           SizedBox(width: 6),
           StepIndicatorRoundedComponent(
             isActive: activeSteps.contains(2),

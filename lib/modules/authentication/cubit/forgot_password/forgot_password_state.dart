@@ -4,7 +4,6 @@ enum ForgotPasswordStep {
   emailInput,
   otpInput,
   newPassword,
-
 }
 
 enum ForgotPasswordStatus {

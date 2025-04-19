@@ -124,7 +124,6 @@ class PrimaryButton extends StatelessWidget {
                         ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-
                       ),
                     ),
                   ],
