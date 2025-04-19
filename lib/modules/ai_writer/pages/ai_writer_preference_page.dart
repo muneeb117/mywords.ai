@@ -118,6 +118,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
         child: BlocConsumer<AiWriterCubit, AiWriterState>(
           listener: (context, state) {
             if (state.aiWriterStatus == AiWriterStatus.success) {
+              context.read<AiWriterCubit>().saveUserPrompt();
               Navigator.of(context).push(
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) => AiWriterOutputPage(),

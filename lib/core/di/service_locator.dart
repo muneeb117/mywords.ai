@@ -5,7 +5,7 @@ import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_detector/repository/ai_detector_repository.dart';
 import 'package:mywords/modules/ai_humanizer/repository/ai_humanizer_repository.dart';
 import 'package:mywords/modules/ai_writer/repository/ai_writer_repository.dart';
-import 'package:mywords/modules/ai_writer/repository/file_repository.dart';
+import 'package:mywords/core/repository/file_repository.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/forgot_password_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';

@@ -17,12 +17,22 @@ class AiWriterCubit extends Cubit<AiWriterState> {
   // Internal storage (does not affect UI)
   String _text = '';
   String _writingPurpose = '';
+  String _promptType = '';
+  String _fileName = '';
   String _writingLanguage = '';
   int _minWordLimit = 0;
   int _maxWordLimit = 0;
 
   void setText(String value) {
     _text = value;
+  }
+
+  void setPromptType(String value) {
+    _promptType = value;
+  }
+
+  void setFileName(String value) {
+    _fileName = value;
   }
 
   void setWritingPurpose(String value) {
@@ -41,6 +51,16 @@ class AiWriterCubit extends Cubit<AiWriterState> {
     _maxWordLimit = max;
   }
 
+  void saveUserPrompt() async {
+    final result = await _aiWriterRepository.saveWriterPromptData(data: getPromptData());
+    print('result is :: $result');
+
+    result.handle(
+      onSuccess: (result) async {},
+      onError: (error) {},
+    );
+  }
+
   Map<String, dynamic> getMap() {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
     return {
@@ -50,6 +70,20 @@ class AiWriterCubit extends Cubit<AiWriterState> {
       "minWordLimit": _minWordLimit,
       "maxWordLimit": _maxWordLimit,
       "token": token,
+    };
+  }
+
+  Map<String, dynamic> getPromptData() {
+    return {
+      "prompt": _text,
+      "prompt_type": _promptType,
+      "filename": _fileName,
+      "method": 'writer',
+      "response": state.generatedText,
+      "writer_min_words": _minWordLimit,
+      "writer_max_words": _maxWordLimit,
+      "writer_purpose": _writingPurpose,
+      "writer_language": _writingLanguage,
     };
   }
 
@@ -82,14 +116,11 @@ class AiWriterCubit extends Cubit<AiWriterState> {
   }
 
   void reset() {
-    // Reset internal fields
     _text = '';
     _writingPurpose = '';
     _writingLanguage = '';
     _minWordLimit = 0;
     _maxWordLimit = 0;
-
-    // Reset state
     emit(AiWriterState.initial());
   }
 }

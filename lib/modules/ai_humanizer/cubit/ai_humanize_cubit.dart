@@ -9,24 +9,24 @@ part 'ai_humanize_state.dart';
 
 class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   final AiHumanizerRepository _aiHumanizerRepository;
+  String _text = '';
+  String _promptType = ''; // file/text
+  String _fileName = ''; // uploadedFile ? uploadedFile.name : ""
 
   AiHumanizerCubit({required AiHumanizerRepository aiHumanizerRepository})
       : _aiHumanizerRepository = aiHumanizerRepository,
         super(AiHumanizerState.initial());
 
-  String _text = '';
-
   void setText(String value) {
     _text = value;
   }
 
-  Map<String, dynamic> getMap() {
-    String token = sl<StorageService>().getString(AppKeys.token) ?? '';
-    return {
-      "text": _text,
-      "isProEngine": false,
-      "token": token,
-    };
+  void setPromptType(String value) {
+    _promptType = value;
+  }
+
+  void setFileName(String value) {
+    _fileName = value;
   }
 
   void humanizeText() async {
@@ -52,6 +52,35 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     );
   }
 
+  void saveUserPrompt() async {
+    final result = await _aiHumanizerRepository.saveHumanizerPromptData(data: getPromptData());
+    print('result is :: $result');
+
+    result.handle(
+      onSuccess: (result) async {},
+      onError: (error) {},
+    );
+  }
+
+  Map<String, dynamic> getMap() {
+    String token = sl<StorageService>().getString(AppKeys.token) ?? '';
+    return {
+      "text": _text,
+      "isProEngine": false,
+      "token": token,
+    };
+  }
+
+  Map<String, dynamic> getPromptData() {
+    return {
+      "prompt": _text,
+      "prompt_type": _promptType,
+      "filename": _fileName,
+      "method": 'humanizer',
+      "response": state.generatedText,
+    };
+  }
+
   void updateText(String value) {
     int wordCount = countWords(value);
     emit(state.copyWith(
@@ -66,9 +95,8 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   }
 
   void reset() {
-    // Reset internal fields
     _text = '';
-    // Reset state
+    _promptType = '';
     emit(AiHumanizerState.initial());
   }
 }

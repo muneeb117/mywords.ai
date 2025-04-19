@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:mywords/modules/ai_writer/repository/file_repository.dart';
+import 'package:mywords/core/repository/file_repository.dart';
 
 part 'file_import_state.dart';
 
@@ -28,19 +28,28 @@ class FileImportCubit extends Cubit<FileImportState> {
         return;
       }
 
-      String fileName = file.path.toLowerCase();
+      String filePath = file.path.toLowerCase();
+      final fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
       String extractedText = '';
 
-      if (fileName.endsWith('.pdf')) {
+      if (filePath.endsWith('.pdf')) {
         extractedText = await _fileRepository.extractTextFromPdf(file);
-      } else if (fileName.endsWith('.docx')) {
+      } else if (filePath.endsWith('.docx')) {
         extractedText = await _fileRepository.extractTextFromDocFile(file);
       } else {
         extractedText = 'Unsupported file format';
       }
-      emit(state.copyWith(fileImportStatus: FileImportStatus.success, extractedText: extractedText));
+      emit(state.copyWith(
+        fileImportStatus: FileImportStatus.success,
+        extractedText: extractedText,
+        fileName: fileName,
+      ));
     } catch (e) {
       emit(state.copyWith(fileImportStatus: FileImportStatus.failure, errorMsg: e.toString()));
     }
+  }
+
+  void reset() {
+    emit(FileImportState.initial());
   }
 }

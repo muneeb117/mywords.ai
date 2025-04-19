@@ -31,4 +31,22 @@ class AiWriterRepository {
       return ErrorHandler.handleError<String>(e, stackTrace, context: 'AI Writer');
     }
   }
+
+  Future<Either<ApiError, String>> saveWriterPromptData({required Map<String, dynamic> data}) async {
+    final token = _dioClient.getToken();
+    log('Token before API call: $token');
+    try {
+      final response = await _dioClient.post(ApiEndpoints.savePromptData, data: data);
+
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
+        return Right('Saved user prompt');
+      }
+      return Left(ApiError(
+        errorMsg: 'Server Error, Please try again',
+        code: response.statusCode ?? 0,
+      ));
+    } catch (e, stackTrace) {
+      return ErrorHandler.handleError<String>(e, stackTrace, context: 'Save Writer Prompt');
+    }
+  }
 }

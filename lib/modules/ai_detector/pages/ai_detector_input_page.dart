@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
+import 'package:mywords/common/cubits/file_import/file_import_cubit.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
@@ -10,7 +11,6 @@ import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.dart';
-import 'package:mywords/modules/ai_writer/cubit/file_import/file_import_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiDetectorInputPage extends StatefulWidget {
@@ -27,6 +27,7 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
   void initState() {
     super.initState();
     context.read<AiDetectorCubit>().reset();
+    context.read<FileImportCubit>().reset();
   }
 
   void _putTextOnBoard(String text) {

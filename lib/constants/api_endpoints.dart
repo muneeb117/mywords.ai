@@ -8,4 +8,5 @@ class ApiEndpoints {
   static const deleteAccount = '/api/delete-account';
   static const changePassword = '/api/change-password';
   static const getProfile = '/api/get-user-data';
+  static const savePromptData = '/api/user-prompts';
 }
