@@ -9,6 +9,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
+import 'package:mywords/modules/home/cubit/home_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,9 @@ void main() async {
         ),
         BlocProvider(
           create: (_) => ForgotPasswordCubit(forgotPasswordRepository: sl()),
+        ),
+        BlocProvider(
+          create: (_) => HomeCubit(homeRepository: sl())..fetchDocumentHours(),
         ),
       ],
       child: const MyWordsApp(),

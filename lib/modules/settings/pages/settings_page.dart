@@ -17,7 +17,11 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AccountCubit(sessionRepository: sl(), settingsRepository: sl()),
+      create: (context) => AccountCubit(
+        sessionRepository: sl(),
+        settingsRepository: sl(),
+        dioClient: sl(),
+      ),
       child: Builder(
         builder: (context) {
           return BlocConsumer<AccountCubit, AccountState>(

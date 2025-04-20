@@ -7,6 +7,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/check_for_ai_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
+import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiHumanizerOutputPage extends StatefulWidget {
@@ -17,6 +18,12 @@ class AiHumanizerOutputPage extends StatefulWidget {
 }
 
 class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().fetchDocumentHours();
+  }
+
   @override
   Widget build(BuildContext context) {
     double bottomPadding = MediaQuery.of(context).padding.bottom;

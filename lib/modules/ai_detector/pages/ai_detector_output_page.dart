@@ -5,6 +5,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/check_for_ai_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
+import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiDetectorOutputPage extends StatefulWidget {
@@ -15,7 +16,11 @@ class AiDetectorOutputPage extends StatefulWidget {
 }
 
 class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
-  final TextEditingController aiWriterController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().fetchDocumentHours();
+  }
 
   @override
   Widget build(BuildContext context) {
