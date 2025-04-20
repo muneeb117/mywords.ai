@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mywords/common/cubits/file_import/file_import_cubit.dart';
 import 'package:mywords/config/flavors/flavors.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/config/themes/light_theme.dart';
+import 'package:mywords/core/bloc_setup/app_providers.dart';
 import 'package:mywords/core/di/service_locator.dart';
-import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
-import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
-import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
-import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
-import 'package:mywords/modules/home/cubit/home_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,26 +13,7 @@ void main() async {
 
   runApp(
     MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => AiWriterCubit(aiWriterRepository: sl()),
-        ),
-        BlocProvider(
-          create: (_) => AiHumanizerCubit(aiHumanizerRepository: sl()),
-        ),
-        BlocProvider(
-          create: (_) => AiDetectorCubit(aiDetectorRepository: sl()),
-        ),
-        BlocProvider(
-          create: (_) => FileImportCubit(fileRepository: sl()),
-        ),
-        BlocProvider(
-          create: (_) => ForgotPasswordCubit(forgotPasswordRepository: sl()),
-        ),
-        BlocProvider(
-          create: (_) => HomeCubit(homeRepository: sl())..fetchDocumentHours(),
-        ),
-      ],
+      providers: AppBlocProviders.providers,
       child: const MyWordsApp(),
     ),
   );
