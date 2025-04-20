@@ -118,6 +118,8 @@ class AiWriterCubit extends Cubit<AiWriterState> {
   void reset() {
     _text = '';
     _writingPurpose = '';
+    _promptType = '';
+    _fileName = '';
     _writingLanguage = '';
     _minWordLimit = 0;
     _maxWordLimit = 0;

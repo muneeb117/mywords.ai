@@ -9,6 +9,8 @@ import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
+import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_preference_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
@@ -27,6 +29,8 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
   void initState() {
     super.initState();
     context.read<AiWriterCubit>().reset();
+    context.read<AiDetectorCubit>().reset();
+    context.read<AiHumanizerCubit>().reset();
     context.read<FileImportCubit>().reset();
   }
 

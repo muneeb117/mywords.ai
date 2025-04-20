@@ -97,6 +97,7 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   void reset() {
     _text = '';
     _promptType = '';
+    _fileName = '';
     emit(AiHumanizerState.initial());
   }
 }

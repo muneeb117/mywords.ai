@@ -46,7 +46,7 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                 ),
                 SizedBox(height: 16),
                 Container(
-                    height: 280,
+                    height: 300,
                     margin: EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),

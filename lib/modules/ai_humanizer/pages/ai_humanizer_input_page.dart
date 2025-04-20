@@ -9,8 +9,10 @@ import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
+import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class AiHumanizerInputPage extends StatefulWidget {
@@ -26,6 +28,8 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
   @override
   void initState() {
     super.initState();
+    context.read<AiWriterCubit>().reset();
+    context.read<AiDetectorCubit>().reset();
     context.read<AiHumanizerCubit>().reset();
     context.read<FileImportCubit>().reset();
   }

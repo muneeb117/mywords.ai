@@ -24,7 +24,15 @@ class DetectAiScoreDialog extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(alignment: Alignment.centerRight, child: IconButton(onPressed: () {}, icon: Icon(Icons.close))),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.close),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16) + EdgeInsets.only(bottom: 10),
                   child: Row(

@@ -26,7 +26,7 @@ class AiDetectorCubit extends Cubit<AiDetectorState> {
     emit(state.copyWith(modelPreference: preference));
   }
 
-  Map<String, dynamic> getMap() {
+  Map<String, dynamic> _getMap() {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
     return {
       "text": _text,
@@ -37,7 +37,7 @@ class AiDetectorCubit extends Cubit<AiDetectorState> {
 
   void detectText() async {
     emit(state.copyWith(aiDetectorStatus: AiDetectorStatus.loading));
-    final result = await _aiDetectorRepository.detect(data: getMap());
+    final result = await _aiDetectorRepository.detect(data: _getMap());
     print('result is :: $result');
 
     result.handle(

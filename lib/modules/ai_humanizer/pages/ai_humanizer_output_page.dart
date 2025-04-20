@@ -6,6 +6,7 @@ import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/detect_ai_scrore_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
+import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
@@ -95,38 +96,50 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
         ),
       ),
       bottomNavigationBar: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
-        builder: (context, state) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
-            child: Row(
-              children: [
-                Text('${state.generatedOutputWordCount} Words', style: context.textTheme.titleMedium),
-                SizedBox(width: 48),
-                Expanded(
-                  child: PrimaryButton.filled(
-                      onTap: () {
-
-                        showDialog(
-                          context: context,
-                          builder: (context) => const DetectAiScoreDialog(),
-                        );
+        builder: (context, aiState) {
+          return BlocConsumer<AiDetectorCubit, AiDetectorState>(
+            listener: (context, aiDetectorState) {
+              if (aiDetectorState.aiDetectorStatus == AiDetectorStatus.success) {
+                showDialog(
+                  context: context,
+                  builder: (context) => const DetectAiScoreDialog(),
+                );
+              }
+            },
+            builder: (context, aiDetectorState) {
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                child: Row(
+                  children: [
+                    Text('${aiState.generatedOutputWordCount} Words', style: context.textTheme.titleMedium),
+                    SizedBox(width: 48),
+                    Expanded(
+                      child: PrimaryButton.filled(
+                          isLoading: aiDetectorState.aiDetectorStatus == AiDetectorStatus.loading,
+                          onTap: () {
+                            /// Detect AI response
+                            context.read<AiDetectorCubit>()
+                              ..setText(aiState.generatedText)
+                              ..detectText();
+                          },
+                          title: 'Check for AI',
+                          fontWeight: FontWeight.w700,
+                          backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+                          textColor: context.colorScheme.primary),
+                    ),
+                    SizedBox(width: 5),
+                    IconButton(
+                      icon: SvgPicture.asset('assets/images/svg/ic_copy.svg'),
+                      onPressed: () {
+                        Clipboard.setData(ClipboardData(text: aiState.generatedText));
+                        context.showSnackBar('Copied to Clipboard!');
                       },
-                      title: 'Check for AI',
-                      fontWeight: FontWeight.w700,
-                      backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-                      textColor: context.colorScheme.primary),
+                    )
+                  ],
                 ),
-                SizedBox(width: 5),
-                IconButton(
-                  icon: SvgPicture.asset('assets/images/svg/ic_copy.svg'),
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: state.generatedText));
-                    context.showSnackBar('Copied to Clipboard!');
-                  },
-                )
-              ],
-            ),
+              );
+            },
           );
         },
       ),
