@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mywords/constants/api_endpoints.dart';
 import 'package:mywords/core/exceptions/api_error.dart';
 import 'package:mywords/core/exceptions/error_handler.dart';
@@ -8,10 +9,13 @@ import 'package:mywords/core/network/dio_client.dart';
 
 class AuthRepository {
   final DioClient _dioClient;
+  final GoogleSignIn _googleSignIn;
 
   AuthRepository({
     required DioClient dioClient,
-  }) : _dioClient = dioClient;
+    GoogleSignIn? googleSignIn,
+  })  : _dioClient = dioClient,
+        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
   Future<Either<ApiError, String>> login(String email, String password) async {
     try {
@@ -49,5 +53,24 @@ class AuthRepository {
     } catch (e, stackTrace) {
       return ErrorHandler.handleError<int>(e, stackTrace, context: 'Signup');
     }
+  }
+
+  Future<void> loginWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+
+    print('google user :: $googleUser');
+    // try {
+      // final AuthCredential credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth.accessToken,
+      //   idToken: googleAuth.idToken,
+      // );
+
+    //   return await _firebaseAuth.signInWithCredential(credential);
+    // } on FirebaseAuthException catch (e) {
+    //   throw LogInWithGoogleFailure.fromCode(e.code);
+    // } catch (e) {
+    //   throw LogInWithGoogleFailure(e.toString());
+    // }
   }
 }

@@ -24,7 +24,7 @@ class HomeRepository {
       );
 
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
-        int numberOfDocs = 20;
+        int numberOfDocs = response.data['data'].length;
         return Right(numberOfDocs);
       }
       return Left(ApiError(

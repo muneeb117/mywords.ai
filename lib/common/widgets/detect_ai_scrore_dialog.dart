@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class CheckForAiDialog extends StatelessWidget {
-  const CheckForAiDialog({super.key});
+class DetectAiScoreDialog extends StatelessWidget {
+  const DetectAiScoreDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -14,17 +14,17 @@ class HomeCubit extends Cubit<HomeState> {
         super(HomeState.initial());
 
   void fetchDocumentHours() async {
-    emit(state.copyWith(homeStatus: HomeStatus.loading));
+    // emit(state.copyWith(homeStatus: HomeStatus.loading));
 
-    // final result = await _homeRepository.getDocumentsCount();
-    await Future.delayed(Duration(milliseconds: 1500));
-    final result = Right<ApiError, int>(6);
+    final result = await _homeRepository.getDocumentsCount();
+    // await Future.delayed(Duration(milliseconds: 1500));
+    // final result = Right<ApiError, int>(6);
 
     result.handle(
       onSuccess: (int documentCount) {
         int avgTimeSavedPerDoc = 20;
         final hoursSaved = (documentCount * avgTimeSavedPerDoc) / 60;
-        final roundedHours = hoursSaved.round();
+        final roundedHours = hoursSaved.floor();
 
         emit(state.copyWith(
           homeStatus: HomeStatus.success,

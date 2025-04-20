@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/core/storage/storage_service.dart';
+import 'package:mywords/modules/ai_detector/models/ai_detector_entity.dart';
+import 'package:mywords/modules/ai_detector/models/ai_detector_result.dart';
 import 'package:mywords/modules/ai_detector/repository/ai_detector_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
@@ -39,8 +41,14 @@ class AiDetectorCubit extends Cubit<AiDetectorState> {
     print('result is :: $result');
 
     result.handle(
-      onSuccess: (String generatedText) async {
-        emit(state.copyWith(aiDetectorStatus: AiDetectorStatus.success, generatedText: generatedText));
+      onSuccess: (AiDetectorEntity result) async {
+        emit(
+          state.copyWith(
+            aiDetectorStatus: AiDetectorStatus.success,
+            inputText: _text,
+            aiDetectorEntity: result,
+          ),
+        );
       },
       onError: (error) {
         emit(state.copyWith(aiDetectorStatus: AiDetectorStatus.failed, errorMsg: error.errorMsg));
@@ -51,7 +59,7 @@ class AiDetectorCubit extends Cubit<AiDetectorState> {
   void updateText(String value) {
     int wordCount = countWords(value);
     emit(state.copyWith(
-      text: value,
+      inputText: value,
       wordCount: wordCount,
       aiDetectorStatus: AiDetectorStatus.initial,
     ));
@@ -62,9 +70,7 @@ class AiDetectorCubit extends Cubit<AiDetectorState> {
   }
 
   void reset() {
-    // Reset internal fields
     _text = '';
-    // Reset state
     emit(AiDetectorState.initial());
   }
 }

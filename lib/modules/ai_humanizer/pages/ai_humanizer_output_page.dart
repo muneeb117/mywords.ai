@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
-import 'package:mywords/common/widgets/check_for_ai_dialog.dart';
+import 'package:mywords/common/widgets/detect_ai_scrore_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
@@ -106,9 +106,10 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                 Expanded(
                   child: PrimaryButton.filled(
                       onTap: () {
+
                         showDialog(
                           context: context,
-                          builder: (context) => const CheckForAiDialog(),
+                          builder: (context) => const DetectAiScoreDialog(),
                         );
                       },
                       title: 'Check for AI',

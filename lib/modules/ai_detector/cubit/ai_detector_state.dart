@@ -6,17 +6,17 @@ class AiDetectorState {
   final AiDetectorStatus aiDetectorStatus;
   final String inputText;
   final String modelPreference;
-  final String generatedText;
-  final int wordCount;
   final String errorMsg;
+  final int wordCount;
+  final AiDetectorEntity aiDetectorEntity;
 
   AiDetectorState({
     required this.errorMsg,
     required this.inputText,
     required this.modelPreference,
-    required this.generatedText,
     required this.wordCount,
     required this.aiDetectorStatus,
+    required this.aiDetectorEntity,
   });
 
   factory AiDetectorState.initial() {
@@ -24,26 +24,26 @@ class AiDetectorState {
       errorMsg: '',
       inputText: '',
       modelPreference: 'ChatGPT',
-      generatedText: '',
       wordCount: 0,
+      aiDetectorEntity: AiDetectorEntity.empty(),
       aiDetectorStatus: AiDetectorStatus.initial,
     );
   }
 
   AiDetectorState copyWith({
     String? errorMsg,
-    String? text,
-    String? generatedText,
+    String? inputText,
     String? modelPreference,
     int? wordCount,
+    AiDetectorEntity? aiDetectorEntity,
     AiDetectorStatus? aiDetectorStatus,
   }) {
     return AiDetectorState(
       errorMsg: errorMsg ?? this.errorMsg,
-      inputText: text ?? this.inputText,
+      inputText: inputText ?? this.inputText,
       modelPreference: modelPreference ?? this.modelPreference,
-      generatedText: generatedText ?? this.generatedText,
       wordCount: wordCount ?? this.wordCount,
+      aiDetectorEntity: aiDetectorEntity ?? this.aiDetectorEntity,
       aiDetectorStatus: aiDetectorStatus ?? this.aiDetectorStatus,
     );
   }

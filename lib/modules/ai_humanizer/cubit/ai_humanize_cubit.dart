@@ -31,7 +31,7 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
 
   void humanizeText() async {
     emit(state.copyWith(aiHumanizeStatus: AiHumanizeStatus.loading));
-    final result = await _aiHumanizerRepository.humanize(data: getMap());
+    final result = await _aiHumanizerRepository.humanize(data: _getMap());
     print('result is :: $result');
 
     result.handle(
@@ -53,7 +53,7 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   }
 
   void saveUserPrompt() async {
-    final result = await _aiHumanizerRepository.saveHumanizerPromptData(data: getPromptData());
+    final result = await _aiHumanizerRepository.saveHumanizerPromptData(data: _getPromptData());
     print('result is :: $result');
 
     result.handle(
@@ -62,7 +62,7 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     );
   }
 
-  Map<String, dynamic> getMap() {
+  Map<String, dynamic> _getMap() {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
     return {
       "text": _text,
@@ -71,7 +71,7 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     };
   }
 
-  Map<String, dynamic> getPromptData() {
+  Map<String, dynamic> _getPromptData() {
     return {
       "prompt": _text,
       "prompt_type": _promptType,

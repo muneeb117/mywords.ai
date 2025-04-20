@@ -5,6 +5,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
+import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
@@ -137,7 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                       //   context.read<LoginCubit>().login(email, password);
                       // }),
                       // SizedBox(height: 8),
-                      GoogleAuthButton(onTap: () {}),
+                      GoogleAuthButton(onTap: () {
+                        sl<AuthRepository>().loginWithGoogle();
+                      }),
                       SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
