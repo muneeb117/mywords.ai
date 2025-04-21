@@ -28,10 +28,6 @@ dependencies:
   url_launcher: ^6.2.2
   webview_flutter: ^4.0.0
   cached_network_image: ^3.4.1
-  google_sign_in: ^6.0.2
-
-
-
 
 
   file_picker: ^8.3.2
@@ -43,6 +39,10 @@ dependencies:
   docx_to_text: ^1.0.1
 
 
+  # social auth
+  firebase_auth: ^4.2.10
+  google_sign_in: ^6.0.2
+  sign_in_with_apple: ^4.3.0
 
 
 
