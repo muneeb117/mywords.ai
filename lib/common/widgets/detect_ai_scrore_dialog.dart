@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/modules/ai_detector/models/ai_detector_entity.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class DetectAiScoreDialog extends StatelessWidget {
-  const DetectAiScoreDialog({super.key});
+  const DetectAiScoreDialog({super.key, required this.aiDetectorEntity});
+
+  final AiDetectorEntity aiDetectorEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +42,10 @@ class DetectAiScoreDialog extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        '100%',
+                        '${aiDetectorEntity.confidencePercentage}%',
                         style: context.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: const Color(0xffFF3D00),
+                          color: aiDetectorEntity.isGeneratedByAI ? Color(0xffFF3D00) : AppColors.green,
                         ),
                       ),
                       const SizedBox(width: 30),
@@ -50,10 +54,10 @@ class DetectAiScoreDialog extends StatelessWidget {
                           text: 'Your Text is likely to be written',
                           children: [
                             TextSpan(
-                              text: ' by AI\n9/9 ',
+                              text: ' by AI\n${aiDetectorEntity.summaryMidText} ',
                               style: context.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w500,
-                                color: const Color(0xffFC5A5A),
+                                color: aiDetectorEntity.isGeneratedByAI ? Color(0xffFC5A5A) : AppColors.green,
                               ),
                               children: [
                                 TextSpan(
@@ -110,51 +114,14 @@ class DetectAiScoreDialog extends StatelessWidget {
                             'AI',
                             style: context.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: const Color(0xffFC5A5A),
+                              color: Color(0xffFC5A5A),
+                              letterSpacing: 0,
+                              wordSpacing: 0,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          AiServicesTile(
-                            title: 'Content AI Scale',
-                            assetPath: 'assets/images/svg/ic_human.svg',
-                          ),
-                          SizedBox(width: 5),
-                          AiServicesTile(
-                            title: 'GPTZero',
-                            assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-                          ),
-                          SizedBox(width: 5),
-                          AiServicesTile(
-                            title: 'ZERO GPT',
-                            assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          AiServicesTile(
-                            title: 'OPENAI',
-                            assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-                          ),
-                          SizedBox(width: 5),
-                          AiServicesTile(
-                            title: 'Turnitin',
-                            assetPath: 'assets/images/svg/ic_human.svg',
-                          ),
-                          SizedBox(width: 5),
-                          AiServicesTile(
-                            title: 'CopyLeaks',
-                            assetPath: 'assets/images/svg/ic_human.svg',
-                          ),
-                        ],
-                      ),
+                      ThirdPartyToolsWidget(aiPredictedClass: aiDetectorEntity.predictedClass),
                     ],
                   ),
                 ),
@@ -167,157 +134,49 @@ class DetectAiScoreDialog extends StatelessWidget {
   }
 }
 
-class _InfoStaticWidget extends StatelessWidget {
-  const _InfoStaticWidget();
+class ThirdPartyToolsWidget extends StatelessWidget {
+  final String aiPredictedClass;
+
+  const ThirdPartyToolsWidget({super.key, required this.aiPredictedClass});
+
+  String _getContentAIScaleAsset() {
+    switch (aiPredictedClass) {
+      case 'ai':
+        return 'assets/images/svg/ic_ai_generated.svg';
+      case 'likely_ai':
+        return 'assets/images/svg/ic_likely_ai.svg';
+      default:
+        return 'assets/images/svg/ic_human.svg';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Color(0xffDADADA),
+    return Column(
+      children: [
+        SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AiServicesTile(title: 'Content AI Scale', assetPath: _getContentAIScaleAsset()),
+            SizedBox(width: 5),
+            AiServicesTile(title: 'GPTZero', assetPath: _getContentAIScaleAsset()),
+            SizedBox(width: 5),
+            AiServicesTile(title: 'ZERO GPT', assetPath: _getContentAIScaleAsset()),
+          ],
         ),
-      ),
-      child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10.0),
-                child: Row(
-                  children: [
-                    Text(
-                      '100%',
-                      style: context.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xffFF3D00),
-                      ),
-                    ),
-                    SizedBox(width: 30),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Your Text is likely to be written',
-                        children: [
-                          TextSpan(
-                            text: ' by AI\n9/9 ',
-                            style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500, color: Color(0xffFC5A5A)),
-                            children: [
-                              TextSpan(
-                                text: 'sentences AI generated',
-                                style: context.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                color: Color(0xffDADADA),
-                height: 0,
-              ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Third Party AI Scores',
-                      style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 12),
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/images/svg/ic_human.svg'),
-                        SizedBox(width: 7),
-                        Text(
-                          'Human',
-                          style: context.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff45C646),
-                            letterSpacing: 0,
-                            wordSpacing: 0,
-                          ),
-                        ),
-                        SizedBox(width: 15),
-                        SvgPicture.asset('assets/images/svg/ic_likely_ai.svg'),
-                        SizedBox(width: 7),
-                        Text(
-                          'Likely AI',
-                          style: context.textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w600, color: Color(0xffFABB18), letterSpacing: 0, wordSpacing: 0),
-                        ),
-                        SizedBox(width: 15),
-                        SvgPicture.asset('assets/images/svg/ic_ai_generated.svg'),
-                        SizedBox(width: 7),
-                        Text(
-                          'AI',
-                          style: context.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xffFC5A5A),
-                            letterSpacing: 0,
-                            wordSpacing: 0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AiServicesTile(
-                          title: 'Content AI Scale',
-                          assetPath: 'assets/images/svg/ic_human.svg',
-                        ),
-                        SizedBox(width: 5),
-                        AiServicesTile(
-                          title: 'GPTZero',
-                          assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-                        ),
-                        SizedBox(width: 5),
-                        AiServicesTile(
-                          title: 'ZERO GPT',
-                          assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AiServicesTile(
-                          title: 'OPENAI',
-                          assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-                        ),
-                        SizedBox(width: 5),
-                        AiServicesTile(
-                          title: 'Turnitin',
-                          assetPath: 'assets/images/svg/ic_human.svg',
-                        ),
-                        SizedBox(width: 5),
-                        AiServicesTile(
-                          title: 'CopyLeaks',
-                          assetPath: 'assets/images/svg/ic_human.svg',
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+        SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AiServicesTile(title: 'OPENAI', assetPath: _getContentAIScaleAsset()),
+            SizedBox(width: 5),
+            AiServicesTile(title: 'Turnitin', assetPath: _getContentAIScaleAsset()),
+            SizedBox(width: 5),
+            AiServicesTile(title: 'CopyLeaks', assetPath: _getContentAIScaleAsset()),
+          ],
+        ),
+      ],
     );
   }
 }

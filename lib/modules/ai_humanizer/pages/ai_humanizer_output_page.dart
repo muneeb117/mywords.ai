@@ -102,7 +102,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
               if (aiDetectorState.aiDetectorStatus == AiDetectorStatus.success) {
                 showDialog(
                   context: context,
-                  builder: (context) => const DetectAiScoreDialog(),
+                  builder: (context) => DetectAiScoreDialog(aiDetectorEntity: aiDetectorState.aiDetectorEntity),
                 );
               }
             },

@@ -3,7 +3,6 @@ import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_detector/models/ai_detector_entity.dart';
-import 'package:mywords/modules/ai_detector/models/ai_detector_result.dart';
 import 'package:mywords/modules/ai_detector/repository/ai_detector_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 

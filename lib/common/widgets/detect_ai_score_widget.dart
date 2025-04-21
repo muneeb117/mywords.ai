@@ -115,7 +115,7 @@ class DetectAiScoreWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    ThirdPartyToolsWidget(),
+                    ThirdPartyToolsWidget(aiPredictedClass: aiDetectorEntity.predictedClass),
                   ],
                 ),
               ),
@@ -128,7 +128,20 @@ class DetectAiScoreWidget extends StatelessWidget {
 }
 
 class ThirdPartyToolsWidget extends StatelessWidget {
-  const ThirdPartyToolsWidget({super.key});
+  final String aiPredictedClass;
+
+  const ThirdPartyToolsWidget({super.key, required this.aiPredictedClass});
+
+  String _getContentAIScaleAsset() {
+    switch (aiPredictedClass) {
+      case 'ai':
+        return 'assets/images/svg/ic_ai_generated.svg';
+      case 'likely_ai':
+        return 'assets/images/svg/ic_likely_ai.svg';
+      default:
+        return 'assets/images/svg/ic_human.svg';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,40 +151,22 @@ class ThirdPartyToolsWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AiServicesTile(
-              title: 'Content AI Scale',
-              assetPath: 'assets/images/svg/ic_human.svg',
-            ),
+            AiServicesTile(title: 'Content AI Scale', assetPath: _getContentAIScaleAsset()),
             SizedBox(width: 5),
-            AiServicesTile(
-              title: 'GPTZero',
-              assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-            ),
+            AiServicesTile(title: 'GPTZero', assetPath: _getContentAIScaleAsset()),
             SizedBox(width: 5),
-            AiServicesTile(
-              title: 'ZERO GPT',
-              assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-            ),
+            AiServicesTile(title: 'ZERO GPT', assetPath: _getContentAIScaleAsset()),
           ],
         ),
         SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AiServicesTile(
-              title: 'OPENAI',
-              assetPath: 'assets/images/svg/ic_gpt_loader.svg',
-            ),
+            AiServicesTile(title: 'OPENAI', assetPath: _getContentAIScaleAsset()),
             SizedBox(width: 5),
-            AiServicesTile(
-              title: 'Turnitin',
-              assetPath: 'assets/images/svg/ic_human.svg',
-            ),
+            AiServicesTile(title: 'Turnitin', assetPath: _getContentAIScaleAsset()),
             SizedBox(width: 5),
-            AiServicesTile(
-              title: 'CopyLeaks',
-              assetPath: 'assets/images/svg/ic_human.svg',
-            ),
+            AiServicesTile(title: 'CopyLeaks', assetPath: _getContentAIScaleAsset()),
           ],
         ),
       ],

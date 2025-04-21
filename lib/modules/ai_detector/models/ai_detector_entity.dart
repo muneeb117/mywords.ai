@@ -2,7 +2,7 @@ import 'package:mywords/modules/ai_detector/models/ai_detector_result.dart';
 
 class AiDetectorEntity {
   final int confidencePercentage;
-  final String label;
+  final String predictedClass;
   final String summaryMidText;
   final String resultMessage;
   final bool isGeneratedByAI;
@@ -10,28 +10,16 @@ class AiDetectorEntity {
   AiDetectorEntity({
     required this.confidencePercentage,
     required this.isGeneratedByAI,
-    required this.label,
+    required this.predictedClass,
     required this.summaryMidText,
     required this.resultMessage,
-
   });
 
   factory AiDetectorEntity.fromModel(AiDetectionResult model) {
-    final probs = model.classProbabilities;
-
-    String label;
-    if (probs.ai >= 0.8) {
-      label = "AI";
-    } else if (probs.human >= 0.8) {
-      label = "Human";
-    } else {
-      label = "Likely AI";
-    }
-
     return AiDetectorEntity(
-      confidencePercentage: (model.confidence * 100).round(),
-      isGeneratedByAI: (model.confidence * 100).round() >= 80,
-      label: label,
+      predictedClass: model.predictedClass.toLowerCase(),
+      confidencePercentage: (model.aiGeneratedSentences / model.totalSentences).round() * 100,
+      isGeneratedByAI: ((model.aiGeneratedSentences / model.totalSentences) * 100) > 30,
       summaryMidText: "${model.aiGeneratedSentences}/${model.totalSentences}",
       resultMessage: model.resultMessage,
     );
@@ -42,7 +30,7 @@ class AiDetectorEntity {
     return AiDetectorEntity(
       confidencePercentage: 0,
       isGeneratedByAI: true,
-      label: '',
+      predictedClass: '',
       summaryMidText: '',
       resultMessage: '',
     );
