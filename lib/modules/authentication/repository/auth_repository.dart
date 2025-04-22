@@ -37,11 +37,11 @@ class AuthRepository {
     }
   }
 
-  Future<Either<ApiError, int>> signup(String fullName, String email, String password) async {
+  Future<Either<ApiError, int>> signup(String fullName, String email, String password, String provider) async {
     try {
       final response = await _dioClient.post(
         ApiEndpoints.signup,
-        data: {'name': fullName, 'email': email, 'password': password},
+        data: {'name': fullName, 'email': email, 'password': password, 'provider': provider},
       );
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['userId'] != null) {
         return Right(response.data['userId']);
@@ -61,10 +61,10 @@ class AuthRepository {
 
     print('google user :: $googleUser');
     // try {
-      // final AuthCredential credential = GoogleAuthProvider.credential(
-      //   accessToken: googleAuth.accessToken,
-      //   idToken: googleAuth.idToken,
-      // );
+    // final AuthCredential credential = GoogleAuthProvider.credential(
+    //   accessToken: googleAuth.accessToken,
+    //   idToken: googleAuth.idToken,
+    // );
 
     //   return await _firebaseAuth.signInWithCredential(credential);
     // } on FirebaseAuthException catch (e) {

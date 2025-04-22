@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
+import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
 part 'login_state.dart';
@@ -8,10 +10,15 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   final AuthRepository _authRepository;
   final SessionRepository _sessionRepository;
+  final SocialAuthRepository _socialAuthRepository;
 
-  LoginCubit({required AuthRepository authRepository, required SessionRepository sessionRepository})
-      : _authRepository = authRepository,
+  LoginCubit({
+    required AuthRepository authRepository,
+    required SessionRepository sessionRepository,
+    required SocialAuthRepository socialAuthRepository,
+  })  : _authRepository = authRepository,
         _sessionRepository = sessionRepository,
+        _socialAuthRepository = socialAuthRepository,
         super(LoginState.initial());
 
   void togglePassword() {
@@ -35,5 +42,37 @@ class LoginCubit extends Cubit<LoginState> {
         emit(state.copyWith(loginStatus: LoginStatus.failed, errorMsg: error.errorMsg));
       },
     );
+  }
+
+  Future<void> loginWithGoogle() async {
+    emit(state.copyWith(loginStatus: LoginStatus.googleLoading));
+    try {
+      final result = await _socialAuthRepository.loginWithGoogle();
+      if (result.email.isNotEmpty && result.name.isNotEmpty) {
+        emit(
+          state.copyWith(
+            loginStatus: LoginStatus.googleSuccess,
+            name: result.name,
+            email: result.email,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            errorMsg: 'Some error occurs, Please try again',
+            loginStatus: LoginStatus.failed,
+          ),
+        );
+      }
+    } on LogInWithGoogleFailure catch (e) {
+      emit(
+        state.copyWith(
+          errorMsg: e.message,
+          loginStatus: LoginStatus.failed,
+        ),
+      );
+    } catch (_) {
+      emit(state.copyWith(loginStatus: LoginStatus.failed));
+    }
   }
 }

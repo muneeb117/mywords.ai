@@ -15,17 +15,20 @@ class SocialAuthRepository {
   final GoogleSignIn _googleSignIn;
 
   /// =================================== Google ===================================
-  Future<UserCredential> loginWithGoogle() async {
+  Future<({String name, String email})> loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      print('google user :: $googleUser');
+      return (name: googleUser.displayName ?? '', email: googleUser.email ?? '');
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      return await _firebaseAuth.signInWithCredential(credential);
+      // final AuthCredential credential = GoogleAuthProvider.credential(
+      //   accessToken: googleAuth.accessToken,
+      //   idToken: googleAuth.idToken,
+      // );
+      //
+      // UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
+      // return userCredential;
     } on FirebaseAuthException catch (e) {
       throw LogInWithGoogleFailure.fromCode(e.code);
     } catch (e) {

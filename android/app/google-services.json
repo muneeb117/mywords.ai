@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "951118939478",
+    "project_id": "mywordsai",
+    "storage_bucket": "mywordsai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951118939478:android:2db9462fe5587361a6c2f7",
+        "android_client_info": {
+          "package_name": "com.ai.mywords"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951118939478-scgpt1lqocra1msb72sjmpsicbmk6ui6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjWvqlw3QQMAO36tzWuiDN52lrkC-ti_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951118939478-scgpt1lqocra1msb72sjmpsicbmk6ui6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

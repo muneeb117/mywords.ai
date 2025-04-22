@@ -9,6 +9,7 @@ import 'package:mywords/modules/ai_writer/repository/ai_writer_repository.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/forgot_password_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
+import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
 import 'package:mywords/modules/home/repository/home_repository.dart';
 import 'package:mywords/modules/settings/repository/settings_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,7 @@ Future<void> initDependencies(AppEnv appEnv) async {
 
   sl.registerLazySingleton<SessionRepository>(() => SessionRepository(storageService: sl()));
   sl.registerLazySingleton<AuthRepository>(() => AuthRepository(dioClient: sl()));
+  sl.registerLazySingleton<SocialAuthRepository>(() => SocialAuthRepository());
 
   sl.registerLazySingleton<HomeRepository>(() => HomeRepository(dioClient: sl()));
 
