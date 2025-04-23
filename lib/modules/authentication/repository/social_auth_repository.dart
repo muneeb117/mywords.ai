@@ -15,12 +15,15 @@ class SocialAuthRepository {
   final GoogleSignIn _googleSignIn;
 
   /// =================================== Google ===================================
+  ///
   Future<({String name, String email})> loginWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-      print('google user :: $googleUser');
-      return (name: googleUser.displayName ?? '', email: googleUser.email ?? '');
+      final googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        throw 'Google sign-in was cancelled by the user.';
+      }
+
+      await googleUser.authentication; // optional: can be used if token needed
 
       // final AuthCredential credential = GoogleAuthProvider.credential(
       //   accessToken: googleAuth.accessToken,
@@ -29,6 +32,8 @@ class SocialAuthRepository {
       //
       // UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
       // return userCredential;
+
+      return (name: googleUser.displayName ?? '', email: googleUser.email);
     } on FirebaseAuthException catch (e) {
       throw LogInWithGoogleFailure.fromCode(e.code);
     } catch (e) {
@@ -62,5 +67,9 @@ class SocialAuthRepository {
       print('Apple error :: ${e.toString()}');
       throw const LogInWithAppleFailure();
     }
+  }
+
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
   }
 }

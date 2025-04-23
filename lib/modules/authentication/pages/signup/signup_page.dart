@@ -37,6 +37,7 @@ class _SignupPageState extends State<SignupPage> {
           create: (context) => SignupCubit(
             authRepository: sl(),
             socialAuthRepository: sl(),
+            sessionRepository: sl(),
           ),
         ),
         BlocProvider(

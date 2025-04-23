@@ -40,10 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         BlocProvider(
-          create: (context) => SignupCubit(
-            authRepository: sl(),
-            socialAuthRepository: sl(),
-          ),
+          create: (context) => SignupCubit(authRepository: sl(), socialAuthRepository: sl(), sessionRepository: sl()),
         ),
       ],
       child: Builder(
@@ -135,12 +132,15 @@ class _LoginPageState extends State<LoginPage> {
                                 /// Signup with google
                                 context.read<SignupCubit>().signup(state.name, state.email, '', provider: 'google');
                               } else if (state.loginStatus == LoginStatus.failed) {
-                                context.showSnackBar(state.errorMsg);
+                                if (!state.errorMsg.contains('cancelled by the user')) {
+                                  context.showSnackBar(state.errorMsg);
+                                }
                               }
                             },
                             builder: (context, state) {
                               return BlocListener<SignupCubit, SignupState>(
                                 listener: (context, signupState) {
+                                  print('signupState :: ${signupState.signupStatus}');
                                   if (signupState.signupStatus == SignupStatus.success) {
                                     Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
                                   } else if (signupState.signupStatus == LoginStatus.failed) {

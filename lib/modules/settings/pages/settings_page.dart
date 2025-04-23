@@ -21,6 +21,7 @@ class SettingsPage extends StatelessWidget {
         sessionRepository: sl(),
         settingsRepository: sl(),
         dioClient: sl(),
+        socialAuthRepository: sl(),
       ),
       child: Builder(
         builder: (context) {

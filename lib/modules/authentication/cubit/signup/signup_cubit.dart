@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
+import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
@@ -9,12 +10,15 @@ part 'signup_state.dart';
 class SignupCubit extends Cubit<SignupState> {
   final AuthRepository _authRepository;
   final SocialAuthRepository _socialAuthRepository;
+  final SessionRepository _sessionRepository;
 
   SignupCubit({
     required AuthRepository authRepository,
     required SocialAuthRepository socialAuthRepository,
+    required SessionRepository sessionRepository,
   })  : _authRepository = authRepository,
         _socialAuthRepository = socialAuthRepository,
+        _sessionRepository = sessionRepository,
         super(SignupState.initial());
 
   void togglePassword() {
@@ -36,10 +40,15 @@ class SignupCubit extends Cubit<SignupState> {
     final result = await _authRepository.signup(fullName, email, password, provider);
 
     result.handle(
-      onSuccess: (int userId) {
+      onSuccess: (String token) async {
+        if (state.isGoogleLoading) {
+          await _sessionRepository.setLoggedIn(true);
+          await _sessionRepository.setToken(token);
+        }
         emit(state.copyWith(signupStatus: SignupStatus.success, isGoogleLoading: false));
       },
       onError: (error) {
+        print('error is :: $error');
         emit(state.copyWith(signupStatus: SignupStatus.failed, errorMsg: error.errorMsg, isGoogleLoading: false));
       },
     );
