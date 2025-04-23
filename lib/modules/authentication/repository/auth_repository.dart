@@ -43,11 +43,13 @@ class AuthRepository {
         ApiEndpoints.signup,
         data: {'name': fullName, 'email': email, 'password': password, 'provider': provider},
       );
-      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['token'] != null) {
+      if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
         if (provider == 'google') {
           _dioClient.setToken(response.data['token']);
+          return Right(response.data['token']);
+        } else {
+          return Right(response.data['userId'].toString());
         }
-        return Right(response.data['token']);
       }
       return Left(ApiError(
         errorMsg: 'Server Error, Please try again',
