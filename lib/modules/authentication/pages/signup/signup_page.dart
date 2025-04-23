@@ -162,12 +162,18 @@ class _SignupPageState extends State<SignupPage> {
                               SizedBox(height: 16),
                               BlocConsumer<SignupCubit, SignupState>(
                                 listener: (context, state) {
-                                  if (state.signupStatus == SignupStatus.success) {
+                                  if (state.signupStatus == SignupStatus.success &&
+                                      state.isGoogleLoading == false &&
+                                      state.isFromGoogle == false) {
                                     Navigator.pushReplacementNamed(context, RouteManager.signupConfirmation);
+                                  } else if (state.signupStatus == SignupStatus.success && state.isFromGoogle == true) {
+                                    Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
                                   } else if (state.signupStatus == SignupStatus.googleSuccess) {
                                     context.read<SignupCubit>().signup(state.name, state.email, '', provider: 'google');
                                   } else if (state.signupStatus == SignupStatus.failed) {
-                                    context.showSnackBar(state.errorMsg);
+                                    if (!state.errorMsg.contains('cancelled by the user')) {
+                                      context.showSnackBar(state.errorMsg);
+                                    }
                                   }
                                 },
                                 builder: (context, state) {

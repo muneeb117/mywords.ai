@@ -36,7 +36,11 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   Future<void> signup(String fullName, String email, String password, {String provider = ''}) async {
-    emit(state.copyWith(signupStatus: SignupStatus.loading, isGoogleLoading: provider == 'google'));
+    emit(state.copyWith(
+      signupStatus: SignupStatus.loading,
+      isGoogleLoading: provider == 'google',
+      isFromGoogle: provider == 'google',
+    ));
     final result = await _authRepository.signup(fullName, email, password, provider);
 
     result.handle(
@@ -45,11 +49,18 @@ class SignupCubit extends Cubit<SignupState> {
           await _sessionRepository.setLoggedIn(true);
           await _sessionRepository.setToken(token);
         }
-        emit(state.copyWith(signupStatus: SignupStatus.success, isGoogleLoading: false));
+        emit(state.copyWith(
+          signupStatus: SignupStatus.success,
+          isGoogleLoading: false,
+        ));
       },
       onError: (error) {
-        print('error is :: $error');
-        emit(state.copyWith(signupStatus: SignupStatus.failed, errorMsg: error.errorMsg, isGoogleLoading: false));
+        emit(state.copyWith(
+          signupStatus: SignupStatus.failed,
+          errorMsg: error.errorMsg,
+          isGoogleLoading: false,
+          isFromGoogle: false,
+        ));
       },
     );
   }

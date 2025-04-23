@@ -10,6 +10,7 @@ class SignupState {
   final String email;
   final String errorMsg;
   final bool isGoogleLoading;
+  final bool isFromGoogle;
 
   SignupState({
     required this.isPasswordHidden,
@@ -19,6 +20,7 @@ class SignupState {
     required this.email,
     required this.errorMsg,
     required this.isGoogleLoading,
+    required this.isFromGoogle,
   });
 
   factory SignupState.initial() {
@@ -26,6 +28,7 @@ class SignupState {
       isPasswordHidden: true,
       isConfirmPasswordHidden: true,
       isGoogleLoading: false,
+      isFromGoogle: false,
       signupStatus: SignupStatus.initial,
       name: '',
       email: '',
@@ -37,6 +40,7 @@ class SignupState {
     bool? isPasswordHidden,
     bool? isConfirmPasswordHidden,
     bool? isGoogleLoading,
+    bool? isFromGoogle,
     SignupStatus? signupStatus,
     String? name,
     String? email,
@@ -46,6 +50,7 @@ class SignupState {
       isPasswordHidden: isPasswordHidden ?? this.isPasswordHidden,
       isConfirmPasswordHidden: isConfirmPasswordHidden ?? this.isConfirmPasswordHidden,
       isGoogleLoading: isGoogleLoading ?? this.isGoogleLoading,
+      isFromGoogle: isFromGoogle ?? this.isFromGoogle,
       signupStatus: signupStatus ?? this.signupStatus,
       name: name ?? this.name,
       email: email ?? this.email,
