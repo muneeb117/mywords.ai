@@ -33,14 +33,12 @@ class _LoginPageState extends State<LoginPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => LoginCubit(
-            authRepository: sl(),
-            sessionRepository: sl(),
-            socialAuthRepository: sl(),
-          ),
+          create:
+              (context) => LoginCubit(authRepository: sl(), sessionRepository: sl(), socialAuthRepository: sl(), analyticsService: sl()),
         ),
         BlocProvider(
-          create: (context) => SignupCubit(authRepository: sl(), socialAuthRepository: sl(), sessionRepository: sl()),
+          create:
+              (context) => SignupCubit(authRepository: sl(), socialAuthRepository: sl(), sessionRepository: sl(), analyticsService: sl()),
         ),
       ],
       child: Builder(
@@ -56,10 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                   titleSpacing: 0,
                   surfaceTintColor: Colors.transparent,
                   backgroundColor: context.theme.scaffoldBackgroundColor,
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: TopAppIconAndTitleWidget(),
-                  ),
+                  title: Padding(padding: const EdgeInsets.only(top: 10.0), child: TopAppIconAndTitleWidget()),
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -69,13 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Login',
-                            style: context.textTheme.headlineMedium?.copyWith(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
+                          Text('Login', style: context.textTheme.headlineMedium?.copyWith(fontSize: 24, fontWeight: FontWeight.w700)),
                           // AuthHeaderWidget(title: 'Login'),
                           SizedBox(height: 16),
                           Text('Email', style: context.textTheme.titleMedium),
@@ -166,18 +155,18 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           OrDividerWidget(),
-                          GoogleAuthButton(onTap: () {
-                            context.read<LoginCubit>().loginWithGoogle();
-                          }),
+                          GoogleAuthButton(
+                            onTap: () {
+                              context.read<LoginCubit>().loginWithGoogle();
+                            },
+                          ),
                           SizedBox(height: 8),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 "Don't have an account?",
-                                style: context.textTheme.bodyMedium?.copyWith(
-                                  color: context.colorScheme.onSurface,
-                                ),
+                                style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
                               ),
                               GestureDetector(
                                 onTap: () {
@@ -193,9 +182,9 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -203,10 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               if (isSigningUpWithGoogle)
-                Container(
-                  color: Colors.black.withOpacity(0.15),
-                  child: LoadingIndicator(bgColor: AppColors.black),
-                ),
+                Container(color: Colors.black.withOpacity(0.15), child: LoadingIndicator(bgColor: AppColors.black)),
             ],
           );
         },

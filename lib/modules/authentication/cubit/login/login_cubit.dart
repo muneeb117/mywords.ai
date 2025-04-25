@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
@@ -11,14 +12,17 @@ class LoginCubit extends Cubit<LoginState> {
   final AuthRepository _authRepository;
   final SessionRepository _sessionRepository;
   final SocialAuthRepository _socialAuthRepository;
+  final AnalyticsService _analyticsService;
 
   LoginCubit({
     required AuthRepository authRepository,
     required SessionRepository sessionRepository,
     required SocialAuthRepository socialAuthRepository,
+    required AnalyticsService analyticsService,
   })  : _authRepository = authRepository,
         _sessionRepository = sessionRepository,
         _socialAuthRepository = socialAuthRepository,
+        _analyticsService = analyticsService,
         super(LoginState.initial());
 
   void togglePassword() {

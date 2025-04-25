@@ -38,6 +38,7 @@ class _SignupPageState extends State<SignupPage> {
             authRepository: sl(),
             socialAuthRepository: sl(),
             sessionRepository: sl(),
+            analyticsService: sl(),
           ),
         ),
         BlocProvider(
@@ -45,6 +46,7 @@ class _SignupPageState extends State<SignupPage> {
             authRepository: sl(),
             sessionRepository: sl(),
             socialAuthRepository: sl(),
+            analyticsService: sl(),
           ),
         ),
       ],
