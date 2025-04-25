@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCjWvqlw3QQMAO36tzWuiDN52lrkC-ti_8',
-    appId: '1:951118939478:android:2db9462fe5587361a6c2f7',
+    appId: '1:951118939478:android:e40db9e292898acda6c2f7',
     messagingSenderId: '951118939478',
     projectId: 'mywordsai',
     storageBucket: 'mywordsai.firebasestorage.app',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAU5HbOiR6VRzcq083erJORQiGuQe87vuM',
-    appId: '1:951118939478:ios:8bc0af4393119646a6c2f7',
+    appId: '1:951118939478:ios:35ce8b26fb0dd11aa6c2f7',
     messagingSenderId: '951118939478',
     projectId: 'mywordsai',
     storageBucket: 'mywordsai.firebasestorage.app',
+    androidClientId: '951118939478-2uohcn5agq2abu7bcjud0ut9d1ruk454.apps.googleusercontent.com',
     iosClientId: '951118939478-eueqfv6l1s9kdg33al8qunr6b7hu1r8b.apps.googleusercontent.com',
     iosBundleId: 'com.ai.mywords',
   );

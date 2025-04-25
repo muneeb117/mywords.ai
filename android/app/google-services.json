@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:951118939478:android:2db9462fe5587361a6c2f7",
+        "mobilesdk_app_id": "1:951118939478:android:e40db9e292898acda6c2f7",
         "android_client_info": {
           "package_name": "com.ai.mywords"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "951118939478-scgpt1lqocra1msb72sjmpsicbmk6ui6.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "951118939478-eueqfv6l1s9kdg33al8qunr6b7hu1r8b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ai.mywords"
+              }
             }
           ]
         }

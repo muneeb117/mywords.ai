@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mywords/core/exceptions/apple_failure.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
@@ -6,12 +5,13 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SocialAuthRepository {
   SocialAuthRepository({
-    FirebaseAuth? firebaseAuth,
+    // FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
-  })  : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+  })  :
+        // _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
-  final FirebaseAuth _firebaseAuth;
+  // final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
   /// =================================== Google ===================================
@@ -34,9 +34,11 @@ class SocialAuthRepository {
       // return userCredential;
 
       return (name: googleUser.displayName ?? '', email: googleUser.email);
-    } on FirebaseAuthException catch (e) {
-      throw LogInWithGoogleFailure.fromCode(e.code);
-    } catch (e) {
+    }
+    // on FirebaseAuthException catch (e) {
+    //   throw LogInWithGoogleFailure.fromCode(e.code);
+    // }
+    catch (e) {
       throw LogInWithGoogleFailure(e.toString());
     }
   }
@@ -44,29 +46,29 @@ class SocialAuthRepository {
   /// =================================== Apple ===================================
 
   Future<void> loginWithApple() async {
-    try {
-      // final appleProvider = AppleAuthProvider();
-      // await _firebaseAuth.signInWithProvider(appleProvider);
-
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-      );
-      final oAuthProvider = OAuthProvider('apple.com');
-      final credential = oAuthProvider.credential(
-        idToken: appleCredential.identityToken,
-        accessToken: appleCredential.authorizationCode,
-      );
-      await _firebaseAuth.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      print('Apple error :: ${e.toString()}');
-      throw LogInWithAppleFailure.fromCode(e.code);
-    } catch (e) {
-      print('Apple error :: ${e.toString()}');
-      throw const LogInWithAppleFailure();
-    }
+    // try {
+    //   // final appleProvider = AppleAuthProvider();
+    //   // await _firebaseAuth.signInWithProvider(appleProvider);
+    //
+    //   final appleCredential = await SignInWithApple.getAppleIDCredential(
+    //     scopes: [
+    //       AppleIDAuthorizationScopes.email,
+    //       AppleIDAuthorizationScopes.fullName,
+    //     ],
+    //   );
+    //   final oAuthProvider = OAuthProvider('apple.com');
+    //   final credential = oAuthProvider.credential(
+    //     idToken: appleCredential.identityToken,
+    //     accessToken: appleCredential.authorizationCode,
+    //   );
+    //   await _firebaseAuth.signInWithCredential(credential);
+    // } on FirebaseAuthException catch (e) {
+    //   print('Apple error :: ${e.toString()}');
+    //   throw LogInWithAppleFailure.fromCode(e.code);
+    // } catch (e) {
+    //   print('Apple error :: ${e.toString()}');
+    //   throw const LogInWithAppleFailure();
+    // }
   }
 
   Future<void> signOut() async {
