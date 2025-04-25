@@ -54,7 +54,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                           child: Text(
-                            'Output',
+                            'Humanized Output',
                             style: context.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: context.colorScheme.onSurface,

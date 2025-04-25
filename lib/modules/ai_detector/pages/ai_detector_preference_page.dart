@@ -113,7 +113,7 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
               onTap: () {
                 context.read<AiDetectorCubit>().detectText();
               },
-              title: 'Generate Outline',
+              title: 'Check for AI',
               iconPath: 'assets/images/svg/ic_flag.svg',
               fontWeight: FontWeight.w700,
             );
