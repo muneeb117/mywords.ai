@@ -5,6 +5,8 @@ import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart';
+import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
 import 'package:mywords/modules/authentication/cubit/signup/signup_cubit.dart';
@@ -24,6 +26,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final _analyticsService = sl<AnalyticsService>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -109,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           RememberMeAndForgotPasswordTile(
                             onRememberMeTap: () {},
                             onForgotPasswordTap: () {
+                              _analyticsService.logEvent(name: AnalyticsEventNames.forgotPasswordInitiated);
                               Navigator.pushNamed(context, RouteManager.forgotPasswordEmail);
                             },
                           ),
@@ -170,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  _analyticsService.logEvent(name: AnalyticsEventNames.signupInitiated);
                                   Navigator.pushReplacementNamed(context, RouteManager.signup);
                                 },
                                 child: Padding(

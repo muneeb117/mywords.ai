@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/constants/app_keys.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart' show AnalyticsEventNames;
+import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_humanizer/repository/ai_humanizer_repository.dart';
@@ -9,13 +11,16 @@ part 'ai_humanize_state.dart';
 
 class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   final AiHumanizerRepository _aiHumanizerRepository;
+  final AnalyticsService _analyticsService;
   String _text = '';
   String _promptType = ''; // file/text
   String _fileName = ''; // uploadedFile ? uploadedFile.name : ""
 
-  AiHumanizerCubit({required AiHumanizerRepository aiHumanizerRepository})
+  AiHumanizerCubit({required AiHumanizerRepository aiHumanizerRepository,required AnalyticsService analyticsService})
       : _aiHumanizerRepository = aiHumanizerRepository,
-        super(AiHumanizerState.initial());
+        _analyticsService = analyticsService,
+
+      super(AiHumanizerState.initial());
 
   void setText(String value) {
     _text = value;
@@ -37,6 +42,8 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     result.handle(
       onSuccess: (String generatedText) async {
         int wordCount = countWords(generatedText);
+        _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerSuccess);
+
         emit(state.copyWith(
           aiHumanizeStatus: AiHumanizeStatus.success,
           generatedText: generatedText,
@@ -44,6 +51,7 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
         ));
       },
       onError: (error) {
+        _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerFailed);
         emit(state.copyWith(
           aiHumanizeStatus: AiHumanizeStatus.failed,
           errorMsg: error.errorMsg,

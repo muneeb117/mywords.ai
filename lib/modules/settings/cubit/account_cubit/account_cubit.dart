@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart';
+import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/network/dio_client.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
@@ -11,18 +13,21 @@ class AccountCubit extends Cubit<AccountState> {
   final SessionRepository _sessionRepository;
   final SettingsRepository _settingsRepository;
   final SocialAuthRepository _socialAuthRepository;
+  final AnalyticsService _analyticsService;
   final DioClient _dioClient;
 
   AccountCubit({
     required SessionRepository sessionRepository,
     required SettingsRepository settingsRepository,
     required SocialAuthRepository socialAuthRepository,
+    required AnalyticsService analyticsService,
     required DioClient dioClient,
-  })  : _sessionRepository = sessionRepository,
-        _settingsRepository = settingsRepository,
-        _socialAuthRepository = socialAuthRepository,
-        _dioClient = dioClient,
-        super(AccountState.initial());
+  }) : _sessionRepository = sessionRepository,
+       _settingsRepository = settingsRepository,
+       _socialAuthRepository = socialAuthRepository,
+       _analyticsService = analyticsService,
+       _dioClient = dioClient,
+       super(AccountState.initial());
 
   void logout() async {
     emit(state.copyWith(accountStatus: AccountStatus.loggingOut));
@@ -39,12 +44,14 @@ class AccountCubit extends Cubit<AccountState> {
 
     result.handle(
       onSuccess: (result) async {
+        _analyticsService.logEvent(name: AnalyticsEventNames.deleteAccountSuccess);
         _dioClient.clearToken();
         await _sessionRepository.clearSession();
         await _socialAuthRepository.signOut();
         emit(state.copyWith(accountStatus: AccountStatus.deleteSuccess));
       },
       onError: (error) {
+        _analyticsService.logEvent(name: AnalyticsEventNames.deleteAccountFailed);
         emit(state.copyWith(accountStatus: AccountStatus.failed, errorMsg: error.errorMsg));
       },
     );

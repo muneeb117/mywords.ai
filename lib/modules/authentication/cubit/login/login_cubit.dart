@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
@@ -19,17 +20,14 @@ class LoginCubit extends Cubit<LoginState> {
     required SessionRepository sessionRepository,
     required SocialAuthRepository socialAuthRepository,
     required AnalyticsService analyticsService,
-  })  : _authRepository = authRepository,
-        _sessionRepository = sessionRepository,
-        _socialAuthRepository = socialAuthRepository,
-        _analyticsService = analyticsService,
-        super(LoginState.initial());
+  }) : _authRepository = authRepository,
+       _sessionRepository = sessionRepository,
+       _socialAuthRepository = socialAuthRepository,
+       _analyticsService = analyticsService,
+       super(LoginState.initial());
 
   void togglePassword() {
-    emit(state.copyWith(
-      loginStatus: LoginStatus.initial,
-      isPasswordHidden: !state.isPasswordHidden,
-    ));
+    emit(state.copyWith(loginStatus: LoginStatus.initial, isPasswordHidden: !state.isPasswordHidden));
   }
 
   Future<void> login(String email, String password) async {
@@ -38,11 +36,13 @@ class LoginCubit extends Cubit<LoginState> {
 
     result.handle(
       onSuccess: (String token) async {
+        _analyticsService.logEvent(name: AnalyticsEventNames.loginSuccess, parameters: {'email': email});
         await _sessionRepository.setLoggedIn(true);
         await _sessionRepository.setToken(token);
         emit(state.copyWith(loginStatus: LoginStatus.success));
       },
       onError: (error) {
+        _analyticsService.logEvent(name: AnalyticsEventNames.loginFailed, parameters: {'email': email});
         emit(state.copyWith(loginStatus: LoginStatus.failed, errorMsg: error.errorMsg));
       },
     );
@@ -53,28 +53,13 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final result = await _socialAuthRepository.loginWithGoogle();
       if (result.email.isNotEmpty && result.name.isNotEmpty) {
-        emit(
-          state.copyWith(
-            loginStatus: LoginStatus.googleSuccess,
-            name: result.name,
-            email: result.email,
-          ),
-        );
+        _analyticsService.logEvent(name: AnalyticsEventNames.loginWithGoogleAttempt, parameters: {'email': result.email});
+        emit(state.copyWith(loginStatus: LoginStatus.googleSuccess, name: result.name, email: result.email));
       } else {
-        emit(
-          state.copyWith(
-            errorMsg: 'Some error occurs, Please try again',
-            loginStatus: LoginStatus.failed,
-          ),
-        );
+        emit(state.copyWith(errorMsg: 'Some error occurs, Please try again', loginStatus: LoginStatus.failed));
       }
     } on LogInWithGoogleFailure catch (e) {
-      emit(
-        state.copyWith(
-          errorMsg: e.message,
-          loginStatus: LoginStatus.failed,
-        ),
-      );
+      emit(state.copyWith(errorMsg: e.message, loginStatus: LoginStatus.failed));
     } catch (_) {}
   }
 }

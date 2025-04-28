@@ -7,7 +7,7 @@ class FirebaseAnalyticsService extends AnalyticsService {
   FirebaseAnalyticsService({required FirebaseAnalytics firebaseAnalytics}) : _firebaseAnalytics = firebaseAnalytics;
 
   @override
-  Future<void> logEvent(String name, {Map<String, dynamic>? parameters}) {
-    throw UnimplementedError();
+  void logEvent({required String name, Map<String, Object>? parameters}) {
+    _firebaseAnalytics.logEvent(name: name, parameters: parameters);
   }
 }

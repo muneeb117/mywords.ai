@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/constants/app_keys.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart';
+import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/ai_writer/repository/ai_writer_repository.dart';
@@ -9,10 +11,12 @@ part 'ai_writer_state.dart';
 
 class AiWriterCubit extends Cubit<AiWriterState> {
   final AiWriterRepository _aiWriterRepository;
+  final AnalyticsService _analyticsService;
 
-  AiWriterCubit({required AiWriterRepository aiWriterRepository})
-      : _aiWriterRepository = aiWriterRepository,
-        super(AiWriterState.initial());
+  AiWriterCubit({required AiWriterRepository aiWriterRepository, required AnalyticsService analyticsService})
+    : _aiWriterRepository = aiWriterRepository,
+      _analyticsService = analyticsService,
+      super(AiWriterState.initial());
 
   // Internal storage (does not affect UI)
   String _text = '';
@@ -55,10 +59,7 @@ class AiWriterCubit extends Cubit<AiWriterState> {
     final result = await _aiWriterRepository.saveWriterPromptData(data: getPromptData());
     print('result is :: $result');
 
-    result.handle(
-      onSuccess: (result) async {},
-      onError: (error) {},
-    );
+    result.handle(onSuccess: (result) async {}, onError: (error) {});
   }
 
   Map<String, dynamic> getMap() {
@@ -94,9 +95,11 @@ class AiWriterCubit extends Cubit<AiWriterState> {
 
     result.handle(
       onSuccess: (String generatedText) async {
+        _analyticsService.logEvent(name: AnalyticsEventNames.aiWriterSuccess);
         emit(state.copyWith(aiWriterStatus: AiWriterStatus.success, generatedText: generatedText));
       },
       onError: (error) {
+        _analyticsService.logEvent(name: AnalyticsEventNames.aiWriterFailed);
         emit(state.copyWith(aiWriterStatus: AiWriterStatus.failed, errorMsg: error.errorMsg));
       },
     );
@@ -104,11 +107,7 @@ class AiWriterCubit extends Cubit<AiWriterState> {
 
   void updateText(String value) {
     int wordCount = countWords(value);
-    emit(state.copyWith(
-      text: value,
-      wordCount: wordCount,
-      aiWriterStatus: AiWriterStatus.initial,
-    ));
+    emit(state.copyWith(text: value, wordCount: wordCount, aiWriterStatus: AiWriterStatus.initial));
   }
 
   int countWords(String text) {

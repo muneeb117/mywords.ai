@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart';
+import 'package:mywords/core/analytics/analytics_service.dart';
+import 'package:mywords/core/di/service_locator.dart' show sl;
 import 'package:mywords/modules/home/widgets/current_plan_widget.dart';
 import 'package:mywords/modules/home/widgets/home_header.dart';
 import 'package:mywords/modules/home/widgets/home_tool_widget.dart';
@@ -47,6 +50,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 8),
             HomeToolWidget(
               onTap: () {
+                sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiWriterInitiated);
                 Navigator.pushNamed(context, RouteManager.aiWriterInput);
               },
               title: 'AI Writer',
@@ -56,6 +60,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 10),
             HomeToolWidget(
               onTap: () {
+                sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiHumanizerInitiated);
                 Navigator.pushNamed(context, RouteManager.aiHumanizerInput);
               },
               title: 'AI Humanizer',
@@ -65,6 +70,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 10),
             HomeToolWidget(
               onTap: () {
+                sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiDetectorInitiated);
                 Navigator.pushNamed(context, RouteManager.aiDetectorInput);
               },
               title: 'AI Detector',

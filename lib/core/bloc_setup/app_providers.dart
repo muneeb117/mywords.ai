@@ -9,23 +9,11 @@ import 'package:mywords/modules/home/cubit/home_cubit.dart';
 
 class AppBlocProviders {
   static List<BlocProvider> providers = [
-    BlocProvider<AiWriterCubit>(
-      create: (_) => AiWriterCubit(aiWriterRepository: sl()),
-    ),
-    BlocProvider<AiHumanizerCubit>(
-      create: (_) => AiHumanizerCubit(aiHumanizerRepository: sl()),
-    ),
-    BlocProvider<AiDetectorCubit>(
-      create: (_) => AiDetectorCubit(aiDetectorRepository: sl()),
-    ),
-    BlocProvider<FileImportCubit>(
-      create: (_) => FileImportCubit(fileRepository: sl()),
-    ),
-    BlocProvider<ForgotPasswordCubit>(
-      create: (_) => ForgotPasswordCubit(forgotPasswordRepository: sl()),
-    ),
-    BlocProvider<HomeCubit>(
-      create: (_) => HomeCubit(homeRepository: sl())..fetchDocumentHours(),
-    ),
+    BlocProvider<AiWriterCubit>(create: (_) => AiWriterCubit(aiWriterRepository: sl(), analyticsService: sl())),
+    BlocProvider<AiHumanizerCubit>(create: (_) => AiHumanizerCubit(aiHumanizerRepository: sl(), analyticsService: sl())),
+    BlocProvider<AiDetectorCubit>(create: (_) => AiDetectorCubit(aiDetectorRepository: sl(), analyticsService: sl())),
+    BlocProvider<FileImportCubit>(create: (_) => FileImportCubit(fileRepository: sl())),
+    BlocProvider<ForgotPasswordCubit>(create: (_) => ForgotPasswordCubit(forgotPasswordRepository: sl(), analyticsService: sl())),
+    BlocProvider<HomeCubit>(create: (_) => HomeCubit(homeRepository: sl())..fetchDocumentHours()),
   ];
 }

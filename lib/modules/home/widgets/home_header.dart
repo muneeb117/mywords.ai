@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/config/routes/route_manager.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart' show AnalyticsEventNames;
+import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
+import 'package:mywords/core/di/service_locator.dart' show sl;
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class HomeHeader extends StatelessWidget {

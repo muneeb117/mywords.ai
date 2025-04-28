@@ -1,3 +1,3 @@
 abstract class AnalyticsService {
-  Future<void> logEvent(String name, {Map<String, dynamic>? parameters});
+  void logEvent({required String name, Map<String, Object>? parameters});
 }
