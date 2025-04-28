@@ -9,5 +9,6 @@ class FirebaseAnalyticsService extends AnalyticsService {
   @override
   void logEvent({required String name, Map<String, Object>? parameters}) {
     _firebaseAnalytics.logEvent(name: name, parameters: parameters);
+    print('logged');
   }
 }
