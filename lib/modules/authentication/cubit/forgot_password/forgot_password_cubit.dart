@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:mywords/core/analytics/analytics_event_names.dart';
+import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/modules/authentication/repository/forgot_password_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
@@ -8,10 +10,12 @@ part 'forgot_password_state.dart';
 
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final ForgotPasswordRepository _forgotPasswordRepository;
+  final AnalyticsService _analyticsService;
 
-  ForgotPasswordCubit({required ForgotPasswordRepository forgotPasswordRepository})
-      : _forgotPasswordRepository = forgotPasswordRepository,
-        super(ForgotPasswordState.initial());
+  ForgotPasswordCubit({required ForgotPasswordRepository forgotPasswordRepository, required AnalyticsService analyticsService})
+    : _forgotPasswordRepository = forgotPasswordRepository,
+      _analyticsService = analyticsService,
+      super(ForgotPasswordState.initial());
 
   void submitEmail(String email) async {
     emit(state.copyWith(status: ForgotPasswordStatus.loading, step: ForgotPasswordStep.emailInput));
@@ -50,9 +54,11 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
     result.handle(
       onSuccess: (String result) async {
+        _analyticsService.logEvent(name: AnalyticsEventNames.forgotPasswordSuccess, parameters: {'email': state.email});
         emit(state.copyWith(newPassword: newPassword, status: ForgotPasswordStatus.success));
       },
       onError: (error) {
+        _analyticsService.logEvent(name: AnalyticsEventNames.forgotPasswordFailed, parameters: {'email': state.email});
         emit(state.copyWith(status: ForgotPasswordStatus.failure, errorMessage: error.errorMsg));
       },
     );
