@@ -60,6 +60,6 @@ class LoginCubit extends Cubit<LoginState> {
       }
     } on LogInWithGoogleFailure catch (e) {
       emit(state.copyWith(errorMsg: e.message, loginStatus: LoginStatus.failed));
-    } catch (_) {}
+    } catch (c) {}
   }
 }
