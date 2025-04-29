@@ -57,63 +57,54 @@ class _AiWriterInputPageState extends State<AiWriterInputPage> {
           appBar: CustomAppBar(title: 'AI Writer'),
           body: Column(
             children: [
-              StepIndicator(
-                activeSteps: [1],
-                leftText: 'Prompt',
-                centerText: 'Purpose',
-                rightText: 'Output',
-              ),
+              StepIndicator(activeSteps: [1], leftText: 'Prompt', centerText: 'Purpose', rightText: 'Output'),
               SizedBox(height: 16),
               Flexible(
                 child: SingleChildScrollView(
                   child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Color(0xffDADADA),
-                        ),
-                      ),
-                      child: BlocConsumer<AiWriterCubit, AiWriterState>(
-                        listener: (context, state) {
-                          // TODO: implement listener
-                        },
-                        builder: (context, state) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _TextFieldHeader(wordCount: state.wordCount),
-                              AiTextField(
-                                onChanged: (nextValue) {
-                                  context.read<AiWriterCubit>().updateText(nextValue);
-                                },
-                                textEditingController: aiWriterController,
-                              ),
-                              LabeledIconsRow(
-                                /// On sample text selection
-                                onSampleTextCallback: () {
-                                  final sampleText = AiSampleText.samplePrompt;
-                                  _putTextOnBoard(sampleText);
-                                },
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
+                    child: BlocConsumer<AiWriterCubit, AiWriterState>(
+                      listener: (context, state) {
+                        // TODO: implement listener
+                      },
+                      builder: (context, state) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _TextFieldHeader(wordCount: state.wordCount),
+                            AiTextField(
+                              onChanged: (nextValue) {
+                                context.read<AiWriterCubit>().updateText(nextValue);
+                              },
+                              textEditingController: aiWriterController,
+                            ),
+                            LabeledIconsRow(
+                              /// On sample text selection
+                              onSampleTextCallback: () {
+                                final sampleText = AiSampleText.samplePrompt;
+                                _putTextOnBoard(sampleText);
+                              },
 
-                                /// On upload file
-                                onUploadFileCallBack: () {
-                                  context.read<FileImportCubit>().importFile();
-                                },
+                              /// On upload file
+                              onUploadFileCallBack: () {
+                                context.read<FileImportCubit>().importFile();
+                              },
 
-                                /// On paste text
-                                onPasteTextCallBack: () async {
-                                  final clipboardData = await Clipboard.getData('text/plain');
-                                  final text = clipboardData?.text;
-                                  if (text?.isNotEmpty ?? false) {
-                                    _putTextOnBoard(text!);
-                                  }
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      )),
+                              /// On paste text
+                              onPasteTextCallBack: () async {
+                                final clipboardData = await Clipboard.getData('text/plain');
+                                final text = clipboardData?.text;
+                                if (text?.isNotEmpty ?? false) {
+                                  _putTextOnBoard(text!);
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 20),
@@ -184,12 +175,13 @@ class _TextFieldHeader extends StatelessWidget {
               ),
               Spacer(),
               Text.rich(
-                TextSpan(text: '${wordCount}', style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange), children: [
-                  TextSpan(
-                    text: '/800 Words',
-                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
-                  )
-                ]),
+                TextSpan(
+                  text: '${wordCount}',
+                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
+                  children: [
+                    TextSpan(text: '/800 Words', style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface)),
+                  ],
+                ),
               ),
             ],
           ),

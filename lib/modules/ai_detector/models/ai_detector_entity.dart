@@ -27,12 +27,6 @@ class AiDetectorEntity {
 
   /// Empty factory constructor
   factory AiDetectorEntity.empty() {
-    return AiDetectorEntity(
-      confidencePercentage: 0,
-      isGeneratedByAI: true,
-      predictedClass: '',
-      summaryMidText: '',
-      resultMessage: '',
-    );
+    return AiDetectorEntity(confidencePercentage: 0, isGeneratedByAI: true, predictedClass: '', summaryMidText: '', resultMessage: '');
   }
 }

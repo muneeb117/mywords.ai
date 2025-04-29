@@ -26,66 +26,42 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StepIndicator(
-                activeSteps: [1, 2],
-                leftText: 'Input',
-                centerText: 'Preference',
-                rightText: 'Output',
-              ),
+              StepIndicator(activeSteps: [1, 2], leftText: 'Input', centerText: 'Preference', rightText: 'Output'),
               SizedBox(height: 16),
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Color(0xffDADADA),
-                    ),
-                  ),
-                  child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
-                    listener: (context, state) {},
-                    builder: (context, state) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                            child: Text(
-                              'Select Preference',
-                              style: context.textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: context.colorScheme.onSurface,
-                              ),
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
+                child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                          child: Text(
+                            'Select Preference',
+                            style: context.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: context.colorScheme.onSurface,
                             ),
                           ),
-                          Divider(
-                            color: Color(0xffDADADA),
-                            height: 0,
-                          ),
-                          SizedBox(height: 16),
-                          DetectorPreferenceTile(
-                            title: 'ChatGPT',
-                            isSelected: state.modelPreference == 'ChatGPT',
-                          ),
-                          SizedBox(height: 8),
-                          DetectorPreferenceTile(
-                            title: 'GPT-4',
-                            isSelected: state.modelPreference == 'GPT-4',
-                          ),
-                          SizedBox(height: 8),
-                          DetectorPreferenceTile(
-                            title: 'Human',
-                            isSelected: state.modelPreference == 'Human',
-                          ),
-                          SizedBox(height: 8),
-                          DetectorPreferenceTile(
-                            title: 'Human + AI',
-                            isSelected: state.modelPreference == 'Human + AI',
-                          ),
-                          SizedBox(height: 16),
-                        ],
-                      );
-                    },
-                  )),
+                        ),
+                        Divider(color: Color(0xffDADADA), height: 0),
+                        SizedBox(height: 16),
+                        DetectorPreferenceTile(title: 'ChatGPT', isSelected: state.modelPreference == 'ChatGPT'),
+                        SizedBox(height: 8),
+                        DetectorPreferenceTile(title: 'GPT-4', isSelected: state.modelPreference == 'GPT-4'),
+                        SizedBox(height: 8),
+                        DetectorPreferenceTile(title: 'Human', isSelected: state.modelPreference == 'Human'),
+                        SizedBox(height: 8),
+                        DetectorPreferenceTile(title: 'Human + AI', isSelected: state.modelPreference == 'Human + AI'),
+                        SizedBox(height: 16),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -125,11 +101,7 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
 }
 
 class DetectorPreferenceTile extends StatelessWidget {
-  const DetectorPreferenceTile({
-    super.key,
-    required this.title,
-    required this.isSelected,
-  });
+  const DetectorPreferenceTile({super.key, required this.title, required this.isSelected});
 
   final String title;
   final bool isSelected;
@@ -150,10 +122,7 @@ class DetectorPreferenceTile extends StatelessWidget {
           border: Border.all(color: Color(0xffEAECF0)),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Text(
-          title,
-          style: context.textTheme.titleMedium?.copyWith(color: isSelected ? context.colorScheme.primary : null),
-        ),
+        child: Text(title, style: context.textTheme.titleMedium?.copyWith(color: isSelected ? context.colorScheme.primary : null)),
       ),
     );
   }

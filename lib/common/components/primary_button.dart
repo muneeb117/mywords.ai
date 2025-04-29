@@ -18,8 +18,8 @@ class PrimaryButton extends StatelessWidget {
     this.enableShrinkAnimation = false,
     this.indicatorColor = AppColors.white,
     this.fontWeight = FontWeight.w500,
-  })  : buttonType = ButtonType.filled,
-        gradientColors = null;
+  }) : buttonType = ButtonType.filled,
+       gradientColors = null;
 
   const PrimaryButton.outlined({
     super.key,
@@ -32,8 +32,8 @@ class PrimaryButton extends StatelessWidget {
     this.enableShrinkAnimation = false,
     this.fontWeight = FontWeight.w500,
     this.indicatorColor = AppColors.white,
-  })  : buttonType = ButtonType.outlined,
-        gradientColors = null;
+  }) : buttonType = ButtonType.outlined,
+       gradientColors = null;
 
   const PrimaryButton.gradient({
     super.key,
@@ -46,8 +46,8 @@ class PrimaryButton extends StatelessWidget {
     this.enableShrinkAnimation = false,
     this.indicatorColor = AppColors.white,
     this.fontWeight = FontWeight.w500,
-  })  : buttonType = ButtonType.gradient,
-        backgroundColor = Colors.transparent;
+  }) : buttonType = ButtonType.gradient,
+       backgroundColor = Colors.transparent;
 
   final String title;
   final VoidCallback onTap;
@@ -66,10 +66,7 @@ class PrimaryButton extends StatelessWidget {
     BoxDecoration decoration;
     switch (buttonType) {
       case ButtonType.filled:
-        decoration = BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(6),
-        );
+        decoration = BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(6));
         break;
       case ButtonType.outlined:
         decoration = BoxDecoration(
@@ -80,11 +77,7 @@ class PrimaryButton extends StatelessWidget {
         break;
       case ButtonType.gradient:
         decoration = BoxDecoration(
-          gradient: LinearGradient(
-            colors: gradientColors!,
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          gradient: LinearGradient(colors: gradientColors!, begin: Alignment.topLeft, end: Alignment.bottomRight),
           borderRadius: BorderRadius.circular(6),
         );
         break;
@@ -102,32 +95,28 @@ class PrimaryButton extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: isLoading
-              ? LoadingIndicator(bgColor: indicatorColor)
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (iconPath != null)
+          child:
+              isLoading
+                  ? LoadingIndicator(bgColor: indicatorColor)
+                  : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (iconPath != null)
+                        Flexible(child: Padding(padding: const EdgeInsets.only(right: 8.0, top: 1), child: SvgPicture.asset(iconPath!))),
                       Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0, top: 1),
-                          child: SvgPicture.asset(iconPath!),
+                        child: Text(
+                          title,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            color: buttonType == ButtonType.filled ? textColor : textColor,
+                            fontSize: 16,
+                            fontWeight: fontWeight,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
-                    Flexible(
-                      child: Text(
-                        title,
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: buttonType == ButtonType.filled ? textColor : textColor,
-                          fontSize: 16,
-                          fontWeight: fontWeight,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
         ),
       ),
     );

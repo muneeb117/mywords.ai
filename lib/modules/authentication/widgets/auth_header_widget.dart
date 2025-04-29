@@ -14,17 +14,16 @@ class TopAppIconAndTitleWidget extends StatelessWidget {
           // SizedBox(height: MediaQuery.paddingOf(context).top),
           Row(
             children: [
-              Image.asset(
-                'assets/images/png/img_app_icon.png',
-                height: 45,
-                width: 45,
-              ),
+              Image.asset('assets/images/png/img_app_icon.png', height: 45, width: 45),
               SizedBox(width: 4),
               Text(
                 'MyWords.AI',
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.primary, fontWeight: FontWeight.w700, letterSpacing: 0),
-              )
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: context.colorScheme.primary,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                ),
+              ),
             ],
           ),
         ],

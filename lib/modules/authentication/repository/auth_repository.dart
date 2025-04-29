@@ -11,27 +11,19 @@ class AuthRepository {
   final DioClient _dioClient;
   final GoogleSignIn _googleSignIn;
 
-  AuthRepository({
-    required DioClient dioClient,
-    GoogleSignIn? googleSignIn,
-  })  : _dioClient = dioClient,
-        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
+  AuthRepository({required DioClient dioClient, GoogleSignIn? googleSignIn})
+    : _dioClient = dioClient,
+      _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
   Future<Either<ApiError, String>> login(String email, String password) async {
     try {
-      final response = await _dioClient.post(
-        ApiEndpoints.login,
-        data: {'email': email, 'password': password},
-      );
+      final response = await _dioClient.post(ApiEndpoints.login, data: {'email': email, 'password': password});
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created) && response.data?['token'] != null) {
         final token = response.data['token'];
         _dioClient.setToken(token);
         return Right(token);
       }
-      return Left(ApiError(
-        errorMsg: 'Server Error, Please try again',
-        code: response.statusCode ?? 0,
-      ));
+      return Left(ApiError(errorMsg: 'Server Error, Please try again', code: response.statusCode ?? 0));
     } catch (e, stackTrace) {
       return ErrorHandler.handleError<String>(e, stackTrace, context: 'Login');
     }
@@ -51,10 +43,7 @@ class AuthRepository {
           return Right(response.data['userId'].toString());
         }
       }
-      return Left(ApiError(
-        errorMsg: 'Server Error, Please try again',
-        code: response.statusCode ?? 0,
-      ));
+      return Left(ApiError(errorMsg: 'Server Error, Please try again', code: response.statusCode ?? 0));
     } catch (e, stackTrace) {
       return ErrorHandler.handleError(e, stackTrace, context: 'Signup');
     }

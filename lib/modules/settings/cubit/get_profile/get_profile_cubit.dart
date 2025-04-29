@@ -8,8 +8,8 @@ class GetProfileCubit extends Cubit<GetProfileState> {
   final SettingsRepository _settingsRepository;
 
   GetProfileCubit({required SettingsRepository settingsRepository})
-      : _settingsRepository = settingsRepository,
-        super(GetProfileState.initial());
+    : _settingsRepository = settingsRepository,
+      super(GetProfileState.initial());
 
   void getProfile() async {
     emit(state.copyWith(getProfileStatus: GetProfileStatus.loading));
@@ -17,11 +17,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
 
     result.handle(
       onSuccess: (result) async {
-        emit(state.copyWith(
-          fullName: result.name,
-          email: result.email,
-          getProfileStatus: GetProfileStatus.success,
-        ));
+        emit(state.copyWith(fullName: result.name, email: result.email, getProfileStatus: GetProfileStatus.success));
       },
       onError: (error) {
         emit(state.copyWith(getProfileStatus: GetProfileStatus.failed, errorMsg: error.errorMsg));

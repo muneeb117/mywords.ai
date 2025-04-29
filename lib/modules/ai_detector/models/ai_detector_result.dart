@@ -55,11 +55,7 @@ class ClassProbabilities {
   final double ai;
   final double mixed;
 
-  ClassProbabilities({
-    required this.human,
-    required this.ai,
-    required this.mixed,
-  });
+  ClassProbabilities({required this.human, required this.ai, required this.mixed});
 
   factory ClassProbabilities.fromJson(Map<String, dynamic> json) {
     return ClassProbabilities(
@@ -71,18 +67,10 @@ class ClassProbabilities {
 
   /// Empty constructor
   factory ClassProbabilities.empty() {
-    return ClassProbabilities(
-      human: 0.0,
-      ai: 0.0,
-      mixed: 0.0,
-    );
+    return ClassProbabilities(human: 0.0, ai: 0.0, mixed: 0.0);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'human': human,
-      'ai': ai,
-      'mixed': mixed,
-    };
+    return {'human': human, 'ai': ai, 'mixed': mixed};
   }
 }

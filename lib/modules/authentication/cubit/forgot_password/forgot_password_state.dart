@@ -1,17 +1,8 @@
 part of 'forgot_password_cubit.dart';
 
-enum ForgotPasswordStep {
-  emailInput,
-  otpInput,
-  newPassword,
-}
+enum ForgotPasswordStep { emailInput, otpInput, newPassword }
 
-enum ForgotPasswordStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
+enum ForgotPasswordStatus { initial, loading, success, failure }
 
 class ForgotPasswordState {
   final String email;

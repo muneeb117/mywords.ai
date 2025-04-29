@@ -34,20 +34,12 @@ class _SignupPageState extends State<SignupPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SignupCubit(
-            authRepository: sl(),
-            socialAuthRepository: sl(),
-            sessionRepository: sl(),
-            analyticsService: sl(),
-          ),
+          create:
+              (context) => SignupCubit(authRepository: sl(), socialAuthRepository: sl(), sessionRepository: sl(), analyticsService: sl()),
         ),
         BlocProvider(
-          create: (context) => LoginCubit(
-            authRepository: sl(),
-            sessionRepository: sl(),
-            socialAuthRepository: sl(),
-            analyticsService: sl(),
-          ),
+          create:
+              (context) => LoginCubit(authRepository: sl(), sessionRepository: sl(), socialAuthRepository: sl(), analyticsService: sl()),
         ),
       ],
       child: Builder(
@@ -61,10 +53,7 @@ class _SignupPageState extends State<SignupPage> {
                   titleSpacing: 0,
                   surfaceTintColor: Colors.transparent,
                   backgroundColor: context.theme.scaffoldBackgroundColor,
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: TopAppIconAndTitleWidget(),
-                  ),
+                  title: Padding(padding: const EdgeInsets.only(top: 10.0), child: TopAppIconAndTitleWidget()),
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -78,10 +67,7 @@ class _SignupPageState extends State<SignupPage> {
                             children: [
                               Text(
                                 'Join Us Today',
-                                style: context.textTheme.headlineMedium?.copyWith(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                style: context.textTheme.headlineMedium?.copyWith(fontSize: 24, fontWeight: FontWeight.w700),
                               ),
                               SizedBox(height: 16),
                               Text('Full Name', style: context.textTheme.titleMedium),
@@ -142,9 +128,10 @@ class _SignupPageState extends State<SignupPage> {
                               InputField.password(
                                 hintText: 'Confirm Password',
                                 controller: confirmPasswordTextController,
-                                suffixIconPath: state.isConfirmPasswordHidden
-                                    ? 'assets/images/svg/ic_pwd_hidden.svg'
-                                    : 'assets/images/svg/ic_pwd_shown.svg',
+                                suffixIconPath:
+                                    state.isConfirmPasswordHidden
+                                        ? 'assets/images/svg/ic_pwd_hidden.svg'
+                                        : 'assets/images/svg/ic_pwd_shown.svg',
                                 obscureText: state.isConfirmPasswordHidden,
                                 onSuffixIconTap: () {
                                   context.read<SignupCubit>().toggleConfirmPassword();
@@ -198,18 +185,18 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               ),
                               OrDividerWidget(),
-                              GoogleAuthButton(onTap: () {
-                                context.read<SignupCubit>().signupWithGoogle();
-                              }),
+                              GoogleAuthButton(
+                                onTap: () {
+                                  context.read<SignupCubit>().signupWithGoogle();
+                                },
+                              ),
                               SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     "Already have an account?",
-                                    style: context.textTheme.bodyMedium?.copyWith(
-                                      color: context.colorScheme.onSurface,
-                                    ),
+                                    style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -219,13 +206,15 @@ class _SignupPageState extends State<SignupPage> {
                                       padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
                                       child: Text(
                                         'Login',
-                                        style: context.textTheme.titleMedium
-                                            ?.copyWith(color: context.colorScheme.secondary, fontWeight: FontWeight.bold),
+                                        style: context.textTheme.titleMedium?.copyWith(
+                                          color: context.colorScheme.secondary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         );
@@ -235,10 +224,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               if (isSigningUpWithGoogle)
-                Container(
-                  color: Colors.black.withOpacity(0.15),
-                  child: LoadingIndicator(bgColor: AppColors.black),
-                ),
+                Container(color: Colors.black.withOpacity(0.15), child: LoadingIndicator(bgColor: AppColors.black)),
             ],
           );
         },

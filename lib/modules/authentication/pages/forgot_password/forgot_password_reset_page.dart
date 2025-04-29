@@ -33,9 +33,7 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
               children: [
                 Text(
                   "Choose a new password for your AITripBot account. Make sure it's secure and easy to remember.",
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
                 ),
                 SizedBox(height: 26),
                 Text('New Password', style: context.textTheme.titleMedium),
@@ -109,7 +107,7 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
                       fontWeight: FontWeight.bold,
                     );
                   },
-                )
+                ),
               ],
             ),
           ),

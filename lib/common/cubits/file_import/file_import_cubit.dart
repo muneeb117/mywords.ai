@@ -8,9 +8,7 @@ part 'file_import_state.dart';
 class FileImportCubit extends Cubit<FileImportState> {
   final FileRepository _fileRepository;
 
-  FileImportCubit({required FileRepository fileRepository})
-      : _fileRepository = fileRepository,
-        super(FileImportState.initial());
+  FileImportCubit({required FileRepository fileRepository}) : _fileRepository = fileRepository, super(FileImportState.initial());
 
   Future<void> importFile() async {
     emit(state.copyWith(fileImportStatus: FileImportStatus.loading));
@@ -39,11 +37,7 @@ class FileImportCubit extends Cubit<FileImportState> {
       } else {
         extractedText = 'Unsupported file format';
       }
-      emit(state.copyWith(
-        fileImportStatus: FileImportStatus.success,
-        extractedText: extractedText,
-        fileName: fileName,
-      ));
+      emit(state.copyWith(fileImportStatus: FileImportStatus.success, extractedText: extractedText, fileName: fileName));
     } catch (e) {
       emit(state.copyWith(fileImportStatus: FileImportStatus.failure, errorMsg: e.toString()));
     }

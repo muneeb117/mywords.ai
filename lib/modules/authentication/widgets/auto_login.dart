@@ -24,7 +24,7 @@ class AutoLoginButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
             ),
           ),
-          Text('Continue', style: context.textTheme.titleMedium)
+          Text('Continue', style: context.textTheme.titleMedium),
         ],
       ),
     );

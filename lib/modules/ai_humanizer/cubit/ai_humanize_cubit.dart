@@ -16,9 +16,9 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   String _promptType = ''; // file/text
   String _fileName = ''; // uploadedFile ? uploadedFile.name : ""
 
-  AiHumanizerCubit({required AiHumanizerRepository aiHumanizerRepository,required AnalyticsService analyticsService})
-      : _aiHumanizerRepository = aiHumanizerRepository,
-        _analyticsService = analyticsService,
+  AiHumanizerCubit({required AiHumanizerRepository aiHumanizerRepository, required AnalyticsService analyticsService})
+    : _aiHumanizerRepository = aiHumanizerRepository,
+      _analyticsService = analyticsService,
 
       super(AiHumanizerState.initial());
 
@@ -44,18 +44,11 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
         int wordCount = countWords(generatedText);
         _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerSuccess);
 
-        emit(state.copyWith(
-          aiHumanizeStatus: AiHumanizeStatus.success,
-          generatedText: generatedText,
-          generatedOutputWordCount: wordCount,
-        ));
+        emit(state.copyWith(aiHumanizeStatus: AiHumanizeStatus.success, generatedText: generatedText, generatedOutputWordCount: wordCount));
       },
       onError: (error) {
         _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerFailed);
-        emit(state.copyWith(
-          aiHumanizeStatus: AiHumanizeStatus.failed,
-          errorMsg: error.errorMsg,
-        ));
+        emit(state.copyWith(aiHumanizeStatus: AiHumanizeStatus.failed, errorMsg: error.errorMsg));
       },
     );
   }
@@ -64,38 +57,21 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     final result = await _aiHumanizerRepository.saveHumanizerPromptData(data: _getPromptData());
     print('result is :: $result');
 
-    result.handle(
-      onSuccess: (result) async {},
-      onError: (error) {},
-    );
+    result.handle(onSuccess: (result) async {}, onError: (error) {});
   }
 
   Map<String, dynamic> _getMap() {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
-    return {
-      "text": _text,
-      "isProEngine": false,
-      "token": token,
-    };
+    return {"text": _text, "isProEngine": false, "token": token};
   }
 
   Map<String, dynamic> _getPromptData() {
-    return {
-      "prompt": _text,
-      "prompt_type": _promptType,
-      "filename": _fileName,
-      "method": 'humanizer',
-      "response": state.generatedText,
-    };
+    return {"prompt": _text, "prompt_type": _promptType, "filename": _fileName, "method": 'humanizer', "response": state.generatedText};
   }
 
   void updateText(String value) {
     int wordCount = countWords(value);
-    emit(state.copyWith(
-      text: value,
-      wordCount: wordCount,
-      aiHumanizeStatus: AiHumanizeStatus.initial,
-    ));
+    emit(state.copyWith(text: value, wordCount: wordCount, aiHumanizeStatus: AiHumanizeStatus.initial));
   }
 
   int countWords(String text) {

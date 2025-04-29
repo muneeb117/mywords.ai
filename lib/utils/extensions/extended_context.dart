@@ -11,10 +11,7 @@ extension ExtendedContext on BuildContext {
 
   void closeKeyboard() => FocusScope.of(this).unfocus();
 
-  void showSnackBar(
-    String message, {
-    bool isError = false,
-  }) {
+  void showSnackBar(String message, {bool isError = false}) {
     final theme = Theme.of(this);
     final Color? foregroundColor;
     final Color? backgroundColor;
@@ -26,13 +23,7 @@ extension ExtendedContext on BuildContext {
       backgroundColor = null;
     }
     ScaffoldMessenger.of(this).showSnackBar(
-      SnackBar(
-        backgroundColor: backgroundColor ?? Colors.black87,
-        content: Text(
-          message,
-          style: TextStyle(color: foregroundColor),
-        ),
-      ),
+      SnackBar(backgroundColor: backgroundColor ?? Colors.black87, content: Text(message, style: TextStyle(color: foregroundColor))),
     );
   }
 }

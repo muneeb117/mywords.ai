@@ -79,12 +79,7 @@ class LabeledIconButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: bgColor,
-            border: Border.all(
-              color: Color(0xffDADADA),
-            )),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: bgColor, border: Border.all(color: Color(0xffDADADA))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -92,12 +87,7 @@ class LabeledIconButton extends StatelessWidget {
             SizedBox(width: 8),
             Text(
               text,
-              style: context.textTheme.titleMedium?.copyWith(
-                color: textColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 12,
-                letterSpacing: 0,
-              ),
+              style: context.textTheme.titleMedium?.copyWith(color: textColor, fontWeight: FontWeight.w500, fontSize: 12, letterSpacing: 0),
             ),
           ],
         ),

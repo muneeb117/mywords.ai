@@ -39,22 +39,12 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                StepIndicator(
-                  activeSteps: [1, 2, 3],
-                  leftText: 'Prompt',
-                  centerText: 'Purpose',
-                  rightText: 'Output',
-                ),
+                StepIndicator(activeSteps: [1, 2, 3], leftText: 'Prompt', centerText: 'Purpose', rightText: 'Output'),
                 SizedBox(height: 16),
                 Container(
                   height: 300,
                   margin: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Color(0xffDADADA),
-                    ),
-                  ),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -62,16 +52,10 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                         child: Text(
                           'Output',
-                          style: context.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: context.colorScheme.onSurface,
-                          ),
+                          style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
                         ),
                       ),
-                      Divider(
-                        color: Color(0xffDADADA),
-                        height: 0,
-                      ),
+                      Divider(color: Color(0xffDADADA), height: 0),
                       Expanded(
                         child: BlocBuilder<AiWriterCubit, AiWriterState>(
                           builder: (context, state) {
@@ -82,10 +66,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                                 padding: EdgeInsets.only(top: 16),
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 16.0),
-                                  child: SelectableText(
-                                    state.generatedText,
-                                    style: context.textTheme.titleMedium,
-                                  ),
+                                  child: SelectableText(state.generatedText, style: context.textTheme.titleMedium),
                                 ),
                               ),
                             );
@@ -112,10 +93,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
           bottomNavigationBar: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
             listener: (context, state) {
               if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
-                showDialog(
-                  context: context,
-                  builder: (context) => const AiHumanizerDialog(),
-                );
+                showDialog(context: context, builder: (context) => const AiHumanizerDialog());
               } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
                 context.showSnackBar(state.errorMsg);
               }

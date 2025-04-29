@@ -7,25 +7,13 @@ class HomeState {
   final String errorMsg;
   final int hoursSaved;
 
-  HomeState({
-    required this.homeStatus,
-    required this.errorMsg,
-    required this.hoursSaved,
-  });
+  HomeState({required this.homeStatus, required this.errorMsg, required this.hoursSaved});
 
   factory HomeState.initial() {
-    return HomeState(
-      homeStatus: HomeStatus.initial,
-      hoursSaved: 0,
-      errorMsg: '',
-    );
+    return HomeState(homeStatus: HomeStatus.initial, hoursSaved: 0, errorMsg: '');
   }
 
-  HomeState copyWith({
-    HomeStatus? homeStatus,
-    int? hoursSaved,
-    String? errorMsg,
-  }) {
+  HomeState copyWith({HomeStatus? homeStatus, int? hoursSaved, String? errorMsg}) {
     return HomeState(
       homeStatus: homeStatus ?? this.homeStatus,
       hoursSaved: hoursSaved ?? this.hoursSaved,

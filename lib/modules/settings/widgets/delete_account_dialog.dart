@@ -22,10 +22,7 @@ Future<void> showDeleteAccountDialog(BuildContext context, {required VoidCallbac
         ),
         actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(); // close dialog
@@ -34,9 +31,7 @@ Future<void> showDeleteAccountDialog(BuildContext context, {required VoidCallbac
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
             child: const Text('Delete'),
           ),

@@ -32,9 +32,5 @@ class OnboardingItem {
   final String description;
   final String image;
 
-  OnboardingItem({
-    required this.title,
-    required this.description,
-    required this.image,
-  });
+  OnboardingItem({required this.title, required this.description, required this.image});
 }

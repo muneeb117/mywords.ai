@@ -17,10 +17,7 @@ class DetectAiScoreDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       insetPadding: const EdgeInsets.all(16),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xffDADADA)),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xffDADADA))),
         child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -62,12 +59,10 @@ class DetectAiScoreDialog extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: 'sentences AI generated',
-                                  style: context.textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                         style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
@@ -81,10 +76,7 @@ class DetectAiScoreDialog extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Third Party AI Scores',
-                        style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                      ),
+                      Text('Third Party AI Scores', style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 12),
                       Row(
                         children: [
@@ -92,20 +84,14 @@ class DetectAiScoreDialog extends StatelessWidget {
                           const SizedBox(width: 7),
                           Text(
                             'Human',
-                            style: context.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xff45C646),
-                            ),
+                            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600, color: const Color(0xff45C646)),
                           ),
                           const SizedBox(width: 15),
                           SvgPicture.asset('assets/images/svg/ic_likely_ai.svg'),
                           const SizedBox(width: 7),
                           Text(
                             'Likely AI',
-                            style: context.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: const Color(0xffFABB18),
-                            ),
+                            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600, color: const Color(0xffFABB18)),
                           ),
                           const SizedBox(width: 15),
                           SvgPicture.asset('assets/images/svg/ic_ai_generated.svg'),
@@ -182,11 +168,7 @@ class ThirdPartyToolsWidget extends StatelessWidget {
 }
 
 class AiServicesTile extends StatelessWidget {
-  const AiServicesTile({
-    super.key,
-    required this.title,
-    required this.assetPath,
-  });
+  const AiServicesTile({super.key, required this.title, required this.assetPath});
 
   final String title;
   final String assetPath;
@@ -196,19 +178,13 @@ class AiServicesTile extends StatelessWidget {
     return Container(
       height: 34,
       padding: EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: Color(0xffB3B3B3).withOpacity(0.15),
-        borderRadius: BorderRadius.circular(30),
-      ),
+      decoration: BoxDecoration(color: Color(0xffB3B3B3).withOpacity(0.15), borderRadius: BorderRadius.circular(30)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(assetPath),
           SizedBox(width: 6),
-          Text(
-            title,
-            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11),
-          ),
+          Text(title, style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11)),
         ],
       ),
     );

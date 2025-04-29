@@ -1,15 +1,12 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mywords/core/exceptions/apple_failure.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SocialAuthRepository {
   SocialAuthRepository({
     // FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
-  })  :
-        // _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
+  }) : // _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+       _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
   // final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;

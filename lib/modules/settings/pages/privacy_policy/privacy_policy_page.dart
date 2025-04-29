@@ -16,21 +16,20 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
 
   void initState() {
     super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (progress) {
-            // `progress` is an int from 0 to 100
-            setState(() {
-              _progress = progress / 100.0;
-            });
-          },
-        ),
-      )
-      ..loadRequest(
-        Uri.parse('https://sites.google.com/view/mywords-ai/home'),
-      );
+    _controller =
+        WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setNavigationDelegate(
+            NavigationDelegate(
+              onProgress: (progress) {
+                // `progress` is an int from 0 to 100
+                setState(() {
+                  _progress = progress / 100.0;
+                });
+              },
+            ),
+          )
+          ..loadRequest(Uri.parse('https://sites.google.com/view/mywords-ai/home'));
   }
 
   @override
@@ -46,9 +45,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               backgroundColor: Colors.grey.shade300,
               valueColor: AlwaysStoppedAnimation<Color>(context.colorScheme.primary),
             ),
-          Expanded(
-            child: WebViewWidget(controller: _controller),
-          ),
+          Expanded(child: WebViewWidget(controller: _controller)),
         ],
       ),
     );

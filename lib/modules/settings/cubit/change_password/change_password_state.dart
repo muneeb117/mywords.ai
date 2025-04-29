@@ -1,11 +1,6 @@
 part of 'change_password_cubit.dart';
 
-enum ChangePasswordStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
+enum ChangePasswordStatus { initial, loading, success, failure }
 
 class ChangePasswordState {
   final ChangePasswordStatus changePasswordStatus;

@@ -9,10 +9,7 @@ class DioClient extends DioForNative {
   String? _authToken;
 
   DioClient({required Flavors flavors}) : _flavors = flavors {
-    options = BaseOptions(
-      baseUrl: _flavors.config.baseUrl,
-      responseType: ResponseType.json,
-    );
+    options = BaseOptions(baseUrl: _flavors.config.baseUrl, responseType: ResponseType.json);
 
     if (_flavors.config.isDebug) {
       interceptors.add(LogInterceptor(requestBody: true, responseBody: true, responseHeader: false, request: false, requestHeader: true));

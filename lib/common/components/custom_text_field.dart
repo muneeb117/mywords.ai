@@ -45,8 +45,8 @@ class InputField extends StatelessWidget {
     this.hasPrefixIcon = true,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
-  })  : inputFieldType = InputFieldType.regular,
-        super(key: key);
+  }) : inputFieldType = InputFieldType.regular,
+       super(key: key);
 
   // Email field constructor
   const InputField.email({
@@ -60,16 +60,16 @@ class InputField extends StatelessWidget {
     this.hasPrefixIcon = true,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters,
-  })  : prefixIconPath = 'assets/images/svg/ic_email.svg',
-        suffixIconPath = null,
-        onSuffixIconTap = null,
-        keyboardType = TextInputType.emailAddress,
-        obscureText = false,
-        autocorrect = false,
-        enableSuggestions = true,
-        textCapitalization = TextCapitalization.none,
-        inputFieldType = InputFieldType.email,
-        super(key: key);
+  }) : prefixIconPath = 'assets/images/svg/ic_email.svg',
+       suffixIconPath = null,
+       onSuffixIconTap = null,
+       keyboardType = TextInputType.emailAddress,
+       obscureText = false,
+       autocorrect = false,
+       enableSuggestions = true,
+       textCapitalization = TextCapitalization.none,
+       inputFieldType = InputFieldType.email,
+       super(key: key);
 
   // Password field constructor
   const InputField.password({
@@ -85,14 +85,14 @@ class InputField extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.obscureText = true,
     this.inputFormatters,
-  })  : hasPrefixIcon = true,
-        prefixIconPath = 'assets/images/svg/ic_lock.svg',
-        keyboardType = TextInputType.visiblePassword,
-        autocorrect = false,
-        enableSuggestions = false,
-        textCapitalization = TextCapitalization.none,
-        inputFieldType = InputFieldType.password,
-        super(key: key);
+  }) : hasPrefixIcon = true,
+       prefixIconPath = 'assets/images/svg/ic_lock.svg',
+       keyboardType = TextInputType.visiblePassword,
+       autocorrect = false,
+       enableSuggestions = false,
+       textCapitalization = TextCapitalization.none,
+       inputFieldType = InputFieldType.password,
+       super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -114,55 +114,34 @@ class InputField extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         hintText: hintText,
-        hintStyle: TextStyle(
-          color: Color(0xff9E9E9E),
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-        prefixIcon: hasPrefixIcon
-            ? Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 12),
-                child: SvgPicture.asset(prefixIconPath),
-              )
-            : null,
+        hintStyle: TextStyle(color: Color(0xff9E9E9E), fontSize: 14, fontWeight: FontWeight.w500),
+        prefixIcon:
+            hasPrefixIcon ? Padding(padding: const EdgeInsets.only(left: 20.0, right: 12), child: SvgPicture.asset(prefixIconPath)) : null,
         contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-        suffixIcon: suffixIconPath == null || suffixIconPath == ''
-            ? null
-            : InkWell(
-                onTap: () {
-                  onSuffixIconTap?.call();
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(right: 14.0, left: 14),
-                  child: SvgPicture.asset(
-                    suffixIconPath!,
-                    colorFilter: ColorFilter.mode(AppColors.black, BlendMode.srcIn),
+        suffixIcon:
+            suffixIconPath == null || suffixIconPath == ''
+                ? null
+                : InkWell(
+                  onTap: () {
+                    onSuffixIconTap?.call();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 14.0, left: 14),
+                    child: SvgPicture.asset(suffixIconPath!, colorFilter: ColorFilter.mode(AppColors.black, BlendMode.srcIn)),
                   ),
                 ),
-              ),
-        suffixIconConstraints: suffixIconPath == null || suffixIconPath == ''
-            ? null
-            : BoxConstraints(minHeight: 46, minWidth: 46, maxWidth: 46, maxHeight: 46),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: Color(0xffEAECF0),
-            width: 1,
-          ),
-        ),
+        suffixIconConstraints:
+            suffixIconPath == null || suffixIconPath == ''
+                ? null
+                : BoxConstraints(minHeight: 46, minWidth: 46, maxWidth: 46, maxHeight: 46),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Color(0xffEAECF0), width: 1)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: Color(0xffEAECF0),
-            width: 1,
-          ),
+          borderSide: BorderSide(color: Color(0xffEAECF0), width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: context.colorScheme.secondary,
-            width: 1,
-          ),
+          borderSide: BorderSide(color: context.colorScheme.secondary, width: 1),
         ),
       ),
     );

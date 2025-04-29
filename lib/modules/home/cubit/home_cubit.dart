@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:mywords/core/exceptions/api_error.dart';
 import 'package:mywords/modules/home/repository/home_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
@@ -9,9 +7,7 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _homeRepository;
 
-  HomeCubit({required HomeRepository homeRepository})
-      : _homeRepository = homeRepository,
-        super(HomeState.initial());
+  HomeCubit({required HomeRepository homeRepository}) : _homeRepository = homeRepository, super(HomeState.initial());
 
   void fetchDocumentHours() async {
     // emit(state.copyWith(homeStatus: HomeStatus.loading));
@@ -26,16 +22,10 @@ class HomeCubit extends Cubit<HomeState> {
         final hoursSaved = (documentCount * avgTimeSavedPerDoc) / 60;
         final roundedHours = hoursSaved.floor();
 
-        emit(state.copyWith(
-          homeStatus: HomeStatus.success,
-          hoursSaved: roundedHours,
-        ));
+        emit(state.copyWith(homeStatus: HomeStatus.success, hoursSaved: roundedHours));
       },
       onError: (error) {
-        emit(state.copyWith(
-          homeStatus: HomeStatus.failed,
-          errorMsg: error.errorMsg,
-        ));
+        emit(state.copyWith(homeStatus: HomeStatus.failed, errorMsg: error.errorMsg));
       },
     );
   }

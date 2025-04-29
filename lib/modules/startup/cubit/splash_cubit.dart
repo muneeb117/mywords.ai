@@ -10,9 +10,9 @@ class SplashCubit extends Cubit<SplashState> {
   final DioClient _dioClient;
 
   SplashCubit({required SessionRepository sessionRepository, required DioClient dioClient})
-      : _sessionRepository = sessionRepository,
-        _dioClient = dioClient,
-        super(SplashInitial());
+    : _sessionRepository = sessionRepository,
+      _dioClient = dioClient,
+      super(SplashInitial());
 
   Future<void> init() async {
     await Future.delayed(const Duration(milliseconds: 1800));

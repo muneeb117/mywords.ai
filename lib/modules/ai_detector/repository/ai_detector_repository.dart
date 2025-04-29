@@ -12,9 +12,7 @@ import 'package:mywords/modules/ai_detector/models/ai_detector_result.dart';
 class AiDetectorRepository {
   final DioClient _dioClient;
 
-  AiDetectorRepository({
-    required DioClient dioClient,
-  }) : _dioClient = dioClient;
+  AiDetectorRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<Either<ApiError, AiDetectorEntity>> detect({required Map<String, dynamic> data}) async {
     final token = _dioClient.getToken();
@@ -27,10 +25,7 @@ class AiDetectorRepository {
         AiDetectorEntity aiDetectorEntity = AiDetectorEntity.fromModel(aiDetectionResult);
         return Right(aiDetectorEntity);
       }
-      return Left(ApiError(
-        errorMsg: 'Server Error, Please try again',
-        code: response.statusCode ?? 0,
-      ));
+      return Left(ApiError(errorMsg: 'Server Error, Please try again', code: response.statusCode ?? 0));
     } catch (e, stackTrace) {
       return ErrorHandler.handleError(e, stackTrace, context: 'AI Detector');
     }

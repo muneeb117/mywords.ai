@@ -5,11 +5,7 @@ class RememberMeAndForgotPasswordTile extends StatefulWidget {
   final VoidCallback onRememberMeTap;
   final VoidCallback onForgotPasswordTap;
 
-  const RememberMeAndForgotPasswordTile({
-    super.key,
-    required this.onRememberMeTap,
-    required this.onForgotPasswordTap,
-  });
+  const RememberMeAndForgotPasswordTile({super.key, required this.onRememberMeTap, required this.onForgotPasswordTap});
 
   @override
   State<RememberMeAndForgotPasswordTile> createState() => _RememberMeAndForgotPasswordTileState();
@@ -40,28 +36,16 @@ class _RememberMeAndForgotPasswordTileState extends State<RememberMeAndForgotPas
                   width: 14,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(
-                      color: context.colorScheme.outline,
-                      width: 1.6,
-                    ),
+                    border: Border.all(color: context.colorScheme.outline, width: 1.6),
                     borderRadius: BorderRadius.circular(2),
                   ),
                   child: Container(
                     margin: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      color: isRememberPasswordEnabled ? context.colorScheme.primary : Colors.transparent,
-                    ),
+                    decoration: BoxDecoration(color: isRememberPasswordEnabled ? context.colorScheme.primary : Colors.transparent),
                   ),
                 ),
                 SizedBox(width: 8),
-                Container(
-                  child: Text(
-                    'Remember me',
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+                Container(child: Text('Remember me', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500))),
               ],
             ),
           ),
@@ -72,12 +56,9 @@ class _RememberMeAndForgotPasswordTileState extends State<RememberMeAndForgotPas
           onTap: widget.onForgotPasswordTap,
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              'Forgot Password?',
-              style: context.textTheme.titleMedium,
-            ),
+            child: Text('Forgot Password?', style: context.textTheme.titleMedium),
           ),
-        )
+        ),
       ],
     );
   }

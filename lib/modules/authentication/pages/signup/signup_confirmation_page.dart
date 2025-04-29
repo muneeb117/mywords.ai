@@ -20,13 +20,7 @@ class SignupConfirmationPage extends StatelessWidget {
             children: [
               SvgPicture.asset('assets/images/svg/ic_confirmation.svg'),
               SizedBox(height: 20),
-              Text(
-                "You're All Set!",
-                style: context.textTheme.headlineMedium?.copyWith(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text("You're All Set!", style: context.textTheme.headlineMedium?.copyWith(fontSize: 24, fontWeight: FontWeight.w600)),
               SizedBox(height: 16),
               Text(
                 "You are registered into MyWords.ai\nsuccessfully",
@@ -40,7 +34,7 @@ class SignupConfirmationPage extends StatelessWidget {
                 },
                 title: 'Finish',
                 fontWeight: FontWeight.w700,
-              )
+              ),
             ],
           ),
         ),

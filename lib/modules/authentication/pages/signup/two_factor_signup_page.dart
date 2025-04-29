@@ -21,10 +21,7 @@ class _TwoFactorSignupPageState extends State<TwoFactorSignupPage> {
         titleSpacing: 0,
         surfaceTintColor: Colors.transparent,
         backgroundColor: context.theme.scaffoldBackgroundColor,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: TopAppIconAndTitleWidget(),
-        ),
+        title: Padding(padding: const EdgeInsets.only(top: 10.0), child: TopAppIconAndTitleWidget()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,22 +31,20 @@ class _TwoFactorSignupPageState extends State<TwoFactorSignupPage> {
             children: [
               Text(
                 'Two Factor Authentication',
-                style: context.textTheme.headlineMedium?.copyWith(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: context.textTheme.headlineMedium?.copyWith(fontSize: 24, fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 18),
-              Text('App requires to protect your account. How would you like to receive your two factor code?',
-                  style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurface)),
+              Text(
+                'App requires to protect your account. How would you like to receive your two factor code?',
+                style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
+              ),
               SizedBox(height: 18),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: context.colorScheme.secondary,
-                    )),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: context.colorScheme.secondary),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -58,12 +53,7 @@ class _TwoFactorSignupPageState extends State<TwoFactorSignupPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Send to email",
-                          style: context.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Text("Send to email", style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                         Text(
                           "We'll send the code to\n***ams@yopmail.com",
                           style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, fontWeight: FontWeight.w400),
@@ -75,17 +65,9 @@ class _TwoFactorSignupPageState extends State<TwoFactorSignupPage> {
                       height: 18,
                       width: 18,
                       padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: context.colorScheme.secondary,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    )
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: context.colorScheme.secondary),
+                      child: Container(decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.white)),
+                    ),
                   ],
                 ),
               ),
@@ -96,7 +78,7 @@ class _TwoFactorSignupPageState extends State<TwoFactorSignupPage> {
                   Navigator.pushReplacementNamed(context, RouteManager.enterOtpSignup);
                 },
                 fontWeight: FontWeight.w700,
-              )
+              ),
             ],
           ),
         ),

@@ -4,11 +4,7 @@ import 'package:mywords/core/exceptions/api_error.dart';
 import 'package:mywords/utils/logger/logger.dart';
 
 class ErrorHandler {
-  static Left<ApiError, T> handleError<T>(
-    Object e,
-    StackTrace stackTrace, {
-    String context = 'API Call',
-  }) {
+  static Left<ApiError, T> handleError<T>(Object e, StackTrace stackTrace, {String context = 'API Call'}) {
     final fullContext = context == 'API Call' ? context : '$context - API Call';
 
     final _log = logger(ErrorHandler);

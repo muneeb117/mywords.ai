@@ -18,22 +18,10 @@ class AiWriterState {
   });
 
   factory AiWriterState.initial() {
-    return AiWriterState(
-      errorMsg: '',
-      inputText: '',
-      generatedText: '',
-      wordCount: 0,
-      aiWriterStatus: AiWriterStatus.initial,
-    );
+    return AiWriterState(errorMsg: '', inputText: '', generatedText: '', wordCount: 0, aiWriterStatus: AiWriterStatus.initial);
   }
 
-  AiWriterState copyWith({
-    String? errorMsg,
-    String? text,
-    String? generatedText,
-    int? wordCount,
-    AiWriterStatus? aiWriterStatus,
-  }) {
+  AiWriterState copyWith({String? errorMsg, String? text, String? generatedText, int? wordCount, AiWriterStatus? aiWriterStatus}) {
     return AiWriterState(
       errorMsg: errorMsg ?? this.errorMsg,
       inputText: text ?? this.inputText,

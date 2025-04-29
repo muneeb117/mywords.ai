@@ -30,9 +30,7 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
             children: [
               Text(
                 "Check your email inbox or spam folder for a one-time passcode (OTP). Enter the code below.",
-                style: context.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
+                style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
               ),
               SizedBox(height: 26),
               Pinput(
@@ -49,12 +47,7 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
               Text("You can resend the code in 56 seconds", style: context.textTheme.bodyMedium),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Text(
-                  "Resend",
-                  style: context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: Text("Resend", style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
               ),
               SizedBox(height: 10),
               BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
@@ -83,7 +76,7 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                     fontWeight: FontWeight.bold,
                   );
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -95,15 +88,8 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
 final defaultPinTheme = PinTheme(
   width: 75,
   height: 56,
-  textStyle: TextStyle(
-    fontSize: 16,
-    color: Color.fromRGBO(30, 60, 87, 1),
-    fontWeight: FontWeight.w600,
-  ),
-  decoration: BoxDecoration(
-    border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-    borderRadius: BorderRadius.circular(10),
-  ),
+  textStyle: TextStyle(fontSize: 16, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+  decoration: BoxDecoration(border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)), borderRadius: BorderRadius.circular(10)),
 );
 
 final focusedPinTheme = defaultPinTheme.copyDecorationWith(

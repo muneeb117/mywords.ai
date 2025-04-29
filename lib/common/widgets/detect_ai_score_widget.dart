@@ -15,12 +15,7 @@ class DetectAiScoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Color(0xffDADADA),
-        ),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
       child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -52,12 +47,10 @@ class DetectAiScoreWidget extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: 'sentences AI generated',
-                                style: context.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
@@ -65,20 +58,14 @@ class DetectAiScoreWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(
-                color: Color(0xffDADADA),
-                height: 0,
-              ),
+              Divider(color: Color(0xffDADADA), height: 0),
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Third Party AI Scores',
-                      style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    Text('Third Party AI Scores', style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                     SizedBox(height: 12),
                     Row(
                       children: [
@@ -98,8 +85,12 @@ class DetectAiScoreWidget extends StatelessWidget {
                         SizedBox(width: 7),
                         Text(
                           'Likely AI',
-                          style: context.textTheme.titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w600, color: Color(0xffFABB18), letterSpacing: 0, wordSpacing: 0),
+                          style: context.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xffFABB18),
+                            letterSpacing: 0,
+                            wordSpacing: 0,
+                          ),
                         ),
                         SizedBox(width: 15),
                         SvgPicture.asset('assets/images/svg/ic_ai_generated.svg'),
@@ -175,11 +166,7 @@ class ThirdPartyToolsWidget extends StatelessWidget {
 }
 
 class AiServicesTile extends StatelessWidget {
-  const AiServicesTile({
-    super.key,
-    required this.title,
-    required this.assetPath,
-  });
+  const AiServicesTile({super.key, required this.title, required this.assetPath});
 
   final String title;
   final String assetPath;
@@ -189,19 +176,13 @@ class AiServicesTile extends StatelessWidget {
     return Container(
       height: 34,
       padding: EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        color: Color(0xffB3B3B3).withOpacity(0.15),
-        borderRadius: BorderRadius.circular(30),
-      ),
+      decoration: BoxDecoration(color: Color(0xffB3B3B3).withOpacity(0.15), borderRadius: BorderRadius.circular(30)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(assetPath),
           SizedBox(width: 6),
-          Text(
-            title,
-            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11),
-          ),
+          Text(title, style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11)),
         ],
       ),
     );

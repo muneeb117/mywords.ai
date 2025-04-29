@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/config/routes/route_manager.dart';
-import 'package:mywords/core/analytics/analytics_event_names.dart' show AnalyticsEventNames;
-import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
-import 'package:mywords/core/di/service_locator.dart' show sl;
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -18,17 +15,16 @@ class HomeHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(
-                'assets/images/png/img_app_icon.png',
-                height: 45,
-                width: 45,
-              ),
+              Image.asset('assets/images/png/img_app_icon.png', height: 45, width: 45),
               SizedBox(width: 4),
               Text(
                 'MyWords.AI',
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.primary, fontWeight: FontWeight.w700, letterSpacing: 0),
-              )
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: context.colorScheme.primary,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                ),
+              ),
             ],
           ),
           GestureDetector(
@@ -36,11 +32,8 @@ class HomeHeader extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, RouteManager.setting);
             },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 4.0),
-              child: SvgPicture.asset('assets/images/svg/ic_settings_nav.svg'),
-            ),
-          )
+            child: Padding(padding: const EdgeInsets.only(left: 4.0), child: SvgPicture.asset('assets/images/svg/ic_settings_nav.svg')),
+          ),
         ],
       ),
     );

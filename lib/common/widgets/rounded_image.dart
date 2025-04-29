@@ -28,13 +28,7 @@ class RoundedImage extends StatelessWidget {
     return Container(
       width: 90,
       height: 90,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: context.colorScheme.primary,
-          width: 1,
-        ),
-      ),
+      decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: context.colorScheme.primary, width: 1)),
       child: CircleAvatar(
         backgroundColor: Colors.black,
         radius: 45,

@@ -37,12 +37,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StepIndicator(
-                activeSteps: [1, 2],
-                leftText: 'Prompt',
-                centerText: 'Purpose',
-                rightText: 'Output',
-              ),
+              StepIndicator(activeSteps: [1, 2], leftText: 'Prompt', centerText: 'Purpose', rightText: 'Output'),
               SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -64,12 +59,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                     SizedBox(height: 12),
                     Text('Select a language *', style: context.textTheme.titleMedium),
                     SizedBox(height: 8),
-                    CustomDropdownWithoutIcon(
-                      items: ['English'],
-                      hint: 'Select Language',
-                      value: selectedLanguage,
-                      onChanged: (val) {},
-                    ),
+                    CustomDropdownWithoutIcon(items: ['English'], hint: 'Select Language', value: selectedLanguage, onChanged: (val) {}),
                     SizedBox(height: 12),
                     Text('Minimum Word Count *', style: context.textTheme.titleMedium),
                     SizedBox(height: 8),
@@ -79,9 +69,7 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                       prefixIconPath: '',
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       controller: minWordCountController,
                     ),
                     SizedBox(height: 12),
@@ -93,22 +81,18 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                       prefixIconPath: '',
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       controller: maxWordCountController,
                     ),
                     SizedBox(height: 12),
                     Text(
                       'Minimum 350 words, maximum 500 words.',
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: context.colorScheme.onSurface,
-                      ),
+                      style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
                     ),
                     SizedBox(height: 20),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

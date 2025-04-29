@@ -18,19 +18,13 @@ class GoogleAuthButton extends StatelessWidget {
           Container(
             height: 56,
             width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xffEDF1F3)),
-              borderRadius: BorderRadius.circular(50),
-            ),
+            decoration: BoxDecoration(border: Border.all(color: Color(0xffEDF1F3)), borderRadius: BorderRadius.circular(50)),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: SvgPicture.asset('assets/images/svg/ic_google.svg'),
-              ),
+              child: Padding(padding: const EdgeInsets.only(left: 16.0), child: SvgPicture.asset('assets/images/svg/ic_google.svg')),
             ),
           ),
-          Text('Continue with Google', style: context.textTheme.titleMedium)
+          Text('Continue with Google', style: context.textTheme.titleMedium),
         ],
       ),
     );

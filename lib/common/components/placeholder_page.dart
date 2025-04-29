@@ -12,29 +12,18 @@ class PlaceHolderPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Text(
-              '$title Page',
-              style: context.textTheme.headlineMedium?.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+          Center(child: Text('$title Page', style: context.textTheme.headlineMedium?.copyWith(fontSize: 20, fontWeight: FontWeight.w500))),
           SizedBox(height: 10),
           TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.keyboard_backspace),
-                  SizedBox(width: 8),
-                  Text('Go Back'),
-                ],
-              ))
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(Icons.keyboard_backspace), SizedBox(width: 8), Text('Go Back')],
+            ),
+          ),
         ],
       ),
     );

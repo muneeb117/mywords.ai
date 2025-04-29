@@ -33,25 +33,15 @@ class AiHumanizerDialog extends StatelessWidget {
                     children: [
                       Text(
                         "AI Humanizer Output",
-                        style: context.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.green,
-                        ),
+                        style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: AppColors.green),
                       ),
                       GestureDetector(
                         onTap: () => Navigator.of(context).pop(),
                         behavior: HitTestBehavior.opaque,
                         child: Container(
                           padding: const EdgeInsets.all(6), // Increased tap area
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey.shade200,
-                          ),
-                          child: const Icon(
-                            Icons.close,
-                            size: 20,
-                            color: Colors.grey,
-                          ),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey.shade200),
+                          child: const Icon(Icons.close, size: 20, color: Colors.grey),
                         ),
                       ),
                     ],
@@ -62,12 +52,7 @@ class AiHumanizerDialog extends StatelessWidget {
                   // Subtitle
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Your refined text is ready:",
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                    ),
+                    child: Text("Your refined text is ready:", style: context.textTheme.bodyMedium?.copyWith(color: Colors.grey[600])),
                   ),
                   const SizedBox(height: 12),
 
@@ -84,10 +69,7 @@ class AiHumanizerDialog extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: SelectableText(
                         state.generatedText,
-                        style: context.textTheme.bodyLarge?.copyWith(
-                          height: 1.5,
-                          color: Colors.black87,
-                        ),
+                        style: context.textTheme.bodyLarge?.copyWith(height: 1.5, color: Colors.black87),
                       ),
                     ),
                   ),

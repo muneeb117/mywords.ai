@@ -3,13 +3,7 @@ import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
 class StepIndicator extends StatelessWidget {
-  const StepIndicator({
-    super.key,
-    required this.activeSteps,
-    required this.leftText,
-    this.centerText = 'Purpose',
-    required this.rightText,
-  });
+  const StepIndicator({super.key, required this.activeSteps, required this.leftText, this.centerText = 'Purpose', required this.rightText});
 
   final List<int> activeSteps;
   final String leftText;
@@ -20,43 +14,19 @@ class StepIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: context.colorScheme.secondary.withOpacity(0.05),
-          border: Border.all(
-            color: Color(0xffEAECF0),
-          )),
+      decoration: BoxDecoration(color: context.colorScheme.secondary.withOpacity(0.05), border: Border.all(color: Color(0xffEAECF0))),
       padding: EdgeInsets.symmetric(horizontal: 18, vertical: 14),
       child: Row(
         children: [
-          StepIndicatorRoundedComponent(
-            isActive: activeSteps.contains(1),
-            stepNumber: '1',
-            stepTitle: leftText,
-          ),
+          StepIndicatorRoundedComponent(isActive: activeSteps.contains(1), stepNumber: '1', stepTitle: leftText),
           SizedBox(width: 6),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Divider(thickness: 1, color: Color(0xff94A3B8)),
-          )),
+          Expanded(child: Padding(padding: const EdgeInsets.only(top: 2.0), child: Divider(thickness: 1, color: Color(0xff94A3B8)))),
           SizedBox(width: 6),
-          StepIndicatorRoundedComponent(
-            isActive: activeSteps.contains(2),
-            stepNumber: '2',
-            stepTitle: centerText,
-          ),
+          StepIndicatorRoundedComponent(isActive: activeSteps.contains(2), stepNumber: '2', stepTitle: centerText),
           SizedBox(width: 6),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Divider(thickness: 1, color: Color(0xff94A3B8)),
-          )),
+          Expanded(child: Padding(padding: const EdgeInsets.only(top: 2.0), child: Divider(thickness: 1, color: Color(0xff94A3B8)))),
           SizedBox(width: 6),
-          StepIndicatorRoundedComponent(
-            isActive: activeSteps.contains(3),
-            stepNumber: '3',
-            stepTitle: rightText,
-          ),
+          StepIndicatorRoundedComponent(isActive: activeSteps.contains(3), stepNumber: '3', stepTitle: rightText),
         ],
       ),
     );
@@ -64,12 +34,7 @@ class StepIndicator extends StatelessWidget {
 }
 
 class StepIndicatorRoundedComponent extends StatelessWidget {
-  const StepIndicatorRoundedComponent({
-    super.key,
-    required this.isActive,
-    required this.stepNumber,
-    required this.stepTitle,
-  });
+  const StepIndicatorRoundedComponent({super.key, required this.isActive, required this.stepNumber, required this.stepTitle});
 
   final bool isActive;
   final String stepNumber;
@@ -82,10 +47,7 @@ class StepIndicatorRoundedComponent extends StatelessWidget {
         Container(
           height: 27,
           width: 27,
-          decoration: BoxDecoration(
-            color: isActive ? context.colorScheme.secondary : AppColors.white,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: isActive ? context.colorScheme.secondary : AppColors.white, shape: BoxShape.circle),
           child: Center(
             child: Text(
               stepNumber,
@@ -97,12 +59,7 @@ class StepIndicatorRoundedComponent extends StatelessWidget {
           ),
         ),
         SizedBox(width: 7),
-        Text(
-          stepTitle,
-          style: context.textTheme.titleSmall?.copyWith(
-            fontWeight: isActive ? FontWeight.bold : FontWeight.w400,
-          ),
-        ),
+        Text(stepTitle, style: context.textTheme.titleSmall?.copyWith(fontWeight: isActive ? FontWeight.bold : FontWeight.w400)),
       ],
     );
   }

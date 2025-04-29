@@ -26,7 +26,6 @@ class MyWordsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'MyWords.ai',
       debugShowCheckedModeBanner: false,

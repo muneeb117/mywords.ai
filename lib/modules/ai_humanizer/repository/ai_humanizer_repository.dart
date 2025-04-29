@@ -10,9 +10,7 @@ import 'package:mywords/core/network/dio_client.dart';
 class AiHumanizerRepository {
   final DioClient _dioClient;
 
-  AiHumanizerRepository({
-    required DioClient dioClient,
-  }) : _dioClient = dioClient;
+  AiHumanizerRepository({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<Either<ApiError, String>> humanize({required Map<String, dynamic> data}) async {
     final token = _dioClient.getToken();
@@ -23,10 +21,7 @@ class AiHumanizerRepository {
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
         return Right(response.data['humanizedText']);
       }
-      return Left(ApiError(
-        errorMsg: 'Server Error, Please try again',
-        code: response.statusCode ?? 0,
-      ));
+      return Left(ApiError(errorMsg: 'Server Error, Please try again', code: response.statusCode ?? 0));
     } catch (e, stackTrace) {
       return ErrorHandler.handleError<String>(e, stackTrace, context: 'AI Writer');
     }
@@ -41,10 +36,7 @@ class AiHumanizerRepository {
       if ((response.statusCode == HttpStatus.ok || response.statusCode == HttpStatus.created)) {
         return Right('Saved user prompt');
       }
-      return Left(ApiError(
-        errorMsg: 'Server Error, Please try again',
-        code: response.statusCode ?? 0,
-      ));
+      return Left(ApiError(errorMsg: 'Server Error, Please try again', code: response.statusCode ?? 0));
     } catch (e, stackTrace) {
       return ErrorHandler.handleError<String>(e, stackTrace, context: 'Save Humanizer Prompt');
     }

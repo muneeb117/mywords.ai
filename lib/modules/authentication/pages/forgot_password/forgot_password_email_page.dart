@@ -39,9 +39,7 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
               children: [
                 Text(
                   "Enter your registered email address below. We'll send you a one-time passcode (OTP) to reset your password.",
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
                 ),
                 SizedBox(height: 26),
                 Text('Your Registered Email', style: context.textTheme.titleMedium),
@@ -85,7 +83,7 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
                       fontWeight: FontWeight.bold,
                     );
                   },
-                )
+                ),
               ],
             ),
           ),

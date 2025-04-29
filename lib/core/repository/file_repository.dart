@@ -27,10 +27,7 @@ class FileRepository {
   }
 
   Future<File?> pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'docx'],
-    );
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf', 'docx']);
 
     if (result != null) {
       return File(result.files.single.path!);
