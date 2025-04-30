@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiTextField extends StatelessWidget {
   const AiTextField({
@@ -16,11 +17,11 @@ class AiTextField extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 300,
+          height: 300.ch,
           decoration: BoxDecoration(
             border: Border.all(color: Color(0xffDADADA)),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 18.cw, vertical: 8.ch),
           child: TextFormField(
             maxLines: null,
             expands: true,
@@ -38,7 +39,7 @@ class AiTextField extends StatelessWidget {
         Visibility(
           visible: textEditingController.text.isEmpty,
           child: Container(
-            height: 300,
+            height: 300.ch,
             child: IgnorePointer(
               child: Center(
                 child: Text(

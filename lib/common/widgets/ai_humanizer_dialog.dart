@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiHumanizerDialog extends StatelessWidget {
   const AiHumanizerDialog({super.key});
@@ -11,19 +12,19 @@ class AiHumanizerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.cr)),
+      insetPadding: EdgeInsets.symmetric(horizontal: 24.cw, vertical: 32.ch),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.cr),
           border: Border.all(color: const Color(0xffE0E0E0)),
         ),
         child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
           listener: (context, state) {},
           builder: (context, state) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.cw, vertical: 20.ch),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -42,14 +43,14 @@ class AiHumanizerDialog extends StatelessWidget {
                         onTap: () => Navigator.of(context).pop(),
                         behavior: HitTestBehavior.opaque,
                         child: Container(
-                          padding: const EdgeInsets.all(6), // Increased tap area
+                          padding: EdgeInsets.all(6.cw),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.grey.shade200,
                           ),
-                          child: const Icon(
+                          child:  Icon(
                             Icons.close,
-                            size: 20,
+                            size: 20.csp,
                             color: Colors.grey,
                           ),
                         ),
@@ -57,7 +58,7 @@ class AiHumanizerDialog extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.ch),
 
                   // Subtitle
                   Align(
@@ -69,16 +70,16 @@ class AiHumanizerDialog extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.ch),
 
                   // Output box
                   Container(
-                    constraints: const BoxConstraints(minHeight: 200, maxHeight: 400),
+                    constraints: BoxConstraints(minHeight: 200.ch, maxHeight: 400.ch),
                     width: double.infinity,
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16.cw),
                     decoration: BoxDecoration(
                       color: Colors.grey[50],
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.cr),
                       border: Border.all(color: const Color(0xffDADADA)),
                     ),
                     child: SingleChildScrollView(
@@ -92,7 +93,7 @@ class AiHumanizerDialog extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.ch),
 
                   // Buttons
                   Row(
@@ -103,13 +104,13 @@ class AiHumanizerDialog extends StatelessWidget {
                           Clipboard.setData(ClipboardData(text: state.generatedText));
                           context.showSnackBar('Copied to clipboard');
                         },
-                        icon: const Icon(Icons.copy, size: 18),
+                        icon:  Icon(Icons.copy, size: 18.csp),
                         label: const Text("Copy"),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8.cw),
                       TextButton.icon(
                         onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.close, size: 20),
+                        icon:  Icon(Icons.close, size: 20.csp),
                         label: const Text("Close"),
                       ),
                     ],

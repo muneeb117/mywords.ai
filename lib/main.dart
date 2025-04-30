@@ -41,7 +41,7 @@ class MyWordsApp extends StatelessWidget {
           navigatorObservers: <NavigatorObserver>[
             FirebaseAnalyticsObserver(analytics: sl<FirebaseAnalytics>()),
           ],
-          initialRoute: RouteManager.login,
+          initialRoute: RouteManager.splash,
           onGenerateRoute: RouteManager.generateRoute,
         );
       },

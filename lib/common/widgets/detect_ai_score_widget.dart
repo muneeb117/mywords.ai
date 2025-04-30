@@ -5,6 +5,7 @@ import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_detector/models/ai_detector_entity.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class DetectAiScoreWidget extends StatelessWidget {
   final AiDetectorEntity aiDetectorEntity;
@@ -14,9 +15,9 @@ class DetectAiScoreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: 8.cw),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.cr),
         border: Border.all(
           color: Color(0xffDADADA),
         ),
@@ -28,7 +29,7 @@ class DetectAiScoreWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 10.ch),
                 child: Row(
                   children: [
                     Text(
@@ -38,7 +39,7 @@ class DetectAiScoreWidget extends StatelessWidget {
                         color: aiDetectorEntity.isGeneratedByAI ? Color(0xffFF3D00) : AppColors.green,
                       ),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 30.cw),
                     Text.rich(
                       TextSpan(
                         text: 'Your Text is likely to be written',
@@ -71,7 +72,7 @@ class DetectAiScoreWidget extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                padding: EdgeInsets.fromLTRB(16.cw, 16.ch, 16.cw, 16.ch),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -79,11 +80,11 @@ class DetectAiScoreWidget extends StatelessWidget {
                       'Third Party AI Scores',
                       style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 12.ch),
                     Row(
                       children: [
                         SvgPicture.asset('assets/images/svg/ic_human.svg'),
-                        SizedBox(width: 7),
+                        SizedBox(width: 7.cw),
                         Text(
                           'Human',
                           style: context.textTheme.titleSmall?.copyWith(
@@ -93,17 +94,17 @@ class DetectAiScoreWidget extends StatelessWidget {
                             wordSpacing: 0,
                           ),
                         ),
-                        SizedBox(width: 15),
+                        SizedBox(width: 15.cw),
                         SvgPicture.asset('assets/images/svg/ic_likely_ai.svg'),
-                        SizedBox(width: 7),
+                        SizedBox(width: 7.cw),
                         Text(
                           'Likely AI',
                           style: context.textTheme.titleSmall
                               ?.copyWith(fontWeight: FontWeight.w600, color: Color(0xffFABB18), letterSpacing: 0, wordSpacing: 0),
                         ),
-                        SizedBox(width: 15),
+                        SizedBox(width: 15.cw),
                         SvgPicture.asset('assets/images/svg/ic_ai_generated.svg'),
-                        SizedBox(width: 7),
+                        SizedBox(width: 7.cw),
                         Text(
                           'AI',
                           style: context.textTheme.titleSmall?.copyWith(
@@ -147,25 +148,25 @@ class ThirdPartyToolsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 16),
+        SizedBox(height: 16.ch),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AiServicesTile(title: 'Content AI Scale', assetPath: _getContentAIScaleAsset()),
-            SizedBox(width: 5),
+            SizedBox(width: 5.cw),
             AiServicesTile(title: 'GPTZero', assetPath: _getContentAIScaleAsset()),
-            SizedBox(width: 5),
+            SizedBox(width: 5.cw),
             AiServicesTile(title: 'ZERO GPT', assetPath: _getContentAIScaleAsset()),
           ],
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 16.ch),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AiServicesTile(title: 'OPENAI', assetPath: _getContentAIScaleAsset()),
-            SizedBox(width: 5),
+            SizedBox(width: 5.cw),
             AiServicesTile(title: 'Turnitin', assetPath: _getContentAIScaleAsset()),
-            SizedBox(width: 5),
+            SizedBox(width: 5.cw),
             AiServicesTile(title: 'CopyLeaks', assetPath: _getContentAIScaleAsset()),
           ],
         ),
@@ -187,20 +188,20 @@ class AiServicesTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 34,
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      height: 34.ch,
+      padding: EdgeInsets.symmetric(horizontal: 8.cw),
       decoration: BoxDecoration(
         color: Color(0xffB3B3B3).withOpacity(0.15),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(30.cr),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(assetPath),
-          SizedBox(width: 6),
+          SizedBox(width: 6.cw),
           Text(
             title,
-            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11),
+            style: context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, fontSize: 11.csp),
           ),
         ],
       ),

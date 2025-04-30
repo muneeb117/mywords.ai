@@ -69,14 +69,14 @@ class PrimaryButton extends StatelessWidget {
       case ButtonType.filled:
         decoration = BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(6.cr),
         );
         break;
       case ButtonType.outlined:
         decoration = BoxDecoration(
           color: backgroundColor,
           border: Border.all(color: textColor, width: 2),
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(6.cr),
         );
         break;
       case ButtonType.gradient:
@@ -86,7 +86,7 @@ class PrimaryButton extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(6.cr),
         );
         break;
     }
@@ -94,15 +94,15 @@ class PrimaryButton extends StatelessWidget {
       decoration: decoration,
       child: InkWell(
         onTap: isLoading ? null : onTap,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(6.cr),
         child: AnimatedContainer(
-          width: isLoading && enableShrinkAnimation ? 56 : MediaQuery.of(context).size.width,
+          width: isLoading && enableShrinkAnimation ? 56.cw : MediaQuery.of(context).size.width,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          height: 56,
+          height: 56.ch,
           alignment: Alignment.center,
-          decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(8)),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(8.cr)),
+          padding: EdgeInsets.symmetric(horizontal: 16.cw),
           child: isLoading
               ? LoadingIndicator(bgColor: indicatorColor)
               : Row(
