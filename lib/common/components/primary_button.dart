@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 enum ButtonType { filled, outlined, gradient }
 
@@ -110,7 +111,7 @@ class PrimaryButton extends StatelessWidget {
                     if (iconPath != null)
                       Flexible(
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0, top: 1),
+                          padding:  EdgeInsets.only(right: 8.cw, top: 1.ch),
                           child: SvgPicture.asset(iconPath!),
                         ),
                       ),
@@ -119,7 +120,7 @@ class PrimaryButton extends StatelessWidget {
                         title,
                         style: context.textTheme.bodyMedium?.copyWith(
                           color: buttonType == ButtonType.filled ? textColor : textColor,
-                          fontSize: 16,
+                          fontSize: 16.csp,
                           fontWeight: fontWeight,
                         ),
                         overflow: TextOverflow.ellipsis,

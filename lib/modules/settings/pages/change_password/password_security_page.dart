@@ -6,6 +6,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/settings/cubit/change_password/change_password_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class PasswordSecurityPage extends StatefulWidget {
   const PasswordSecurityPage({super.key});
@@ -41,7 +42,7 @@ class _PasswordSecurityPageState extends State<PasswordSecurityPage> {
             return Scaffold(
               appBar: CustomAppBar(title: 'Security'),
               body: Container(
-                margin: EdgeInsets.all(16),
+                margin: EdgeInsets.all(16.cw),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -63,10 +64,10 @@ class _PasswordSecurityPageState extends State<PasswordSecurityPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 16.ch),
                       Text(
                           'Your password needs to be at least 8 characters long.\nInclude some words and phrases to make it even more safer'),
-                      SizedBox(height: 16),
+                      SizedBox(height: 16.ch),
                       InputField.password(
                         hintText: 'New Password',
                         controller: newPasswordController,
@@ -86,7 +87,7 @@ class _PasswordSecurityPageState extends State<PasswordSecurityPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 16.ch),
                       InputField.password(
                         hintText: 'Confirm Your Password',
                         controller: confirmNewPasswordController,
@@ -113,8 +114,8 @@ class _PasswordSecurityPageState extends State<PasswordSecurityPage> {
                 ),
               ),
               bottomNavigationBar: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
                 child: PrimaryButton.filled(
                   isLoading: state.changePasswordStatus == ChangePasswordStatus.loading,
                   onTap: () {

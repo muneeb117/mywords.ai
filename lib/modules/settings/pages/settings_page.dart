@@ -12,6 +12,7 @@ import 'package:mywords/modules/settings/cubit/account_cubit/account_cubit.dart'
 import 'package:mywords/modules/settings/widgets/delete_account_dialog.dart';
 import 'package:mywords/modules/settings/widgets/settings_tile.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -51,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Scaffold(
                     appBar: CustomAppBar(title: 'Settings'),
                     body: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(16.cw),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -97,7 +98,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             textColor: Color(0xffFF3D00),
                           ),
                           Divider(height: 0, color: Color(0xffEEEEEE)),
-                          SizedBox(height: 24),
+                          SizedBox(height: 24.ch),
                           PrimaryButton.filled(
                             backgroundColor: AppColors.darkOrangeBg,
                             textColor: AppColors.darkOrange,

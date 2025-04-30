@@ -14,6 +14,7 @@ import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiHumanizerInputPage extends StatefulWidget {
   const AiHumanizerInputPage({super.key});
@@ -58,13 +59,13 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
           body: Column(
             children: [
               StepIndicatorHumanizer(activeSteps: [1]),
-              SizedBox(height: 16),
+              SizedBox(height: 16.ch),
               Flexible(
                 child: SingleChildScrollView(
                   child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      margin: EdgeInsets.symmetric(horizontal: 8.cw),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.cr),
                         border: Border.all(
                           color: Color(0xffDADADA),
                         ),
@@ -122,14 +123,14 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                       )),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20.ch),
             ],
           ),
           bottomNavigationBar: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
             builder: (context, state) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
                 child: PrimaryButton.filled(
                   isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
                   onTap: () {
@@ -173,7 +174,7 @@ class _TextFieldHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 12.ch),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -194,7 +195,7 @@ class _TextFieldHeader extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 14.ch),
           Text(
             'Please briefly describe your prompt *',
             style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),

@@ -9,6 +9,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiDetectorOutputPage extends StatefulWidget {
   const AiDetectorOutputPage({super.key});
@@ -44,12 +45,12 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                   centerText: 'Preference',
                   rightText: 'Output',
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 16.ch),
                 Container(
-                    height: 300,
-                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    height: 300.ch,
+                    margin: EdgeInsets.symmetric(horizontal: 8.cw),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.cr),
                       border: Border.all(
                         color: Color(0xffDADADA),
                       ),
@@ -61,7 +62,7 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                              padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 16.ch),
                               child: Text(
                                 'Output',
                                 style: context.textTheme.titleLarge?.copyWith(
@@ -79,11 +80,11 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                                 builder: (context, state) {
                                   return Container(
                                     width: double.infinity,
-                                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                    padding: EdgeInsets.fromLTRB(16.cw, 0, 16.cw, 0),
                                     child: SingleChildScrollView(
-                                        padding: EdgeInsets.only(top: 16),
+                                        padding: EdgeInsets.only(top: 16.ch),
                                         child: Padding(
-                                          padding: const EdgeInsets.only(bottom: 16.0),
+                                          padding: EdgeInsets.only(bottom: 16.ch),
                                           child: SelectableText(
                                             state.inputText,
                                             style: context.textTheme.titleMedium,
@@ -98,14 +99,14 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                         );
                       },
                     )),
-                SizedBox(height: 16),
+                SizedBox(height: 16.ch),
                 DetectAiScoreWidget(aiDetectorEntity: aiDetectorState.aiDetectorEntity)
               ],
             ),
           ),
           bottomNavigationBar: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+            margin: EdgeInsets.symmetric(horizontal: 16.cw),
+            padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
             child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
               listener: (context, state) {
                 if (state.aiHumanizeStatus == AiHumanizeStatus.success) {

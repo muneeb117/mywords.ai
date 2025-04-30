@@ -10,6 +10,7 @@ import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiWriterOutputPage extends StatefulWidget {
   const AiWriterOutputPage({super.key});
@@ -45,12 +46,12 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                   centerText: 'Purpose',
                   rightText: 'Output',
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 16.ch),
                 Container(
-                  height: 300,
-                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  height: 300.ch,
+                  margin: EdgeInsets.symmetric(horizontal: 8.cw),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.cw),
                     border: Border.all(
                       color: Color(0xffDADADA),
                     ),
@@ -59,7 +60,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                        padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 16.ch),
                         child: Text(
                           'Output',
                           style: context.textTheme.titleLarge?.copyWith(
@@ -77,11 +78,11 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                           builder: (context, state) {
                             return Container(
                               width: double.infinity,
-                              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                              padding: EdgeInsets.fromLTRB(16.cw, 0, 16.cw, 0),
                               child: SingleChildScrollView(
-                                padding: EdgeInsets.only(top: 16),
+                                padding: EdgeInsets.only(top: 16.ch),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  padding: EdgeInsets.only(bottom: 16.ch),
                                   child: SelectableText(
                                     state.generatedText,
                                     style: context.textTheme.titleMedium,
@@ -101,7 +102,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                       return Container();
                     }
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      padding: EdgeInsets.symmetric(vertical: 16.ch),
                       child: DetectAiScoreWidget(aiDetectorEntity: state.aiDetectorEntity),
                     );
                   },
@@ -122,8 +123,8 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
             },
             builder: (context, state) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
                 child: PrimaryButton.gradient(
                   isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
                   onTap: () {

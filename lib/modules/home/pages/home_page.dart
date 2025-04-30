@@ -8,6 +8,7 @@ import 'package:mywords/modules/home/widgets/home_header.dart';
 import 'package:mywords/modules/home/widgets/home_tool_widget.dart';
 import 'package:mywords/modules/home/widgets/hours_saved_widget.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,35 +20,35 @@ class HomePage extends StatelessWidget {
           titleSpacing: 0,
           backgroundColor: context.theme.scaffoldBackgroundColor,
           title: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: EdgeInsets.only(top: 10.ch),
             child: HomeHeader(),
           ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 4),
+            SizedBox(height: 4.ch),
             Divider(color: Color(0xffEEEEEE), height: 0),
-            SizedBox(height: 16),
+            SizedBox(height: 16.ch),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.cw),
               child: Row(
                 children: [
                   Expanded(child: CurrentPlanWidget()),
-                  SizedBox(width: 12),
+                  SizedBox(width: 12.cw),
                   Expanded(child: HoursSavedWidget()),
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.ch),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.cw),
               child: Text(
                 'Popular Tools',
                 style: context.textTheme.titleMedium,
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.ch),
             HomeToolWidget(
               onTap: () {
                 sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiWriterInitiated);
@@ -57,7 +58,7 @@ class HomePage extends StatelessWidget {
               description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
               imageAssetPath: 'assets/images/png/img_ai_writer.png',
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.ch),
             HomeToolWidget(
               onTap: () {
                 sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiHumanizerInitiated);
@@ -67,7 +68,7 @@ class HomePage extends StatelessWidget {
               description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
               imageAssetPath: 'assets/images/png/img_ai_humanizer.png',
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.ch),
             HomeToolWidget(
               onTap: () {
                 sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiDetectorInitiated);
