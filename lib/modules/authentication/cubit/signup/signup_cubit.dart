@@ -88,31 +88,4 @@ class SignupCubit extends Cubit<SignupState> {
       },
     );
   }
-
-  Future<void> signupWithGoogle() async {
-    emit(state.copyWith(signupStatus: SignupStatus.googleLoading));
-    try {
-      final result = await _socialAuthRepository.loginWithGoogle();
-      if (result.email.isNotEmpty && result.name.isNotEmpty) {
-        emit(
-          state.copyWith(
-            signupStatus: SignupStatus.googleSuccess,
-            name: result.name,
-            email: result.email,
-          ),
-        );
-      } else {
-        emit(
-          state.copyWith(
-            errorMsg: 'Some error occurs, Please try again',
-            signupStatus: SignupStatus.failed,
-          ),
-        );
-      }
-    } on LogInWithGoogleFailure catch (e) {
-      emit(state.copyWith(errorMsg: e.message, signupStatus: SignupStatus.failed));
-    } catch (_) {
-      emit(state.copyWith(signupStatus: SignupStatus.failed));
-    }
-  }
 }
