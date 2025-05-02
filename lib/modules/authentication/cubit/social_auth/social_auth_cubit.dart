@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart';
+import 'package:mywords/core/exceptions/apple_failure.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
@@ -80,8 +81,10 @@ class SocialAuthCubit extends Cubit<SocialAuthState> {
           ),
         );
       }
-    } on LogInWithGoogleFailure catch (e) {
+    } on LogInWithAppleFailure catch (e) {
       emit(state.copyWith(errorMsg: e.message, socialAuthStatus: SocialAuthStatus.failed));
-    } catch (c) {}
+    } catch (c) {
+      emit(state.copyWith(errorMsg: c.toString(), socialAuthStatus: SocialAuthStatus.failed));
+    }
   }
 }

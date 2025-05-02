@@ -19,7 +19,7 @@ class SocialAuthRepository {
     try {
       final googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        throw 'Google sign-in was cancelled by the user.';
+        throw 'Google sign-in was cancelled by user.';
       }
 
       await googleUser.authentication;
@@ -66,10 +66,16 @@ class SocialAuthRepository {
       final email = user?.email ?? 'user@gmail.com';
       return (name: displayName, email: email);
     } on FirebaseAuthException catch (e) {
-      print('Apple error :: ${e.toString()}');
+      print('Apple error fb:: ${e.toString()}');
       throw LogInWithAppleFailure.fromCode(e.code);
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        throw const LogInWithAppleFailure('cancelled by user');
+      } else {
+        throw LogInWithAppleFailure(e.message);
+      }
     } catch (e) {
-      print('Apple error :: ${e.toString()}');
+      print('Apple error nm :: ${e.toString()}');
       throw const LogInWithAppleFailure();
     }
   }

@@ -214,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                                   provider: state.provider,
                                 );
                               } else if (state.socialAuthStatus == SocialAuthStatus.failed) {
-                                if (!state.errorMsg.contains('cancelled by the user')) {
+                                if (!state.errorMsg.contains('cancelled by user')) {
                                   context.showSnackBar(state.errorMsg);
                                 }
                               }

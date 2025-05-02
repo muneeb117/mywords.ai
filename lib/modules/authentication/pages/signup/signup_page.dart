@@ -248,7 +248,7 @@ class _SignupPageState extends State<SignupPage> {
                                       provider: state.provider,
                                     );
                                   } else if (state.socialAuthStatus == SocialAuthStatus.failed) {
-                                    if (!state.errorMsg.contains('cancelled by the user')) {
+                                    if (!state.errorMsg.contains('cancelled by user')) {
                                       context.showSnackBar(state.errorMsg);
                                     }
                                   }
@@ -259,7 +259,7 @@ class _SignupPageState extends State<SignupPage> {
                                 platform: 'Apple',
                                 iconPath: 'assets/images/svg/ic_apple.svg',
                                 onTap: () {
-                                  // context.read<LoginCubit>().loginWithGoogle();
+                                  context.read<SocialAuthCubit>().loginWithApple();
                                 },
                               ),
                               SizedBox(height: 8.ch),
