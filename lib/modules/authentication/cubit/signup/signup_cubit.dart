@@ -27,30 +27,64 @@ class SignupCubit extends Cubit<SignupState> {
        super(SignupState.initial());
 
   void togglePassword() {
-    emit(state.copyWith(signupStatus: SignupStatus.initial, isPasswordHidden: !state.isPasswordHidden));
+    emit(
+      state.copyWith(signupStatus: SignupStatus.initial, isPasswordHidden: !state.isPasswordHidden),
+    );
   }
 
   void toggleConfirmPassword() {
-    emit(state.copyWith(signupStatus: SignupStatus.initial, isConfirmPasswordHidden: !state.isConfirmPasswordHidden));
+    emit(
+      state.copyWith(
+        signupStatus: SignupStatus.initial,
+        isConfirmPasswordHidden: !state.isConfirmPasswordHidden,
+      ),
+    );
   }
 
-  Future<void> signup(String fullName, String email, String password, {String provider = ''}) async {
-    emit(state.copyWith(signupStatus: SignupStatus.loading, isGoogleLoading: provider == 'google', isFromGoogle: provider == 'google'));
+  Future<void> signup(
+    String fullName,
+    String email,
+    String password, {
+    String provider = '',
+  }) async {
+    emit(
+      state.copyWith(
+        signupStatus: SignupStatus.loading,
+        isGoogleLoading: provider == 'google',
+        isFromGoogle: provider == 'google',
+      ),
+    );
     final result = await _authRepository.signup(fullName, email, password, provider);
 
     result.handle(
       onSuccess: (String token) async {
         if (state.isFromGoogle) {
-          _analyticsService.logEvent(name: AnalyticsEventNames.loginWithGoogleSuccess, parameters: {'email': email});
+          _analyticsService.logEvent(
+            name: AnalyticsEventNames.loginWithGoogleSuccess,
+            parameters: {'email': email},
+          );
           await _sessionRepository.setLoggedIn(true);
           await _sessionRepository.setToken(token);
         }
-        _analyticsService.logEvent(name: AnalyticsEventNames.signupSuccess, parameters: {'email': email});
+        _analyticsService.logEvent(
+          name: AnalyticsEventNames.signupSuccess,
+          parameters: {'email': email},
+        );
         emit(state.copyWith(signupStatus: SignupStatus.success, isGoogleLoading: false));
       },
       onError: (error) {
-        _analyticsService.logEvent(name: AnalyticsEventNames.signupFailed, parameters: {'email': email});
-        emit(state.copyWith(signupStatus: SignupStatus.failed, errorMsg: error.errorMsg, isGoogleLoading: false, isFromGoogle: false));
+        _analyticsService.logEvent(
+          name: AnalyticsEventNames.signupFailed,
+          parameters: {'email': email},
+        );
+        emit(
+          state.copyWith(
+            signupStatus: SignupStatus.failed,
+            errorMsg: error.errorMsg,
+            isGoogleLoading: false,
+            isFromGoogle: false,
+          ),
+        );
       },
     );
   }
@@ -60,9 +94,20 @@ class SignupCubit extends Cubit<SignupState> {
     try {
       final result = await _socialAuthRepository.loginWithGoogle();
       if (result.email.isNotEmpty && result.name.isNotEmpty) {
-        emit(state.copyWith(signupStatus: SignupStatus.googleSuccess, name: result.name, email: result.email));
+        emit(
+          state.copyWith(
+            signupStatus: SignupStatus.googleSuccess,
+            name: result.name,
+            email: result.email,
+          ),
+        );
       } else {
-        emit(state.copyWith(errorMsg: 'Some error occurs, Please try again', signupStatus: SignupStatus.failed));
+        emit(
+          state.copyWith(
+            errorMsg: 'Some error occurs, Please try again',
+            signupStatus: SignupStatus.failed,
+          ),
+        );
       }
     } on LogInWithGoogleFailure catch (e) {
       emit(state.copyWith(errorMsg: e.message, signupStatus: SignupStatus.failed));

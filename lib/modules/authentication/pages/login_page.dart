@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
 import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/common/components/primary_button.dart';
@@ -11,6 +10,7 @@ import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
 import 'package:mywords/modules/authentication/cubit/signup/signup_cubit.dart';
+import 'package:mywords/modules/authentication/cubit/social_auth/social_auth_cubit.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
@@ -55,14 +55,24 @@ class _LoginPageState extends State<LoginPage> {
                 analyticsService: sl(),
               ),
         ),
+        BlocProvider(
+          create:
+              (context) => SocialAuthCubit(
+                authRepository: sl(),
+                socialAuthRepository: sl(),
+                sessionRepository: sl(),
+                analyticsService: sl(),
+              ),
+        ),
       ],
       child: Builder(
         builder: (context) {
-          final signupCubit = context.watch<SignupCubit>();
-          final loginCubit = context.watch<LoginCubit>();
+          final socialAuthState = context.watch<SocialAuthCubit>().state;
+          final signupState = context.watch<SignupCubit>().state;
+
           bool isSigningUpWithGoogle =
-              loginCubit.state.loginStatus == LoginStatus.googleLoading ||
-              signupCubit.state.signupStatus == SignupStatus.loading;
+              socialAuthState.socialAuthStatus == SocialAuthStatus.loading ||
+              signupState.signupStatus == SignupStatus.loading;
           return Stack(
             children: [
               Scaffold(
@@ -150,18 +160,8 @@ class _LoginPageState extends State<LoginPage> {
                                   RouteManager.home,
                                   (route) => false,
                                 );
-                              } else if (state.loginStatus == LoginStatus.googleSuccess) {
-                                /// Signup with google
-                                context.read<SignupCubit>().signup(
-                                  state.name,
-                                  state.email,
-                                  '',
-                                  provider: 'google',
-                                );
                               } else if (state.loginStatus == LoginStatus.failed) {
-                                if (!state.errorMsg.contains('cancelled by the user')) {
-                                  context.showSnackBar(state.errorMsg);
-                                }
+                                context.showSnackBar(state.errorMsg);
                               }
                             },
                             builder: (context, state) {
@@ -198,9 +198,36 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           OrDividerWidget(),
-                          GoogleAuthButton(
+                          BlocConsumer<SocialAuthCubit, SocialAuthState>(
+                            listener: (context, state) {
+                              if (state.socialAuthStatus == SocialAuthStatus.success) {
+                                /// Signup with google
+                                context.read<SignupCubit>().signup(
+                                  state.name,
+                                  state.email,
+                                  '',
+                                  provider: 'google',
+                                );
+                              } else if (state.socialAuthStatus == SocialAuthStatus.failed) {
+                                if (!state.errorMsg.contains('cancelled by the user')) {
+                                  context.showSnackBar(state.errorMsg);
+                                }
+                              }
+                            },
+                            builder: (context, state) {
+                              return SocialAuthButton(
+                                iconPath: 'assets/images/svg/ic_google.svg',
+                                onTap: () {
+                                  context.read<SocialAuthCubit>().loginWithGoogle();
+                                },
+                              );
+                            },
+                          ),
+                          SizedBox(height: 12.ch),
+                          SocialAuthButton(
+                            iconPath: 'assets/images/svg/ic_apple.svg',
                             onTap: () {
-                              context.read<LoginCubit>().loginWithGoogle();
+                              // context.read<SocialAuthCubit>().loginWithGoogle();
                             },
                           ),
                           SizedBox(height: 8.ch),

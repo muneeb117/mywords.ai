@@ -83,22 +83,17 @@ class _SignupPageState extends State<SignupPage> {
                             children: [
                               Text(
                                 'Join Us Today',
-                                style: context.textTheme.headlineMedium
-                                    ?.copyWith(
-                                      fontSize: 24.csp,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                                style: context.textTheme.headlineMedium?.copyWith(
+                                  fontSize: 24.csp,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                               SizedBox(height: 16.ch),
-                              Text(
-                                'Full Name',
-                                style: context.textTheme.titleMedium,
-                              ),
+                              Text('Full Name', style: context.textTheme.titleMedium),
                               SizedBox(height: 8.ch),
                               InputField(
                                 hintText: 'Your full name',
-                                prefixIconPath:
-                                    'assets/images/svg/ic_email.svg',
+                                prefixIconPath: 'assets/images/svg/ic_email.svg',
                                 hasPrefixIcon: false,
                                 controller: fullNameController,
                                 keyboardType: TextInputType.name,
@@ -112,10 +107,7 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               ),
                               SizedBox(height: 12.ch),
-                              Text(
-                                'Email',
-                                style: context.textTheme.titleMedium,
-                              ),
+                              Text('Email', style: context.textTheme.titleMedium),
                               SizedBox(height: 8.ch),
                               InputField.email(
                                 hintText: 'Email',
@@ -130,10 +122,7 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               ),
                               SizedBox(height: 12.ch),
-                              Text(
-                                'Password',
-                                style: context.textTheme.titleMedium,
-                              ),
+                              Text('Password', style: context.textTheme.titleMedium),
                               SizedBox(height: 8.ch),
                               InputField.password(
                                 hintText: 'Password',
@@ -155,10 +144,7 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               ),
                               SizedBox(height: 12.ch),
-                              Text(
-                                'Confirm Password',
-                                style: context.textTheme.titleMedium,
-                              ),
+                              Text('Confirm Password', style: context.textTheme.titleMedium),
                               SizedBox(height: 8.ch),
                               InputField.password(
                                 hintText: 'Confirm Password',
@@ -169,9 +155,7 @@ class _SignupPageState extends State<SignupPage> {
                                         : 'assets/images/svg/ic_pwd_shown.svg',
                                 obscureText: state.isConfirmPasswordHidden,
                                 onSuffixIconTap: () {
-                                  context
-                                      .read<SignupCubit>()
-                                      .toggleConfirmPassword();
+                                  context.read<SignupCubit>().toggleConfirmPassword();
                                 },
                                 textInputAction: TextInputAction.done,
                                 validator: (value) {
@@ -189,35 +173,29 @@ class _SignupPageState extends State<SignupPage> {
                               SizedBox(height: 16.ch),
                               BlocConsumer<SignupCubit, SignupState>(
                                 listener: (context, state) {
-                                  if (state.signupStatus ==
-                                          SignupStatus.success &&
+                                  if (state.signupStatus == SignupStatus.success &&
                                       state.isGoogleLoading == false &&
                                       state.isFromGoogle == false) {
                                     Navigator.pushReplacementNamed(
                                       context,
                                       RouteManager.signupConfirmation,
                                     );
-                                  } else if (state.signupStatus ==
-                                          SignupStatus.success &&
+                                  } else if (state.signupStatus == SignupStatus.success &&
                                       state.isFromGoogle == true) {
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       RouteManager.home,
                                       (route) => false,
                                     );
-                                  } else if (state.signupStatus ==
-                                      SignupStatus.googleSuccess) {
+                                  } else if (state.signupStatus == SignupStatus.googleSuccess) {
                                     context.read<SignupCubit>().signup(
                                       state.name,
                                       state.email,
                                       '',
                                       provider: 'google',
                                     );
-                                  } else if (state.signupStatus ==
-                                      SignupStatus.failed) {
-                                    if (!state.errorMsg.contains(
-                                      'cancelled by the user',
-                                    )) {
+                                  } else if (state.signupStatus == SignupStatus.failed) {
+                                    if (!state.errorMsg.contains('cancelled by the user')) {
                                       context.showSnackBar(state.errorMsg);
                                     }
                                   }
@@ -226,24 +204,17 @@ class _SignupPageState extends State<SignupPage> {
                                   return PrimaryButton.gradient(
                                     title: 'Sign Up',
                                     isLoading:
-                                        state.signupStatus ==
-                                            SignupStatus.loading &&
+                                        state.signupStatus == SignupStatus.loading &&
                                         !state.isGoogleLoading,
                                     enableShrinkAnimation: false,
                                     onTap: () {
                                       bool isFormValidated =
-                                          _formKey.currentState?.validate() ==
-                                          true;
+                                          _formKey.currentState?.validate() == true;
                                       if (isFormValidated) {
                                         context.closeKeyboard();
-                                        final fullName =
-                                            fullNameController.text;
-                                        final email =
-                                            emailController.text
-                                                .toLowerCase()
-                                                .trim();
-                                        final password =
-                                            passwordTextController.text.trim();
+                                        final fullName = fullNameController.text;
+                                        final email = emailController.text.toLowerCase().trim();
+                                        final password = passwordTextController.text.trim();
                                         context.read<SignupCubit>().signup(
                                           fullName,
                                           email,
@@ -256,11 +227,17 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               ),
                               OrDividerWidget(),
-                              GoogleAuthButton(
+                              SocialAuthButton(
+                                iconPath: 'assets/images/svg/ic_google.svg',
                                 onTap: () {
-                                  context
-                                      .read<SignupCubit>()
-                                      .signupWithGoogle();
+                                  context.read<SignupCubit>().signupWithGoogle();
+                                },
+                              ),
+                              SizedBox(height: 12.ch),
+                              SocialAuthButton(
+                                iconPath: 'assets/images/svg/ic_apple.svg',
+                                onTap: () {
+                                  // context.read<LoginCubit>().loginWithGoogle();
                                 },
                               ),
                               SizedBox(height: 8.ch),
@@ -269,17 +246,13 @@ class _SignupPageState extends State<SignupPage> {
                                 children: [
                                   Text(
                                     "Already have an account?",
-                                    style: context.textTheme.bodyMedium
-                                        ?.copyWith(
-                                          color: context.colorScheme.onSurface,
-                                        ),
+                                    style: context.textTheme.bodyMedium?.copyWith(
+                                      color: context.colorScheme.onSurface,
+                                    ),
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.pushReplacementNamed(
-                                        context,
-                                        RouteManager.login,
-                                      );
+                                      Navigator.pushReplacementNamed(context, RouteManager.login);
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(
@@ -290,12 +263,10 @@ class _SignupPageState extends State<SignupPage> {
                                       ),
                                       child: Text(
                                         'Login',
-                                        style: context.textTheme.titleMedium
-                                            ?.copyWith(
-                                              color:
-                                                  context.colorScheme.secondary,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        style: context.textTheme.titleMedium?.copyWith(
+                                          color: context.colorScheme.secondary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),

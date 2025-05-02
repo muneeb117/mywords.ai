@@ -1,6 +1,6 @@
 part of 'login_cubit.dart';
 
-enum LoginStatus { initial, loading, googleLoading, googleSuccess, success, failed }
+enum LoginStatus { initial, loading, success, failed }
 
 class LoginState {
   final bool isPasswordHidden;

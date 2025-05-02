@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class GoogleAuthButton extends StatelessWidget {
+class SocialAuthButton extends StatelessWidget {
   final VoidCallback onTap;
+  final String iconPath;
 
-  const GoogleAuthButton({super.key, required this.onTap});
+  const SocialAuthButton({super.key, required this.onTap, required this.iconPath});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class GoogleAuthButton extends StatelessWidget {
           Container(
             height: 56,
             width: double.infinity,
+
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffEDF1F3)),
               borderRadius: BorderRadius.circular(50),
@@ -26,11 +28,11 @@ class GoogleAuthButton extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16.0),
-                child: SvgPicture.asset('assets/images/svg/ic_google.svg'),
+                child: SvgPicture.asset(iconPath, height: 30, width: 30),
               ),
             ),
           ),
-          Text('Continue with Google', style: context.textTheme.titleMedium)
+          Text('Continue with Google', style: context.textTheme.titleMedium),
         ],
       ),
     );
