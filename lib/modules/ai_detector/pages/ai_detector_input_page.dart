@@ -14,6 +14,7 @@ import 'package:mywords/modules/ai_detector/pages/ai_detector_preference_page.da
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiDetectorInputPage extends StatefulWidget {
   const AiDetectorInputPage({super.key});
@@ -47,77 +48,86 @@ class _AiDetectorInputPageState extends State<AiDetectorInputPage> {
       appBar: CustomAppBar(title: 'AI Detector'),
       body: Column(
         children: [
-          StepIndicator(activeSteps: [1], leftText: 'Input', centerText: 'Preference', rightText: 'Output'),
-          SizedBox(height: 16),
+          StepIndicator(
+            activeSteps: [1],
+            leftText: 'Input',
+            centerText: 'Preference',
+            rightText: 'Output',
+          ),
+          SizedBox(height: 16.ch),
           Flexible(
             child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
-                child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
-                  listener: (context, state) {
-                    // TODO: implement listener
-                  },
-                  builder: (context, state) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _TextFieldHeader(wordCount: state.wordCount),
-                        AiTextField(
-                          onChanged: (nextValue) {
-                            context.read<AiDetectorCubit>().updateText(nextValue);
-                          },
-                          textEditingController: textController,
-                        ),
-                        BlocConsumer<FileImportCubit, FileImportState>(
-                          listener: (context, state) {
-                            print('file state is :: $state');
-                            if (state.fileImportStatus == FileImportStatus.success) {
-                              _putTextOnBoard(state.extractedText);
-                            } else if (state.fileImportStatus == FileImportStatus.failure) {
-                              context.showSnackBar(state.errorMsg);
-                            }
-                          },
-                          builder: (context, state) {
-                            return LabeledIconsRow(
-                              /// On sample text selection
-                              onSampleTextCallback: () {
-                                final sampleText = AiSampleText.samplePrompt;
-                                _putTextOnBoard(sampleText);
-                              },
+                  margin: EdgeInsets.symmetric(horizontal: 8.cw),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.cr),
+                    border: Border.all(
+                      color: Color(0xffDADADA),
+                    ),
+                  ),
+                  child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _TextFieldHeader(wordCount: state.wordCount),
+                          AiTextField(
+                            onChanged: (nextValue) {
+                              context.read<AiDetectorCubit>().updateText(nextValue);
+                            },
+                            textEditingController: textController,
+                          ),
+                          BlocConsumer<FileImportCubit, FileImportState>(
+                            listener: (context, state) {
+                              print('file state is :: $state');
+                              if (state.fileImportStatus == FileImportStatus.success) {
+                                _putTextOnBoard(state.extractedText);
+                              } else if (state.fileImportStatus == FileImportStatus.failure) {
+                                context.showSnackBar(state.errorMsg);
+                              }
+                            },
+                            builder: (context, state) {
+                              return LabeledIconsRow(
+                                /// On sample text selection
+                                onSampleTextCallback: () {
+                                  final sampleText = AiSampleText.samplePrompt;
+                                  _putTextOnBoard(sampleText);
+                                },
 
-                              /// On upload file
-                              onUploadFileCallBack: () {
-                                context.read<FileImportCubit>().importFile();
-                              },
+                                /// On upload file
+                                onUploadFileCallBack: () {
+                                  context.read<FileImportCubit>().importFile();
+                                },
 
-                              /// On paste text
-                              onPasteTextCallBack: () async {
-                                final clipboardData = await Clipboard.getData('text/plain');
-                                final text = clipboardData?.text;
-                                if (text?.isNotEmpty ?? false) {
-                                  _putTextOnBoard(text!);
-                                }
-                              },
-                            );
-                          },
-                        ),
-                        // SizedBox(height: 14),
-                      ],
-                    );
-                  },
-                ),
-              ),
+                                /// On paste text
+                                onPasteTextCallBack: () async {
+                                  final clipboardData = await Clipboard.getData('text/plain');
+                                  final text = clipboardData?.text;
+                                  if (text?.isNotEmpty ?? false) {
+                                    _putTextOnBoard(text!);
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                          // SizedBox(height: 14),
+                        ],
+                      );
+                    },
+                  )),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 20.ch),
         ],
       ),
       bottomNavigationBar: BlocBuilder<AiDetectorCubit, AiDetectorState>(
         builder: (context, state) {
           return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+            margin: EdgeInsets.symmetric(horizontal: 16.cw),
+            padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
             child: PrimaryButton.filled(
               onTap: () {
                 final text = textController.text.trim();
@@ -159,7 +169,7 @@ class _TextFieldHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 12.ch),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -171,17 +181,16 @@ class _TextFieldHeader extends StatelessWidget {
               ),
               Spacer(),
               Text.rich(
-                TextSpan(
-                  text: '${wordCount}',
-                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
-                  children: [
-                    TextSpan(text: '/800 Words', style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface)),
-                  ],
-                ),
+                TextSpan(text: '${wordCount}', style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange), children: [
+                  TextSpan(
+                    text: '/800 Words',
+                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
+                  )
+                ]),
               ),
             ],
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 14.ch),
           Text(
             'Please briefly describe your prompt *',
             style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),

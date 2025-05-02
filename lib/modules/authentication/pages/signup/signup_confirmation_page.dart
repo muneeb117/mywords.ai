@@ -4,6 +4,7 @@ import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class SignupConfirmationPage extends StatelessWidget {
   const SignupConfirmationPage({super.key});
@@ -13,28 +14,34 @@ class SignupConfirmationPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'Confirmation'),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16),
+        margin: EdgeInsets.symmetric(horizontal: 16.cw),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset('assets/images/svg/ic_confirmation.svg'),
-              SizedBox(height: 20),
-              Text("You're All Set!", style: context.textTheme.headlineMedium?.copyWith(fontSize: 24, fontWeight: FontWeight.w600)),
-              SizedBox(height: 16),
+              SizedBox(height: 20.ch),
+              Text(
+                "You're All Set!",
+                style: context.textTheme.headlineMedium?.copyWith(
+                  fontSize: 24.csp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 16.ch),
               Text(
                 "You are registered into MyWords.ai\nsuccessfully",
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodyLarge?.copyWith(color: context.colorScheme.onSurface.withOpacity(0.9), height: 1),
               ),
-              SizedBox(height: 150),
+              SizedBox(height: 150.ch),
               PrimaryButton.filled(
                 onTap: () {
                   Navigator.pushReplacementNamed(context, RouteManager.login);
                 },
                 title: 'Finish',
                 fontWeight: FontWeight.w700,
-              ),
+              )
             ],
           ),
         ),

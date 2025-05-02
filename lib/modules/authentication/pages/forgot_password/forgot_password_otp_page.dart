@@ -6,6 +6,7 @@ import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 import 'package:pinput/pinput.dart';
 
 class ForgotPasswordOtpPage extends StatefulWidget {
@@ -23,16 +24,18 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
     return Scaffold(
       appBar: CustomAppBar(title: 'Enter OTP Code'),
       body: Container(
-        margin: EdgeInsets.all(16),
+        margin: EdgeInsets.all(16.cw),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 "Check your email inbox or spam folder for a one-time passcode (OTP). Enter the code below.",
-                style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
+                style: context.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-              SizedBox(height: 26),
+              SizedBox(height: 26.ch),
               Pinput(
                 defaultPinTheme: defaultPinTheme,
                 focusedPinTheme: focusedPinTheme,
@@ -43,13 +46,18 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                   context.read<ForgotPasswordCubit>().verifyOtp(otp);
                 },
               ),
-              SizedBox(height: 26),
+              SizedBox(height: 26.ch),
               Text("You can resend the code in 56 seconds", style: context.textTheme.bodyMedium),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Text("Resend", style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                padding: EdgeInsets.symmetric(vertical: 12.ch),
+                child: Text(
+                  "Resend",
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 10.ch),
               BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
                 listener: (context, state) {
                   if (state.step == ForgotPasswordStep.otpInput) {
@@ -76,7 +84,7 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                     fontWeight: FontWeight.bold,
                   );
                 },
-              ),
+              )
             ],
           ),
         ),
@@ -86,13 +94,20 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
 }
 
 final defaultPinTheme = PinTheme(
-  width: 75,
-  height: 56,
-  textStyle: TextStyle(fontSize: 16, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
-  decoration: BoxDecoration(border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)), borderRadius: BorderRadius.circular(10)),
+  width: 75.cw,
+  height: 56.ch,
+  textStyle: TextStyle(
+    fontSize: 16.csp,
+    color: Color.fromRGBO(30, 60, 87, 1),
+    fontWeight: FontWeight.w600,
+  ),
+  decoration: BoxDecoration(
+    border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
+    borderRadius: BorderRadius.circular(10.cr),
+  ),
 );
 
 final focusedPinTheme = defaultPinTheme.copyDecorationWith(
   border: Border.all(color: AppColors.accent),
-  borderRadius: BorderRadius.circular(10),
+  borderRadius: BorderRadius.circular(10.cr),
 );

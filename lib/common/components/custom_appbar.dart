@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -34,7 +35,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       title: Text(
         title,
-        style: titleStyle ?? Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
+        style: titleStyle ?? Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18.csp, fontWeight: FontWeight.w500),
       ),
     );
   }

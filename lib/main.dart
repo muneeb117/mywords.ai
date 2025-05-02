@@ -3,6 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart' show Firebase;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mywords/config/flavors/flavors.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/config/themes/light_theme.dart';
@@ -26,14 +27,24 @@ class MyWordsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MyWords.ai',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: lightTheme,
-      navigatorObservers: <NavigatorObserver>[FirebaseAnalyticsObserver(analytics: sl<FirebaseAnalytics>())],
-      initialRoute: RouteManager.splash,
-      onGenerateRoute: RouteManager.generateRoute,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      useInheritedMediaQuery: true,
+      splitScreenMode: true,
+      builder: (context, widget) {
+        return MaterialApp(
+          title: 'MyWords.ai',
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: lightTheme,
+          navigatorObservers: <NavigatorObserver>[
+            FirebaseAnalyticsObserver(analytics: sl<FirebaseAnalytics>()),
+          ],
+          initialRoute: RouteManager.splash,
+          onGenerateRoute: RouteManager.generateRoute,
+        );
+      },
     );
   }
 }

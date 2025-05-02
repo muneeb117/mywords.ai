@@ -10,6 +10,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiHumanizerOutputPage extends StatefulWidget {
   const AiHumanizerOutputPage({super.key});
@@ -35,49 +36,61 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
         child: Column(
           children: [
             StepIndicatorHumanizer(activeSteps: [1, 2]),
-            SizedBox(height: 16),
+            SizedBox(height: 16.ch),
             Container(
-              height: 380,
-              margin: EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
-              child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                        child: Text(
-                          'Humanized Output',
-                          style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
+                height: 380.ch,
+                margin: EdgeInsets.symmetric(horizontal: 8.cw),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.cr),
+                  border: Border.all(
+                    color: Color(0xffDADADA),
+                  ),
+                ),
+                child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 16.ch),
+                          child: Text(
+                            'Humanized Output',
+                            style: context.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: context.colorScheme.onSurface,
+                            ),
+                          ),
                         ),
-                      ),
-                      Divider(color: Color(0xffDADADA), height: 0),
-                      Expanded(
-                        child: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
-                          builder: (context, state) {
-                            return Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                              child: SingleChildScrollView(
-                                padding: EdgeInsets.only(top: 16),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 16.0),
-                                  child: SelectableText(state.generatedText, style: context.textTheme.titleMedium),
-                                ),
-                              ),
-                              decoration: BoxDecoration(),
-                            );
-                          },
+                        Divider(
+                          color: Color(0xffDADADA),
+                          height: 0,
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 16),
+                        Expanded(
+                          child: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
+                            builder: (context, state) {
+                              return Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.fromLTRB(16.cw, 0, 16.cw, 0),
+                                child: SingleChildScrollView(
+                                    padding: EdgeInsets.only(top: 16.ch),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 16.ch),
+                                      child: SelectableText(
+                                        state.generatedText,
+                                        style: context.textTheme.titleMedium,
+                                      ),
+                                    )),
+                                decoration: BoxDecoration(),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )),
+            SizedBox(height: 16.ch),
             // _InfoStaticWidget(),
             // SizedBox(height: 16),
           ],
@@ -88,40 +101,42 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
           return BlocConsumer<AiDetectorCubit, AiDetectorState>(
             listener: (context, aiDetectorState) {
               if (aiDetectorState.aiDetectorStatus == AiDetectorStatus.success) {
-                showDialog(context: context, builder: (context) => DetectAiScoreDialog(aiDetectorEntity: aiDetectorState.aiDetectorEntity));
+                showDialog(
+                  context: context,
+                  builder: (context) => DetectAiScoreDialog(aiDetectorEntity: aiDetectorState.aiDetectorEntity),
+                );
               }
             },
             builder: (context, aiDetectorState) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
                 child: Row(
                   children: [
                     Text('${aiState.generatedOutputWordCount} Words', style: context.textTheme.titleMedium),
-                    SizedBox(width: 48),
+                    SizedBox(width: 48.cw),
                     Expanded(
                       child: PrimaryButton.filled(
-                        isLoading: aiDetectorState.aiDetectorStatus == AiDetectorStatus.loading,
-                        onTap: () {
-                          /// Detect AI response
-                          context.read<AiDetectorCubit>()
-                            ..setText(aiState.generatedText)
-                            ..detectText();
-                        },
-                        title: 'Check for AI',
-                        fontWeight: FontWeight.w700,
-                        backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-                        textColor: context.colorScheme.primary,
-                      ),
+                          isLoading: aiDetectorState.aiDetectorStatus == AiDetectorStatus.loading,
+                          onTap: () {
+                            /// Detect AI response
+                            context.read<AiDetectorCubit>()
+                              ..setText(aiState.generatedText)
+                              ..detectText();
+                          },
+                          title: 'Check for AI',
+                          fontWeight: FontWeight.w700,
+                          backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+                          textColor: context.colorScheme.primary),
                     ),
-                    SizedBox(width: 5),
+                    SizedBox(width: 5.cw),
                     IconButton(
                       icon: SvgPicture.asset('assets/images/svg/ic_copy.svg'),
                       onPressed: () {
                         Clipboard.setData(ClipboardData(text: aiState.generatedText));
                         context.showSnackBar('Copied to Clipboard!');
                       },
-                    ),
+                    )
                   ],
                 ),
               );

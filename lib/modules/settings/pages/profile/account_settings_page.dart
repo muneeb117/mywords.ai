@@ -7,6 +7,7 @@ import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/settings/cubit/get_profile/get_profile_cubit.dart';
 import 'package:mywords/utils/extensions/email_validator.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AccountSettingsPage extends StatelessWidget {
   const AccountSettingsPage({super.key});
@@ -50,16 +51,16 @@ class _AccountSettingsViewState extends State<AccountSettingsView> {
             emailController.text = state.email;
           }
           return Container(
-            margin: EdgeInsets.all(16),
+            margin: EdgeInsets.all(16.cw),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Center(
                 //   child: RoundedImage(imageUrl: null),
                 // ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.ch),
                 Text('Full Name', style: context.textTheme.titleMedium),
-                SizedBox(height: 8),
+                SizedBox(height: 8.ch),
                 InputField(
                   hintText: 'Your full name',
                   prefixIconPath: '',
@@ -76,9 +77,9 @@ class _AccountSettingsViewState extends State<AccountSettingsView> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.ch),
                 Text('Email', style: context.textTheme.titleMedium),
-                SizedBox(height: 8),
+                SizedBox(height: 8.ch),
                 InputField.email(
                   hintText: 'Email',
                   hasPrefixIcon: false,

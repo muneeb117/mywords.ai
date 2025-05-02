@@ -1,6 +1,6 @@
 part of 'signup_cubit.dart';
 
-enum SignupStatus { initial, loading, googleLoading, googleSuccess, success, failed }
+enum SignupStatus { initial, loading, success, failed }
 
 class SignupState {
   final bool isPasswordHidden;
@@ -11,6 +11,7 @@ class SignupState {
   final String errorMsg;
   final bool isGoogleLoading;
   final bool isFromGoogle;
+  final bool isFromApple;
 
   SignupState({
     required this.isPasswordHidden,
@@ -21,6 +22,7 @@ class SignupState {
     required this.errorMsg,
     required this.isGoogleLoading,
     required this.isFromGoogle,
+    required this.isFromApple,
   });
 
   factory SignupState.initial() {
@@ -29,6 +31,7 @@ class SignupState {
       isConfirmPasswordHidden: true,
       isGoogleLoading: false,
       isFromGoogle: false,
+      isFromApple: false,
       signupStatus: SignupStatus.initial,
       name: '',
       email: '',
@@ -39,8 +42,9 @@ class SignupState {
   SignupState copyWith({
     bool? isPasswordHidden,
     bool? isConfirmPasswordHidden,
-    bool? isGoogleLoading,
-    bool? isFromGoogle,
+    bool? isSocialAuthLoading,
+    bool? isFromSocialAuth,
+    bool? isFromApple,
     SignupStatus? signupStatus,
     String? name,
     String? email,
@@ -49,8 +53,9 @@ class SignupState {
     return SignupState(
       isPasswordHidden: isPasswordHidden ?? this.isPasswordHidden,
       isConfirmPasswordHidden: isConfirmPasswordHidden ?? this.isConfirmPasswordHidden,
-      isGoogleLoading: isGoogleLoading ?? this.isGoogleLoading,
-      isFromGoogle: isFromGoogle ?? this.isFromGoogle,
+      isGoogleLoading: isSocialAuthLoading ?? this.isGoogleLoading,
+      isFromGoogle: isFromSocialAuth ?? this.isFromGoogle,
+      isFromApple: isFromApple ?? this.isFromApple,
       signupStatus: signupStatus ?? this.signupStatus,
       name: name ?? this.name,
       email: email ?? this.email,

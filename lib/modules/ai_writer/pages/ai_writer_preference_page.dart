@@ -10,6 +10,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/ai_writer/pages/ai_writer_output_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiWriterPreferencePage extends StatefulWidget {
   const AiWriterPreferencePage({super.key});
@@ -37,15 +38,20 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StepIndicator(activeSteps: [1, 2], leftText: 'Prompt', centerText: 'Purpose', rightText: 'Output'),
-              SizedBox(height: 16),
+              StepIndicator(
+                activeSteps: [1, 2],
+                leftText: 'Prompt',
+                centerText: 'Purpose',
+                rightText: 'Output',
+              ),
+              SizedBox(height: 16.ch),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                padding: EdgeInsets.symmetric(horizontal: 18.cw),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Select writing purpose *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.ch),
                     CustomDropdownWithoutIcon(
                       items: ['Essay', 'Letter', 'Email', 'Story', 'Article', 'Discussion Board/Question Response'],
                       hint: 'Select Purpose',
@@ -56,50 +62,61 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
                         });
                       },
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 12.ch),
                     Text('Select a language *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
-                    CustomDropdownWithoutIcon(items: ['English'], hint: 'Select Language', value: selectedLanguage, onChanged: (val) {}),
-                    SizedBox(height: 12),
+                    SizedBox(height: 8.ch),
+                    CustomDropdownWithoutIcon(
+                      items: ['English'],
+                      hint: 'Select Language',
+                      value: selectedLanguage,
+                      onChanged: (val) {},
+                    ),
+                    SizedBox(height: 12.ch),
                     Text('Minimum Word Count *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.ch),
                     InputField(
                       hintText: 'Enter minimum word count',
                       hasPrefixIcon: false,
                       prefixIconPath: '',
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.next,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       controller: minWordCountController,
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 12.ch),
                     Text('Maximum Word Count *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8),
+                    SizedBox(height: 8.ch),
                     InputField(
                       hintText: 'Enter maximum word count',
                       hasPrefixIcon: false,
                       prefixIconPath: '',
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       controller: maxWordCountController,
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 12.ch),
                     Text(
                       'Minimum 350 words, maximum 500 words.',
-                      style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.onSurface,
+                      ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.ch),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),
       ),
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+        margin: EdgeInsets.symmetric(horizontal: 16.cw),
+        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
         child: BlocConsumer<AiWriterCubit, AiWriterState>(
           listener: (context, state) {
             if (state.aiWriterStatus == AiWriterStatus.success) {

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 
-class SocialAuthButton extends StatelessWidget {
+class AppleAuthButton extends StatelessWidget {
   final VoidCallback onTap;
-  final String iconPath;
-  final String platform;
 
-  const SocialAuthButton({super.key,required this.platform, required this.onTap, required this.iconPath});
+  const AppleAuthButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,6 @@ class SocialAuthButton extends StatelessWidget {
           Container(
             height: 56,
             width: double.infinity,
-
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffEDF1F3)),
               borderRadius: BorderRadius.circular(50),
@@ -29,13 +26,13 @@ class SocialAuthButton extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16.0),
-                child: SvgPicture.asset(iconPath, height: 30, width: 30),
+                child: SvgPicture.asset('assets/images/svg/ic_apple.svg'),
               ),
             ),
           ),
-          Text('Continue with $platform', style: context.textTheme.titleMedium),
+          Text('Continue with Apple', style: context.textTheme.titleMedium)
         ],
       ),
     );
   }
-}
+} 

@@ -14,6 +14,7 @@ import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiHumanizerInputPage extends StatefulWidget {
   const AiHumanizerInputPage({super.key});
@@ -58,74 +59,78 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
           body: Column(
             children: [
               StepIndicatorHumanizer(activeSteps: [1]),
-              SizedBox(height: 16),
+              SizedBox(height: 16.ch),
               Flexible(
                 child: SingleChildScrollView(
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Color(0xffDADADA))),
-                    child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
-                      listener: (context, state) {
-                        if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
-                          context.read<AiHumanizerCubit>().saveUserPrompt();
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) => AiHumanizerOutputPage(),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
+                      margin: EdgeInsets.symmetric(horizontal: 8.cw),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.cr),
+                        border: Border.all(
+                          color: Color(0xffDADADA),
+                        ),
+                      ),
+                      child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
+                        listener: (context, state) {
+                          if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
+                            context.read<AiHumanizerCubit>().saveUserPrompt();
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation, secondaryAnimation) => AiHumanizerOutputPage(),
+                                transitionDuration: Duration.zero,
+                                reverseTransitionDuration: Duration.zero,
+                              ),
+                            );
+                          } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
+                            context.showSnackBar(state.errorMsg);
+                          }
+                        },
+                        builder: (context, state) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _TextFieldHeader(wordCount: state.wordCount),
+                              AiTextField(
+                                onChanged: (nextValue) {
+                                  context.read<AiHumanizerCubit>().updateText(nextValue);
+                                },
+                                textEditingController: textController,
+                              ),
+                              LabeledIconsRow(
+                                /// On sample text selection
+                                onSampleTextCallback: () {
+                                  final sampleText = AiSampleText.samplePrompt;
+                                  _putTextOnBoard(sampleText);
+                                },
+
+                                /// On upload file
+                                onUploadFileCallBack: () {
+                                  context.read<FileImportCubit>().importFile();
+                                },
+
+                                /// On paste text
+                                onPasteTextCallBack: () async {
+                                  final clipboardData = await Clipboard.getData('text/plain');
+                                  final text = clipboardData?.text;
+                                  if (text?.isNotEmpty ?? false) {
+                                    _putTextOnBoard(text!);
+                                  }
+                                },
+                              ),
+                            ],
                           );
-                        } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
-                          context.showSnackBar(state.errorMsg);
-                        }
-                      },
-                      builder: (context, state) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _TextFieldHeader(wordCount: state.wordCount),
-                            AiTextField(
-                              onChanged: (nextValue) {
-                                context.read<AiHumanizerCubit>().updateText(nextValue);
-                              },
-                              textEditingController: textController,
-                            ),
-                            LabeledIconsRow(
-                              /// On sample text selection
-                              onSampleTextCallback: () {
-                                final sampleText = AiSampleText.samplePrompt;
-                                _putTextOnBoard(sampleText);
-                              },
-
-                              /// On upload file
-                              onUploadFileCallBack: () {
-                                context.read<FileImportCubit>().importFile();
-                              },
-
-                              /// On paste text
-                              onPasteTextCallBack: () async {
-                                final clipboardData = await Clipboard.getData('text/plain');
-                                final text = clipboardData?.text;
-                                if (text?.isNotEmpty ?? false) {
-                                  _putTextOnBoard(text!);
-                                }
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+                        },
+                      )),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20.ch),
             ],
           ),
           bottomNavigationBar: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
             builder: (context, state) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
                 child: PrimaryButton.filled(
                   isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
                   onTap: () {
@@ -169,7 +174,7 @@ class _TextFieldHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 12.ch),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,17 +186,16 @@ class _TextFieldHeader extends StatelessWidget {
               ),
               Spacer(),
               Text.rich(
-                TextSpan(
-                  text: '${wordCount}',
-                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
-                  children: [
-                    TextSpan(text: '/800 Words', style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface)),
-                  ],
-                ),
+                TextSpan(text: '${wordCount}', style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange), children: [
+                  TextSpan(
+                    text: '/800 Words',
+                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
+                  )
+                ]),
               ),
             ],
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 14.ch),
           Text(
             'Please briefly describe your prompt *',
             style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),

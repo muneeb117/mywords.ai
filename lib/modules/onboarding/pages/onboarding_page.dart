@@ -9,6 +9,7 @@ import 'package:mywords/core/storage/storage_service.dart';
 import 'package:mywords/modules/onboarding/cubit/onboarding.dart';
 import 'package:mywords/modules/onboarding/models/onboarding_model.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class OnboardingPage extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 },
                 itemBuilder:
                     (context, index) => Container(
-                      padding: EdgeInsets.all(18) + EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+                      padding: EdgeInsets.all(18.cw) + EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
                       child: Image.asset(items[index].image),
                     ),
               ),
@@ -51,8 +52,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.white),
                 width: double.infinity,
-                height: 290,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                height: 290.ch,
+                padding: EdgeInsets.symmetric(horizontal: 24.cw, vertical: 30.ch),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,32 +61,32 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Text(
                       items[_currentPage].title,
                       textAlign: TextAlign.center,
-                      style: context.textTheme.headlineLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.w700),
+                      style: context.textTheme.headlineLarge?.copyWith(fontSize: 24.csp, fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.ch),
                     Text(
                       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
                       maxLines: 3,
                       textAlign: TextAlign.center,
                       style: context.textTheme.bodyMedium?.copyWith(height: 1.5),
                     ),
-                    SizedBox(height: 22),
+                    SizedBox(height: 22.ch),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         items.length,
                         (index) => Container(
-                          width: _currentPage == index ? 24 : 8,
-                          height: 8,
-                          margin: EdgeInsets.symmetric(horizontal: 4),
+                          width: _currentPage == index ? 24.cw : 8.cw,
+                          height: 8.ch,
+                          margin: EdgeInsets.symmetric(horizontal: 4.cw),
                           decoration: BoxDecoration(
                             color: _currentPage == index ? context.colorScheme.primary : Color(0xffE7E7E7),
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(5.cw),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 22),
+                    SizedBox(height: 22.ch),
                     Builder(
                       builder: (context) {
                         return Row(
@@ -102,7 +103,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            SizedBox(width: 16),
+                            SizedBox(width: 16.cw),
                             Expanded(
                               child: PrimaryButton.filled(
                                 onTap: () {
