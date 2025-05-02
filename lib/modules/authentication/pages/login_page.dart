@@ -10,12 +10,14 @@ import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/di/service_locator.dart';
 import 'package:mywords/modules/authentication/cubit/login/login_cubit.dart';
 import 'package:mywords/modules/authentication/cubit/signup/signup_cubit.dart';
+import 'package:mywords/modules/authentication/cubit/social_auth/social_auth_cubit.dart';
 import 'package:mywords/modules/authentication/widgets/auth_header_widget.dart';
 import 'package:mywords/modules/authentication/widgets/google_auth_button.dart';
 import 'package:mywords/modules/authentication/widgets/or_divider_widget.dart';
 import 'package:mywords/modules/authentication/widgets/remember_me_and_forgot_pwd_widget.dart';
 import 'package:mywords/utils/extensions/email_validator.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,19 +39,40 @@ class _LoginPageState extends State<LoginPage> {
       providers: [
         BlocProvider(
           create:
-              (context) => LoginCubit(authRepository: sl(), sessionRepository: sl(), socialAuthRepository: sl(), analyticsService: sl()),
+              (context) => LoginCubit(
+                authRepository: sl(),
+                sessionRepository: sl(),
+                socialAuthRepository: sl(),
+                analyticsService: sl(),
+              ),
         ),
         BlocProvider(
           create:
-              (context) => SignupCubit(authRepository: sl(), socialAuthRepository: sl(), sessionRepository: sl(), analyticsService: sl()),
+              (context) => SignupCubit(
+                authRepository: sl(),
+                socialAuthRepository: sl(),
+                sessionRepository: sl(),
+                analyticsService: sl(),
+              ),
+        ),
+        BlocProvider(
+          create:
+              (context) => SocialAuthCubit(
+                authRepository: sl(),
+                socialAuthRepository: sl(),
+                sessionRepository: sl(),
+                analyticsService: sl(),
+              ),
         ),
       ],
       child: Builder(
         builder: (context) {
-          final signupCubit = context.watch<SignupCubit>();
-          final loginCubit = context.watch<LoginCubit>();
+          final socialAuthState = context.watch<SocialAuthCubit>().state;
+          final signupState = context.watch<SignupCubit>().state;
+
           bool isSigningUpWithGoogle =
-              loginCubit.state.loginStatus == LoginStatus.googleLoading || signupCubit.state.signupStatus == SignupStatus.loading;
+              socialAuthState.socialAuthStatus == SocialAuthStatus.loading ||
+              signupState.signupStatus == SignupStatus.loading;
           return Stack(
             children: [
               Scaffold(
@@ -57,21 +80,29 @@ class _LoginPageState extends State<LoginPage> {
                   titleSpacing: 0,
                   surfaceTintColor: Colors.transparent,
                   backgroundColor: context.theme.scaffoldBackgroundColor,
-                  title: Padding(padding: const EdgeInsets.only(top: 10.0), child: TopAppIconAndTitleWidget()),
+                  title: Padding(
+                    padding: EdgeInsets.only(top: 10.ch),
+                    child: TopAppIconAndTitleWidget(),
+                  ),
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.ch),
                   child: SingleChildScrollView(
                     child: Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Login', style: context.textTheme.headlineMedium?.copyWith(fontSize: 24, fontWeight: FontWeight.w700)),
-                          // AuthHeaderWidget(title: 'Login'),
-                          SizedBox(height: 16),
+                          Text(
+                            'Login',
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              fontSize: 24.ch,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 14.ch),
                           Text('Email', style: context.textTheme.titleMedium),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           InputField.email(
                             hintText: 'Email',
                             controller: emailController,
@@ -84,16 +115,18 @@ class _LoginPageState extends State<LoginPage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 12),
+                          SizedBox(height: 12.ch),
                           Text('Password', style: context.textTheme.titleMedium),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           BlocBuilder<LoginCubit, LoginState>(
                             builder: (context, state) {
                               return InputField.password(
                                 hintText: 'Password',
                                 controller: passwordController,
                                 suffixIconPath:
-                                    state.isPasswordHidden ? 'assets/images/svg/ic_pwd_hidden.svg' : 'assets/images/svg/ic_pwd_shown.svg',
+                                    state.isPasswordHidden
+                                        ? 'assets/images/svg/ic_pwd_hidden.svg'
+                                        : 'assets/images/svg/ic_pwd_shown.svg',
                                 obscureText: state.isPasswordHidden,
                                 onSuffixIconTap: () {
                                   context.read<LoginCubit>().togglePassword();
@@ -108,26 +141,27 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             },
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           RememberMeAndForgotPasswordTile(
                             onRememberMeTap: () {},
                             onForgotPasswordTap: () {
-                              _analyticsService.logEvent(name: AnalyticsEventNames.forgotPasswordInitiated);
+                              _analyticsService.logEvent(
+                                name: AnalyticsEventNames.forgotPasswordInitiated,
+                              );
                               Navigator.pushNamed(context, RouteManager.forgotPasswordEmail);
                             },
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           BlocConsumer<LoginCubit, LoginState>(
                             listener: (context, state) {
                               if (state.loginStatus == LoginStatus.success) {
-                                Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
-                              } else if (state.loginStatus == LoginStatus.googleSuccess) {
-                                /// Signup with google
-                                context.read<SignupCubit>().signup(state.name, state.email, '', provider: 'google');
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  RouteManager.home,
+                                  (route) => false,
+                                );
                               } else if (state.loginStatus == LoginStatus.failed) {
-                                if (!state.errorMsg.contains('cancelled by the user')) {
-                                  context.showSnackBar(state.errorMsg);
-                                }
+                                context.showSnackBar(state.errorMsg);
                               }
                             },
                             builder: (context, state) {
@@ -135,7 +169,11 @@ class _LoginPageState extends State<LoginPage> {
                                 listener: (context, signupState) {
                                   print('signupState :: ${signupState.signupStatus}');
                                   if (signupState.signupStatus == SignupStatus.success) {
-                                    Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      RouteManager.home,
+                                      (route) => false,
+                                    );
                                   } else if (signupState.signupStatus == LoginStatus.failed) {
                                     context.showSnackBar(signupState.errorMsg);
                                   }
@@ -145,7 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                                   isLoading: state.loginStatus == LoginStatus.loading,
                                   onTap: () {
                                     // If left side evaluates to null, and null == true is false
-                                    bool isFormValidated = _formKey.currentState?.validate() == true;
+                                    bool isFormValidated =
+                                        _formKey.currentState?.validate() == true;
                                     if (isFormValidated) {
                                       context.closeKeyboard();
                                       final email = emailController.text.toLowerCase().trim();
@@ -159,26 +198,62 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           OrDividerWidget(),
-                          GoogleAuthButton(
-                            onTap: () {
-                              context.read<LoginCubit>().loginWithGoogle();
+                          BlocConsumer<SocialAuthCubit, SocialAuthState>(
+                            listener: (context, state) {
+                              if (state.socialAuthStatus == SocialAuthStatus.success) {
+                                /// Signup with google
+                                context.read<SignupCubit>().signup(
+                                  state.name,
+                                  state.email,
+                                  '',
+                                  provider: 'google',
+                                );
+                              } else if (state.socialAuthStatus == SocialAuthStatus.failed) {
+                                if (!state.errorMsg.contains('cancelled by the user')) {
+                                  context.showSnackBar(state.errorMsg);
+                                }
+                              }
+                            },
+                            builder: (context, state) {
+                              return SocialAuthButton(
+                                iconPath: 'assets/images/svg/ic_google.svg',
+                                onTap: () {
+                                  context.read<SocialAuthCubit>().loginWithGoogle();
+                                },
+                              );
                             },
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 12.ch),
+                          SocialAuthButton(
+                            iconPath: 'assets/images/svg/ic_apple.svg',
+                            onTap: () {
+                              // context.read<SocialAuthCubit>().loginWithGoogle();
+                            },
+                          ),
+                          SizedBox(height: 8.ch),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 "Don't have an account?",
-                                style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
+                                style: context.textTheme.bodyMedium?.copyWith(
+                                  color: context.colorScheme.onSurface,
+                                ),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  _analyticsService.logEvent(name: AnalyticsEventNames.signupInitiated);
+                                  _analyticsService.logEvent(
+                                    name: AnalyticsEventNames.signupInitiated,
+                                  );
                                   Navigator.pushReplacementNamed(context, RouteManager.signup);
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8, bottom: 8),
+                                  padding: EdgeInsets.only(
+                                    left: 4.ch,
+                                    right: 4.ch,
+                                    top: 8.ch,
+                                    bottom: 8.ch,
+                                  ),
                                   child: Text(
                                     'Sign Up',
                                     style: context.textTheme.titleMedium?.copyWith(
@@ -197,7 +272,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               if (isSigningUpWithGoogle)
-                Container(color: Colors.black.withOpacity(0.15), child: LoadingIndicator(bgColor: AppColors.black)),
+                Container(
+                  color: Colors.black.withOpacity(0.15),
+                  child: LoadingIndicator(bgColor: AppColors.black),
+                ),
             ],
           );
         },

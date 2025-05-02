@@ -6,6 +6,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class ForgotPasswordResetPage extends StatefulWidget {
   const ForgotPasswordResetPage({super.key});
@@ -24,7 +25,7 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
     return Scaffold(
       appBar: CustomAppBar(title: 'Reset Password'),
       body: Container(
-        margin: EdgeInsets.all(16),
+        margin: EdgeInsets.all(16.cw),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -37,9 +38,9 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: 26),
+                SizedBox(height: 26.ch),
                 Text('New Password', style: context.textTheme.titleMedium),
-                SizedBox(height: 8),
+                SizedBox(height: 8.ch),
                 InputField.password(
                   hintText: 'New Password',
                   controller: passwordController,
@@ -57,9 +58,9 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 12.ch),
                 Text('Confirm New Password', style: context.textTheme.titleMedium),
-                SizedBox(height: 8),
+                SizedBox(height: 8.ch),
                 InputField.password(
                   hintText: 'Confirm New Password',
                   controller: confirmPasswordController,
@@ -83,7 +84,7 @@ class _ForgotPasswordResetPageState extends State<ForgotPasswordResetPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 24),
+                SizedBox(height: 24.ch),
                 BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
                   listener: (context, state) {
                     if (state.step == ForgotPasswordStep.newPassword) {

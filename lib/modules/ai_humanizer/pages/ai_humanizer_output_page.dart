@@ -10,6 +10,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiHumanizerOutputPage extends StatefulWidget {
   const AiHumanizerOutputPage({super.key});
@@ -35,12 +36,12 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
         child: Column(
           children: [
             StepIndicatorHumanizer(activeSteps: [1, 2]),
-            SizedBox(height: 16),
+            SizedBox(height: 16.ch),
             Container(
-                height: 380,
-                margin: EdgeInsets.symmetric(horizontal: 8),
+                height: 380.ch,
+                margin: EdgeInsets.symmetric(horizontal: 8.cw),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.cr),
                   border: Border.all(
                     color: Color(0xffDADADA),
                   ),
@@ -52,7 +53,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                          padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 16.ch),
                           child: Text(
                             'Humanized Output',
                             style: context.textTheme.titleLarge?.copyWith(
@@ -70,11 +71,11 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                             builder: (context, state) {
                               return Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                padding: EdgeInsets.fromLTRB(16.cw, 0, 16.cw, 0),
                                 child: SingleChildScrollView(
-                                    padding: EdgeInsets.only(top: 16),
+                                    padding: EdgeInsets.only(top: 16.ch),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 16.0),
+                                      padding: EdgeInsets.only(bottom: 16.ch),
                                       child: SelectableText(
                                         state.generatedText,
                                         style: context.textTheme.titleMedium,
@@ -89,7 +90,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                     );
                   },
                 )),
-            SizedBox(height: 16),
+            SizedBox(height: 16.ch),
             // _InfoStaticWidget(),
             // SizedBox(height: 16),
           ],
@@ -108,12 +109,12 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
             },
             builder: (context, aiDetectorState) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+                margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
                 child: Row(
                   children: [
                     Text('${aiState.generatedOutputWordCount} Words', style: context.textTheme.titleMedium),
-                    SizedBox(width: 48),
+                    SizedBox(width: 48.cw),
                     Expanded(
                       child: PrimaryButton.filled(
                           isLoading: aiDetectorState.aiDetectorStatus == AiDetectorStatus.loading,
@@ -128,7 +129,7 @@ class _AiHumanizerOutputPageState extends State<AiHumanizerOutputPage> {
                           backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
                           textColor: context.colorScheme.primary),
                     ),
-                    SizedBox(width: 5),
+                    SizedBox(width: 5.cw),
                     IconButton(
                       icon: SvgPicture.asset('assets/images/svg/ic_copy.svg'),
                       onPressed: () {

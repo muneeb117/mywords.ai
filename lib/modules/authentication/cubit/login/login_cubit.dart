@@ -47,19 +47,19 @@ class LoginCubit extends Cubit<LoginState> {
       },
     );
   }
-
-  Future<void> loginWithGoogle() async {
-    emit(state.copyWith(loginStatus: LoginStatus.googleLoading));
-    try {
-      final result = await _socialAuthRepository.loginWithGoogle();
-      if (result.email.isNotEmpty && result.name.isNotEmpty) {
-        _analyticsService.logEvent(name: AnalyticsEventNames.loginWithGoogleAttempt, parameters: {'email': result.email});
-        emit(state.copyWith(loginStatus: LoginStatus.googleSuccess, name: result.name, email: result.email));
-      } else {
-        emit(state.copyWith(errorMsg: 'Some error occurs, Please try again', loginStatus: LoginStatus.failed));
-      }
-    } on LogInWithGoogleFailure catch (e) {
-      emit(state.copyWith(errorMsg: e.message, loginStatus: LoginStatus.failed));
-    } catch (c) {}
-  }
+  //
+  // Future<void> loginWithGoogle() async {
+  //   emit(state.copyWith(loginStatus: LoginStatus.googleLoading));
+  //   try {
+  //     final result = await _socialAuthRepository.loginWithGoogle();
+  //     if (result.email.isNotEmpty && result.name.isNotEmpty) {
+  //       _analyticsService.logEvent(name: AnalyticsEventNames.loginWithGoogleAttempt, parameters: {'email': result.email});
+  //       emit(state.copyWith(loginStatus: LoginStatus.googleSuccess, name: result.name, email: result.email));
+  //     } else {
+  //       emit(state.copyWith(errorMsg: 'Some error occurs, Please try again', loginStatus: LoginStatus.failed));
+  //     }
+  //   } on LogInWithGoogleFailure catch (e) {
+  //     emit(state.copyWith(errorMsg: e.message, loginStatus: LoginStatus.failed));
+  //   } catch (c) {}
+  // }
 }

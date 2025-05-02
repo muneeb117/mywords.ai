@@ -8,6 +8,8 @@ class AnalyticsEventNames {
   static const loginFailed = 'login_failed';
   static const loginWithGoogleAttempt = 'login_with_google_attempt';
   static const loginWithGoogleSuccess = 'login_with_google_success';
+  static const loginWithAppleAttempt = 'login_with_apple_attempt';
+  static const loginWithAppleSuccess = 'login_with_apple_success';
   static const forgotPasswordInitiated = 'forgot_password_initiated';
   static const forgotPasswordSuccess = 'forgot_password_success';
   static const forgotPasswordFailed = 'forgot_password_failed';

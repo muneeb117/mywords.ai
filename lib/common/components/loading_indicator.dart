@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({Key? key, this.bgColor}) : super(key: key);
@@ -10,7 +11,7 @@ class LoadingIndicator extends StatelessWidget {
     return Center(
       child: CupertinoActivityIndicator(
         color: bgColor ?? Colors.white,
-        radius: 12,
+        radius: 12.cr,
       ),
     );
   }

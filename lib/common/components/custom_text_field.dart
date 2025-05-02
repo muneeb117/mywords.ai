@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 enum InputFieldType { regular, email, password }
 
@@ -116,16 +117,16 @@ class InputField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           color: Color(0xff9E9E9E),
-          fontSize: 14,
+          fontSize: 14.csp,
           fontWeight: FontWeight.w500,
         ),
         prefixIcon: hasPrefixIcon
             ? Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 12),
+                padding: EdgeInsets.only(left: 20.cw, right: 12.cw),
                 child: SvgPicture.asset(prefixIconPath),
               )
             : null,
-        contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        contentPadding: EdgeInsets.symmetric(vertical: 16.ch, horizontal: 20.cw),
         suffixIcon: suffixIconPath == null || suffixIconPath == ''
             ? null
             : InkWell(
@@ -133,7 +134,7 @@ class InputField extends StatelessWidget {
                   onSuffixIconTap?.call();
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(right: 14.0, left: 14),
+                  padding: EdgeInsets.only(right: 14.cw, left: 14.cw),
                   child: SvgPicture.asset(
                     suffixIconPath!,
                     colorFilter: ColorFilter.mode(AppColors.black, BlendMode.srcIn),
@@ -142,23 +143,23 @@ class InputField extends StatelessWidget {
               ),
         suffixIconConstraints: suffixIconPath == null || suffixIconPath == ''
             ? null
-            : BoxConstraints(minHeight: 46, minWidth: 46, maxWidth: 46, maxHeight: 46),
+            : BoxConstraints(minHeight: 46.ch, minWidth: 46.cw, maxWidth: 46.cw, maxHeight: 46.ch),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.cr),
           borderSide: BorderSide(
             color: Color(0xffEAECF0),
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.cr),
           borderSide: BorderSide(
             color: Color(0xffEAECF0),
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.cr),
           borderSide: BorderSide(
             color: context.colorScheme.secondary,
             width: 1,

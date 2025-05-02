@@ -6,6 +6,7 @@ import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_detector/pages/ai_detector_output_page.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
+import 'package:mywords/utils/extensions/size_extension.dart';
 
 class AiDetectorPreferencePage extends StatefulWidget {
   const AiDetectorPreferencePage({super.key});
@@ -32,11 +33,11 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
                 centerText: 'Preference',
                 rightText: 'Output',
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.ch),
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  margin: EdgeInsets.symmetric(horizontal: 8.cw),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.cr),
                     border: Border.all(
                       color: Color(0xffDADADA),
                     ),
@@ -61,27 +62,27 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
                             color: Color(0xffDADADA),
                             height: 0,
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 16.ch),
                           DetectorPreferenceTile(
                             title: 'ChatGPT',
                             isSelected: state.modelPreference == 'ChatGPT',
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           DetectorPreferenceTile(
                             title: 'GPT-4',
                             isSelected: state.modelPreference == 'GPT-4',
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           DetectorPreferenceTile(
                             title: 'Human',
                             isSelected: state.modelPreference == 'Human',
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 8.ch),
                           DetectorPreferenceTile(
                             title: 'Human + AI',
                             isSelected: state.modelPreference == 'Human + AI',
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 16.ch),
                         ],
                       );
                     },
@@ -91,8 +92,8 @@ class _AiDetectorPreferencePageState extends State<AiDetectorPreferencePage> {
         ),
       ),
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30),
+        margin: EdgeInsets.symmetric(horizontal: 16.cw),
+        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
         child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
           listener: (context, state) {
             if (state.aiDetectorStatus == AiDetectorStatus.success) {
@@ -141,14 +142,14 @@ class DetectorPreferenceTile extends StatelessWidget {
         context.read<AiDetectorCubit>().setPreference(title);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        margin: EdgeInsets.symmetric(horizontal: 8.cw),
+        padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 12.ch),
         alignment: Alignment.centerLeft,
         width: double.infinity,
         decoration: BoxDecoration(
           color: isSelected ? context.colorScheme.secondary.withOpacity(0.10) : Colors.transparent,
           border: Border.all(color: Color(0xffEAECF0)),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.cr),
         ),
         child: Text(
           title,
