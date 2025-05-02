@@ -56,32 +56,32 @@ class SocialAuthCubit extends Cubit<SocialAuthState> {
   }
 
   void loginWithApple() async {
-    // emit(state.copyWith(socialAuthStatus: SocialAuthStatus.appleLoading));
-    // try {
-    //   final result = await _socialAuthRepository.loginWithApple();
-    //   if (result.email.isNotEmpty && result.name.isNotEmpty) {
-    //     _analyticsService.logEvent(
-    //       name: AnalyticsEventNames.loginWithAppleAttempt,
-    //       parameters: {'email': result.email},
-    //     );
-    //     emit(
-    //       state.copyWith(
-    //         socialAuthStatus: SocialAuthStatus.appleSuccess,
-    //         name: result.name,
-    //         email: result.email,
-    //         provider: 'apple',
-    //       ),
-    //     );
-    //   } else {
-    //     emit(
-    //       state.copyWith(
-    //         errorMsg: 'Some error occurs, Please try again',
-    //         socialAuthStatus: SocialAuthStatus.failed,
-    //       ),
-    //     );
-    //   }
-    // } on LogInWithGoogleFailure catch (e) {
-    //   emit(state.copyWith(errorMsg: e.message, socialAuthStatus: SocialAuthStatus.failed));
-    // } catch (c) {}
+    emit(state.copyWith(socialAuthStatus: SocialAuthStatus.loading));
+    try {
+      final result = await _socialAuthRepository.loginWithApple();
+      if (result.email.isNotEmpty && result.name.isNotEmpty) {
+        _analyticsService.logEvent(
+          name: AnalyticsEventNames.loginWithAppleAttempt,
+          parameters: {'email': result.email},
+        );
+        emit(
+          state.copyWith(
+            socialAuthStatus: SocialAuthStatus.success,
+            name: result.name,
+            email: result.email,
+            provider: 'apple',
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            errorMsg: 'Some error occurs, Please try again',
+            socialAuthStatus: SocialAuthStatus.failed,
+          ),
+        );
+      }
+    } on LogInWithGoogleFailure catch (e) {
+      emit(state.copyWith(errorMsg: e.message, socialAuthStatus: SocialAuthStatus.failed));
+    } catch (c) {}
   }
 }

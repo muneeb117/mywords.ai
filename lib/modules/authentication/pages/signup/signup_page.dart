@@ -40,7 +40,6 @@ class _SignupPageState extends State<SignupPage> {
           create:
               (context) => SignupCubit(
                 authRepository: sl(),
-                socialAuthRepository: sl(),
                 sessionRepository: sl(),
                 analyticsService: sl(),
               ),
@@ -232,6 +231,7 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                               OrDividerWidget(),
                               SocialAuthButton(
+                                platform: 'Google',
                                 iconPath: 'assets/images/svg/ic_google.svg',
                                 onTap: () {
                                   context.read<SocialAuthCubit>().loginWithGoogle();
@@ -256,6 +256,7 @@ class _SignupPageState extends State<SignupPage> {
                                 child: SizedBox(height: 12.ch),
                               ),
                               SocialAuthButton(
+                                platform: 'Apple',
                                 iconPath: 'assets/images/svg/ic_apple.svg',
                                 onTap: () {
                                   // context.read<LoginCubit>().loginWithGoogle();

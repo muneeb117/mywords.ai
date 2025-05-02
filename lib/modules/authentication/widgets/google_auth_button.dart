@@ -5,8 +5,9 @@ import 'package:mywords/utils/extensions/extended_context.dart';
 class SocialAuthButton extends StatelessWidget {
   final VoidCallback onTap;
   final String iconPath;
+  final String platform;
 
-  const SocialAuthButton({super.key, required this.onTap, required this.iconPath});
+  const SocialAuthButton({super.key,required this.platform, required this.onTap, required this.iconPath});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class SocialAuthButton extends StatelessWidget {
               ),
             ),
           ),
-          Text('Continue with Google', style: context.textTheme.titleMedium),
+          Text('Continue with $platform', style: context.textTheme.titleMedium),
         ],
       ),
     );

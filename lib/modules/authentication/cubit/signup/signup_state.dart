@@ -42,8 +42,8 @@ class SignupState {
   SignupState copyWith({
     bool? isPasswordHidden,
     bool? isConfirmPasswordHidden,
-    bool? isGoogleLoading,
-    bool? isFromGoogle,
+    bool? isSocialAuthLoading,
+    bool? isFromSocialAuth,
     bool? isFromApple,
     SignupStatus? signupStatus,
     String? name,
@@ -53,8 +53,8 @@ class SignupState {
     return SignupState(
       isPasswordHidden: isPasswordHidden ?? this.isPasswordHidden,
       isConfirmPasswordHidden: isConfirmPasswordHidden ?? this.isConfirmPasswordHidden,
-      isGoogleLoading: isGoogleLoading ?? this.isGoogleLoading,
-      isFromGoogle: isFromGoogle ?? this.isFromGoogle,
+      isGoogleLoading: isSocialAuthLoading ?? this.isGoogleLoading,
+      isFromGoogle: isFromSocialAuth ?? this.isFromGoogle,
       isFromApple: isFromApple ?? this.isFromApple,
       signupStatus: signupStatus ?? this.signupStatus,
       name: name ?? this.name,

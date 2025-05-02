@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
-import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
@@ -11,17 +10,14 @@ part 'signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {
   final AuthRepository _authRepository;
-  final SocialAuthRepository _socialAuthRepository;
   final SessionRepository _sessionRepository;
   final AnalyticsService _analyticsService;
 
   SignupCubit({
     required AuthRepository authRepository,
-    required SocialAuthRepository socialAuthRepository,
     required SessionRepository sessionRepository,
     required AnalyticsService analyticsService,
   }) : _authRepository = authRepository,
-       _socialAuthRepository = socialAuthRepository,
        _sessionRepository = sessionRepository,
        _analyticsService = analyticsService,
        super(SignupState.initial());
@@ -50,8 +46,8 @@ class SignupCubit extends Cubit<SignupState> {
     emit(
       state.copyWith(
         signupStatus: SignupStatus.loading,
-        isGoogleLoading: provider == 'google',
-        isFromGoogle: provider == 'google',
+        isSocialAuthLoading: provider == 'google' || provider == 'apple',
+        isFromSocialAuth: provider == 'google' || provider == 'apple',
       ),
     );
     final result = await _authRepository.signup(fullName, email, password, provider);
@@ -70,7 +66,7 @@ class SignupCubit extends Cubit<SignupState> {
           name: AnalyticsEventNames.signupSuccess,
           parameters: {'email': email},
         );
-        emit(state.copyWith(signupStatus: SignupStatus.success, isGoogleLoading: false));
+        emit(state.copyWith(signupStatus: SignupStatus.success, isSocialAuthLoading: false));
       },
       onError: (error) {
         _analyticsService.logEvent(
@@ -81,8 +77,8 @@ class SignupCubit extends Cubit<SignupState> {
           state.copyWith(
             signupStatus: SignupStatus.failed,
             errorMsg: error.errorMsg,
-            isGoogleLoading: false,
-            isFromGoogle: false,
+            isSocialAuthLoading: false,
+            isFromSocialAuth: false,
           ),
         );
       },
