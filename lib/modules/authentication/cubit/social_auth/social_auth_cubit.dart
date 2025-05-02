@@ -5,7 +5,6 @@ import 'package:mywords/core/exceptions/google_failure.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
-import 'package:mywords/utils/extensions/either_extension.dart';
 
 part 'social_auth_state.dart';
 
@@ -26,17 +25,30 @@ class SocialAuthCubit extends Cubit<SocialAuthState> {
        _analyticsService = analyticsService,
        super(SocialAuthState.initial());
 
-
-
   void loginWithGoogle() async {
     emit(state.copyWith(socialAuthStatus: SocialAuthStatus.loading));
     try {
       final result = await _socialAuthRepository.loginWithGoogle();
       if (result.email.isNotEmpty && result.name.isNotEmpty) {
-        _analyticsService.logEvent(name: AnalyticsEventNames.loginWithGoogleAttempt, parameters: {'email': result.email});
-        emit(state.copyWith(socialAuthStatus: SocialAuthStatus.success, name: result.name, email: result.email));
+        _analyticsService.logEvent(
+          name: AnalyticsEventNames.loginWithGoogleAttempt,
+          parameters: {'email': result.email},
+        );
+        emit(
+          state.copyWith(
+            socialAuthStatus: SocialAuthStatus.success,
+            name: result.name,
+            email: result.email,
+            provider: 'google',
+          ),
+        );
       } else {
-        emit(state.copyWith(errorMsg: 'Some error occurs, Please try again', socialAuthStatus: SocialAuthStatus.failed));
+        emit(
+          state.copyWith(
+            errorMsg: 'Some error occurs, Please try again',
+            socialAuthStatus: SocialAuthStatus.failed,
+          ),
+        );
       }
     } on LogInWithGoogleFailure catch (e) {
       emit(state.copyWith(errorMsg: e.message, socialAuthStatus: SocialAuthStatus.failed));
@@ -48,10 +60,25 @@ class SocialAuthCubit extends Cubit<SocialAuthState> {
     // try {
     //   final result = await _socialAuthRepository.loginWithApple();
     //   if (result.email.isNotEmpty && result.name.isNotEmpty) {
-    //     _analyticsService.logEvent(name: AnalyticsEventNames.loginWithAppleAttempt, parameters: {'email': result.email});
-    //     emit(state.copyWith(socialAuthStatus: SocialAuthStatus.appleSuccess, name: result.name, email: result.email));
+    //     _analyticsService.logEvent(
+    //       name: AnalyticsEventNames.loginWithAppleAttempt,
+    //       parameters: {'email': result.email},
+    //     );
+    //     emit(
+    //       state.copyWith(
+    //         socialAuthStatus: SocialAuthStatus.appleSuccess,
+    //         name: result.name,
+    //         email: result.email,
+    //         provider: 'apple',
+    //       ),
+    //     );
     //   } else {
-    //     emit(state.copyWith(errorMsg: 'Some error occurs, Please try again', socialAuthStatus: SocialAuthStatus.failed));
+    //     emit(
+    //       state.copyWith(
+    //         errorMsg: 'Some error occurs, Please try again',
+    //         socialAuthStatus: SocialAuthStatus.failed,
+    //       ),
+    //     );
     //   }
     // } on LogInWithGoogleFailure catch (e) {
     //   emit(state.copyWith(errorMsg: e.message, socialAuthStatus: SocialAuthStatus.failed));

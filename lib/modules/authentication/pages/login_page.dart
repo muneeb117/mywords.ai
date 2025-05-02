@@ -167,7 +167,6 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context, state) {
                               return BlocListener<SignupCubit, SignupState>(
                                 listener: (context, signupState) {
-                                  print('signupState :: ${signupState.signupStatus}');
                                   if (signupState.signupStatus == SignupStatus.success) {
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
@@ -198,15 +197,21 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           OrDividerWidget(),
-                          BlocConsumer<SocialAuthCubit, SocialAuthState>(
+                          SocialAuthButton(
+                            iconPath: 'assets/images/svg/ic_google.svg',
+                            onTap: () {
+                              context.read<SocialAuthCubit>().loginWithGoogle();
+                            },
+                          ),
+                          BlocListener<SocialAuthCubit, SocialAuthState>(
                             listener: (context, state) {
                               if (state.socialAuthStatus == SocialAuthStatus.success) {
                                 /// Signup with google
                                 context.read<SignupCubit>().signup(
                                   state.name,
                                   state.email,
-                                  '',
-                                  provider: 'google',
+                                  '', // password
+                                  provider: state.provider,
                                 );
                               } else if (state.socialAuthStatus == SocialAuthStatus.failed) {
                                 if (!state.errorMsg.contains('cancelled by the user')) {
@@ -214,16 +219,8 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               }
                             },
-                            builder: (context, state) {
-                              return SocialAuthButton(
-                                iconPath: 'assets/images/svg/ic_google.svg',
-                                onTap: () {
-                                  context.read<SocialAuthCubit>().loginWithGoogle();
-                                },
-                              );
-                            },
+                            child: SizedBox(height: 12.ch),
                           ),
-                          SizedBox(height: 12.ch),
                           SocialAuthButton(
                             iconPath: 'assets/images/svg/ic_apple.svg',
                             onTap: () {
