@@ -6,7 +6,7 @@ import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
-import 'package:mywords/modules/paywall/cubit/paywall_cubit.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
 
 class AppBlocProviders {
   static List<BlocProvider> providers = [

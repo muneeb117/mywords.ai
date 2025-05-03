@@ -8,7 +8,7 @@ import 'package:mywords/modules/home/widgets/current_plan_widget.dart';
 import 'package:mywords/modules/home/widgets/home_header.dart';
 import 'package:mywords/modules/home/widgets/home_tool_widget.dart';
 import 'package:mywords/modules/home/widgets/hours_saved_widget.dart';
-import 'package:mywords/modules/paywall/cubit/paywall_cubit.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:mywords/utils/extensions/size_extension.dart';
 
