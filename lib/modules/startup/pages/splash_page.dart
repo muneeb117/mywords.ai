@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/core/di/service_locator.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit.dart';
 import 'package:mywords/modules/startup/cubit/splash_cubit.dart';
 import 'package:mywords/modules/startup/widgets/splash_widget.dart';
 
@@ -17,6 +18,8 @@ class SplashPage extends StatelessWidget {
           if (state is ShowLogin) {
             Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
           } else if (state is ShowHome) {
+            context.read<PaywallCubit>().getEntitlement();
+            context.read<PaywallCubit>().getOffering();
             Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
           } else if (state is ShowOnboarding) {
             Navigator.pushNamedAndRemoveUntil(context, RouteManager.onboarding, (route) => false);

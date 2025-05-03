@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mywords/config/flavors/flavors.dart';
 import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/analytics/firebase_analytics.dart';
+import 'package:mywords/core/iap/iap_service.dart';
 import 'package:mywords/core/network/dio_client.dart';
 import 'package:mywords/core/repository/file_repository.dart';
 import 'package:mywords/core/storage/storage_service.dart';
@@ -39,10 +40,13 @@ Future<void> initDependencies(AppEnv appEnv) async {
   sl.registerLazySingleton<SocialAuthRepository>(() => SocialAuthRepository());
 
   sl.registerLazySingleton<HomeRepository>(() => HomeRepository(dioClient: sl()));
+  sl.registerLazySingleton<IapService>(() => IapService());
 
   // Firebase Analytics
   sl.registerSingleton<FirebaseAnalytics>(FirebaseAnalytics.instance);
-  sl.registerLazySingleton<AnalyticsService>(() => FirebaseAnalyticsService(firebaseAnalytics: sl()));
+  sl.registerLazySingleton<AnalyticsService>(
+    () => FirebaseAnalyticsService(firebaseAnalytics: sl()),
+  );
 
   // AI related repositories
   sl.registerLazySingleton<AiWriterRepository>(() => AiWriterRepository(dioClient: sl()));
@@ -50,7 +54,9 @@ Future<void> initDependencies(AppEnv appEnv) async {
   sl.registerLazySingleton<AiDetectorRepository>(() => AiDetectorRepository(dioClient: sl()));
 
   // Misc
-  sl.registerLazySingleton<ForgotPasswordRepository>(() => ForgotPasswordRepository(dioClient: sl()));
+  sl.registerLazySingleton<ForgotPasswordRepository>(
+    () => ForgotPasswordRepository(dioClient: sl()),
+  );
   sl.registerLazySingleton<SettingsRepository>(() => SettingsRepository(dioClient: sl()));
 
   // Register file repository
