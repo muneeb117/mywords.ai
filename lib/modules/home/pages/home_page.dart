@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
@@ -37,66 +38,73 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 4.ch),
-          Divider(color: Color(0xffEEEEEE), height: 0),
-          SizedBox(height: 16.ch),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.cw),
-            child: Row(
-              children: [
-                Expanded(child: CurrentPlanWidget()),
-                SizedBox(width: 12.cw),
-                Expanded(child: HoursSavedWidget()),
-              ],
+        children: AnimateList(
+          interval: 150.ms,
+          effects: [
+            FadeEffect(duration: 600.ms, curve: Curves.easeInOut),
+            SlideEffect(begin: Offset(0, 0.1), duration: 600.ms, curve: Curves.easeInOut),
+          ],
+          children: [
+            SizedBox(height: 4.ch),
+            Divider(color: Color(0xffEEEEEE), height: 0),
+            SizedBox(height: 16.ch),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.cw),
+              child: Row(
+                children: [
+                  Expanded(child: CurrentPlanWidget()),
+                  SizedBox(width: 12.cw),
+                  Expanded(child: HoursSavedWidget()),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 16.ch),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.cw),
-            child: Text('Popular Tools', style: context.textTheme.titleMedium),
-          ),
-          SizedBox(height: 8.ch),
-          HomeToolWidget(
-            onTap: () {
-              sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiWriterInitiated);
-              Navigator.pushNamed(context, RouteManager.aiWriterInput);
-            },
-            title: 'AI Writer',
-            description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
-            imageAssetPath: 'assets/images/png/img_ai_writer.png',
-          ),
-          SizedBox(height: 10.ch),
-          BlocConsumer<PaywallCubit, PaywallState>(
-            listener: (context, state) {
-              // TODO: implement listener
-            },
-            builder: (context, state) {
-              return HomeToolWidget(
-                onTap: () async {
-                  if (state.isPremiumUser) {
-                    Navigator.pushNamed(context, RouteManager.aiHumanizerInput);
-                  } else {
-                    Navigator.pushNamed(context, RouteManager.payWall);
-                  }
-                },
-                title: 'AI Humanizer',
-                description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
-                imageAssetPath: 'assets/images/png/img_ai_humanizer.png',
-              );
-            },
-          ),
-          SizedBox(height: 10.ch),
-          HomeToolWidget(
-            onTap: () {
-              sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiDetectorInitiated);
-              Navigator.pushNamed(context, RouteManager.aiDetectorInput);
-            },
-            title: 'AI Detector',
-            description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
-            imageAssetPath: 'assets/images/png/img_ai_detector.png',
-          ),
-        ],
+            SizedBox(height: 16.ch),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.cw),
+              child: Text('Popular Tools', style: context.textTheme.titleMedium),
+            ),
+            SizedBox(height: 8.ch),
+            HomeToolWidget(
+              onTap: () {
+                sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiWriterInitiated);
+                Navigator.pushNamed(context, RouteManager.aiWriterInput);
+              },
+              title: 'AI Writer',
+              description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
+              imageAssetPath: 'assets/images/png/img_ai_writer.png',
+            ),
+            SizedBox(height: 10.ch),
+            BlocConsumer<PaywallCubit, PaywallState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                return HomeToolWidget(
+                  onTap: () async {
+                    if (state.isPremiumUser) {
+                      Navigator.pushNamed(context, RouteManager.aiHumanizerInput);
+                    } else {
+                      Navigator.pushNamed(context, RouteManager.payWall);
+                    }
+                  },
+                  title: 'AI Humanizer',
+                  description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
+                  imageAssetPath: 'assets/images/png/img_ai_humanizer.png',
+                );
+              },
+            ),
+            SizedBox(height: 10.ch),
+            HomeToolWidget(
+              onTap: () {
+                sl<AnalyticsService>().logEvent(name: AnalyticsEventNames.aiDetectorInitiated);
+                Navigator.pushNamed(context, RouteManager.aiDetectorInput);
+              },
+              title: 'AI Detector',
+              description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
+              imageAssetPath: 'assets/images/png/img_ai_detector.png',
+            ),
+          ],
+        ),
       ),
     );
   }
