@@ -34,6 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
             dioClient: sl(),
             socialAuthRepository: sl(),
             analyticsService: sl(),
+            iapService: sl()
           ),
       child: Builder(
         builder: (context) {

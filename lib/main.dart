@@ -10,15 +10,16 @@ import 'package:mywords/config/themes/light_theme.dart';
 import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/bloc_setup/app_providers.dart';
 import 'package:mywords/core/di/service_locator.dart';
-import 'package:mywords/store_config.dart';
+import 'package:mywords/core/iap/iap_configure.dart';
+import 'package:mywords/core/iap/store_config.dart' show StoreConfig;
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
-  StoreConfig(store: Store.appStore, apiKey: AppKeys.appleKey);
   WidgetsFlutterBinding.ensureInitialized();
-  await _configureSDK();
+  StoreConfig.init(store: Store.appStore, apiKey: AppKeys.appleKey);
+  await IapConfig.init();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -52,16 +53,4 @@ class MyWordsApp extends StatelessWidget {
       },
     );
   }
-}
-
-Future<void> _configureSDK() async {
-  await Purchases.setLogLevel(LogLevel.debug);
-
-  PurchasesConfiguration configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
-
-  configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
-  configuration.pendingTransactionsForPrepaidPlansEnabled = true;
-  await Purchases.configure(configuration);
-
-  await Purchases.enableAdServicesAttributionTokenCollection();
 }

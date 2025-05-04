@@ -42,8 +42,8 @@ class _LoginPageState extends State<LoginPage> {
               (context) => LoginCubit(
                 authRepository: sl(),
                 sessionRepository: sl(),
-                socialAuthRepository: sl(),
                 analyticsService: sl(),
+                iapService: sl(),
               ),
         ),
         BlocProvider(

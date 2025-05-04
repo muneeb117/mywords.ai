@@ -18,8 +18,6 @@ class SplashPage extends StatelessWidget {
           if (state is ShowLogin) {
             Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
           } else if (state is ShowHome) {
-            context.read<PaywallCubit>().getEntitlement();
-            context.read<PaywallCubit>().getOfferings();
             Navigator.pushNamedAndRemoveUntil(context, RouteManager.home, (route) => false);
           } else if (state is ShowOnboarding) {
             Navigator.pushNamedAndRemoveUntil(context, RouteManager.onboarding, (route) => false);

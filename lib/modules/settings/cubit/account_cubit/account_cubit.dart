@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart';
+import 'package:mywords/core/iap/iap_service.dart';
 import 'package:mywords/core/network/dio_client.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
@@ -14,6 +15,7 @@ class AccountCubit extends Cubit<AccountState> {
   final SettingsRepository _settingsRepository;
   final SocialAuthRepository _socialAuthRepository;
   final AnalyticsService _analyticsService;
+  final IapService _iapService;
   final DioClient _dioClient;
 
   AccountCubit({
@@ -21,18 +23,21 @@ class AccountCubit extends Cubit<AccountState> {
     required SettingsRepository settingsRepository,
     required SocialAuthRepository socialAuthRepository,
     required AnalyticsService analyticsService,
+    required IapService iapService,
     required DioClient dioClient,
   }) : _sessionRepository = sessionRepository,
        _settingsRepository = settingsRepository,
        _socialAuthRepository = socialAuthRepository,
        _analyticsService = analyticsService,
+        _iapService = iapService,
        _dioClient = dioClient,
        super(AccountState.initial());
 
   void logout() async {
     emit(state.copyWith(accountStatus: AccountStatus.loggingOut));
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(milliseconds: 1500));
     _dioClient.clearToken();
+    await _iapService.logout();
     await _sessionRepository.clearSession();
     await _socialAuthRepository.signOut();
     emit(state.copyWith(accountStatus: AccountStatus.logoutSuccess));

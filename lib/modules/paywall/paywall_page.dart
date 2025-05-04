@@ -4,10 +4,11 @@ import 'package:mywords/common/components/custom_appbar.dart' show CustomAppBar;
 import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/constants/app_colors.dart';
+import 'package:mywords/core/di/service_locator.dart' show sl;
 import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
-import 'package:mywords/modules/paywall/cubit/purchase_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
+
+import 'cubit/purchase_cubit/purchase_cubit.dart';
 
 enum SelectionType { weekly, monthly }
 
@@ -24,7 +25,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PurchaseCubit(),
+      create: (context) => PurchaseCubit(iapService: sl()),
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Subscription Plan',
@@ -131,30 +132,32 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ),
 
                   const SizedBox(height: 25),
-                  PrimaryButton.gradient(
-                    onTap: () async {
-                      if (selectedIndex == -1) {
-                        context.showSnackBar('Please choose a plan!');
-                        return;
+                  BlocConsumer<PurchaseCubit, PurchaseState>(
+                    listener: (context, state) {
+                      if (state.status == PurchaseStatus.success) {
+                        if (state.customerInfo != null) {
+                          context.read<PaywallCubit>().markUserPremium(
+                            state.customerInfo!.entitlements,
+                          );
+                          Navigator.pop(context);
+                        }
                       }
-                     context.read<PurchaseCubit>().purchasePackage();
-                      // context.read<SubjectBloc>()
-                      // Offerings offerings = await Purchases.getOfferings();
-                      //
-                      // print('all offerings are :: $offerings');
-                      //
-                      // Offering? current = offerings.current;
-                      //
-                      // if (current == null || current.availablePackages.isEmpty) {
-                      //   print('no offerings or packages');
-                      //   // Show error or "no products available"
-                      //   return;
-                      // }
-                      //
-                      // // IapService.getOfferings();
-                      // // TODO: handle subscription
                     },
-                    title: 'Upgrade To Pro',
+                    builder: (context, state) {
+                      return PrimaryButton.gradient(
+                        onTap: () async {
+                          if (selectedIndex == -1) {
+                            context.showSnackBar('Please choose a plan!');
+                            return;
+                          }
+                          context.read<PurchaseCubit>().purchasePackage(
+                            productsList[selectedIndex],
+                          );
+
+                        },
+                        title: 'Upgrade To Pro',
+                      );
+                    },
                   ),
                   const SizedBox(height: 20),
                   const Text(

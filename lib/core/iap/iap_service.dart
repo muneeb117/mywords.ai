@@ -4,8 +4,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 class IapService {
   static const String _entitlementId = 'premium';
 
-  /// Fetches the current available offering from RevenueCat
-   Future<Offering?> getOffering() async {
+  Future<Offering?> getOffering() async {
     try {
       final offerings = await Purchases.getOfferings();
       final currentOffering = offerings.current;
@@ -24,8 +23,7 @@ class IapService {
     }
   }
 
-  /// Checks if the user currently has access to the premium entitlement
-   Future<bool> isPremiumUser() async {
+  Future<bool> isPremiumUser() async {
     try {
       final customerInfo = await Purchases.getCustomerInfo();
       final isActive = customerInfo.entitlements.all[_entitlementId]?.isActive ?? false;
@@ -39,5 +37,13 @@ class IapService {
       debugPrint('[IAP] Stacktrace:\n$stackTrace');
       return false;
     }
+  }
+
+  void login(String userID) {
+    Purchases.logIn(userID);
+  }
+
+  Future<void> logout() async {
+    await Purchases.logOut();
   }
 }

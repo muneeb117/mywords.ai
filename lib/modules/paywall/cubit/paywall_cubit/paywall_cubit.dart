@@ -1,15 +1,21 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/iap/iap_service.dart';
+import 'package:purchases_flutter/models/entitlement_infos_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
 part 'paywall_state.dart';
 
 class PaywallCubit extends Cubit<PaywallState> {
   final IapService _iapService;
+  String _entitlementId = 'premium';
 
   PaywallCubit({required IapService iapService})
-      : _iapService = iapService,
-        super(PaywallState.initial());
+    : _iapService = iapService,
+      super(PaywallState.initial()) {
+    getOfferings();
+  }
 
   Future<void> getEntitlement() async {
     try {
@@ -20,12 +26,16 @@ class PaywallCubit extends Cubit<PaywallState> {
     }
   }
 
+  Future<void> markUserPremium(EntitlementInfos entitlements) async {
+    final isPro = entitlements.all[_entitlementId]?.isActive ?? false;
+    emit(state.copyWith(isPremiumUser: isPro));
+  }
+
   Future<void> getOfferings() async {
     emit(state.copyWith(paywallStatus: PaywallStatus.loading));
-
     try {
       final offering = await _iapService.getOffering();
-
+      log('offerings :: $offering');
       if (offering == null) {
         emit(state.copyWith(paywallStatus: PaywallStatus.failure, errorMsg: 'No offerings found.'));
         return;
