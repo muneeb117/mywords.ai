@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_text_field.dart';
@@ -231,13 +233,6 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               ),
                               OrDividerWidget(),
-                              SocialAuthButton(
-                                platform: 'Google',
-                                iconPath: 'assets/images/svg/ic_google.svg',
-                                onTap: () {
-                                  context.read<SocialAuthCubit>().loginWithGoogle();
-                                },
-                              ),
                               BlocListener<SocialAuthCubit, SocialAuthState>(
                                 listener: (context, state) {
                                   if (state.socialAuthStatus == SocialAuthStatus.success) {
@@ -254,15 +249,24 @@ class _SignupPageState extends State<SignupPage> {
                                     }
                                   }
                                 },
-                                child: SizedBox(height: 12.ch),
+                                child: SocialAuthButton(
+                                  platform: 'Google',
+                                  iconPath: 'assets/images/svg/ic_google.svg',
+                                  onTap: () {
+                                    context.read<SocialAuthCubit>().loginWithGoogle();
+                                  },
+                                ),
                               ),
-                              SocialAuthButton(
-                                platform: 'Apple',
-                                iconPath: 'assets/images/svg/ic_apple.svg',
-                                onTap: () {
-                                  context.read<SocialAuthCubit>().loginWithApple();
-                                },
-                              ),
+
+                              if (Platform.isIOS) SizedBox(height: 12.ch),
+                              if (Platform.isIOS)
+                                SocialAuthButton(
+                                  platform: 'Apple',
+                                  iconPath: 'assets/images/svg/ic_apple.svg',
+                                  onTap: () {
+                                    context.read<SocialAuthCubit>().loginWithApple();
+                                  },
+                                ),
                               SizedBox(height: 8.ch),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
