@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 authRepository: sl(),
                 sessionRepository: sl(),
                 analyticsService: sl(),
+                iapService: sl(),
               ),
         ),
         BlocProvider(

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
+import 'package:mywords/core/iap/iap_service.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
 import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
@@ -12,14 +13,17 @@ class SignupCubit extends Cubit<SignupState> {
   final AuthRepository _authRepository;
   final SessionRepository _sessionRepository;
   final AnalyticsService _analyticsService;
+  final IapService _iapService;
 
   SignupCubit({
     required AuthRepository authRepository,
     required SessionRepository sessionRepository,
     required AnalyticsService analyticsService,
+    required IapService iapService,
   }) : _authRepository = authRepository,
        _sessionRepository = sessionRepository,
        _analyticsService = analyticsService,
+        _iapService = iapService,
        super(SignupState.initial());
 
   void togglePassword() {
@@ -59,6 +63,7 @@ class SignupCubit extends Cubit<SignupState> {
             name: AnalyticsEventNames.loginWithGoogleSuccess,
             parameters: {'email': email},
           );
+          _iapService.login(token);
           await _sessionRepository.setLoggedIn(true);
           await _sessionRepository.setToken(token);
         }
