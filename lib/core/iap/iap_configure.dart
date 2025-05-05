@@ -6,7 +6,6 @@ class IapConfig {
     await Purchases.setLogLevel(LogLevel.debug);
 
     PurchasesConfiguration configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
-    // Important: Enable StoreKit 2.0 for better StoreKit file compatibility
 
     configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
     configuration.pendingTransactionsForPrepaidPlansEnabled = true;

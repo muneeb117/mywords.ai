@@ -12,21 +12,29 @@ import 'package:mywords/mywords_app.dart' show MyWordsApp;
 import 'package:path_provider/path_provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import 'firebase_options.dart';
+import 'config/firebase/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Future.wait([
+    _initializeHydratedStorage(),
+    _initializeInAppPurchases(),
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+  ]);
+
+  await initDependencies(AppEnv.dev);
+  runApp(MultiBlocProvider(providers: AppBlocProviders.providers, child: const MyWordsApp()));
+}
+
+/// Using hydrated bloc/storage to persist in IAP offerings
+Future<void> _initializeHydratedStorage() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
+}
 
+Future<void> _initializeInAppPurchases() async {
   StoreConfig.init(store: Store.appStore, apiKey: AppKeys.appleKey);
   await IapConfig.init();
-
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  await initDependencies(AppEnv.dev);
-
-  runApp(MultiBlocProvider(providers: AppBlocProviders.providers, child: const MyWordsApp()));
 }
