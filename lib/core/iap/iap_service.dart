@@ -7,6 +7,7 @@ import 'package:mywords/core/exceptions/purchase_error.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class IapService {
+
   Future<Either<PurchaseError, CustomerInfo>> purchasePackage({
     required Package package,
     String context = 'Package Purchase',
@@ -22,6 +23,14 @@ class IapService {
       print('error code is :: $errorCode');
       switch (errorCode) {
         case PurchasesErrorCode.networkError:
+          return Left(
+            PurchaseError(
+              code: errorCode.index,
+              errorMsg: 'Network connection issue. Please check your internet and try again.',
+              exception: e,
+            ),
+          );
+        case PurchasesErrorCode.offlineConnectionError:
           return Left(
             PurchaseError(
               code: errorCode.index,

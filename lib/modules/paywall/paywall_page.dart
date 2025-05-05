@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mywords/common/components/custom_appbar.dart' show CustomAppBar;
-import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/core/di/service_locator.dart' show sl;
@@ -20,7 +19,7 @@ class PaywallScreen extends StatefulWidget {
 }
 
 class _PaywallScreenState extends State<PaywallScreen> {
-  int selectedIndex = -1;
+  int selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +43,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
             // TODO: implement listener
           },
           builder: (context, state) {
-            if (state.paywallStatus == PaywallStatus.loading) {
-              return LoadingIndicator();
-            }
-
             var productsList = state.offering.availablePackages;
             return Padding(
               padding: const EdgeInsets.all(20),
@@ -66,41 +61,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   const FeatureItem(text: 'Advanced AI Writer'),
                   const SizedBox(height: 15),
 
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: GestureDetector(
-                  //         behavior: HitTestBehavior.opaque,
-                  //         onTap: () {
-                  //           setState(() {
-                  //             selectionType = SelectionType.weekly;
-                  //           });
-                  //         },
-                  //         child: PlanCard(
-                  //           title: 'Weekly',
-                  //           price: productsList,
-                  //           isSelected: selectionType == SelectionType.weekly,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(width: 12),
-                  //     Expanded(
-                  //       child: GestureDetector(
-                  //         behavior: HitTestBehavior.opaque,
-                  //         onTap: () {
-                  //           setState(() {
-                  //             selectionType = SelectionType.monthly;
-                  //           });
-                  //         },
-                  //         child: PlanCard(
-                  //           title: 'Monthly',
-                  //           price: 'Rs 5618.00',
-                  //           isSelected: selectionType == SelectionType.monthly,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   Row(
                     children: List.generate(productsList.length, (index) {
                       final product = productsList[index];

@@ -1,6 +1,6 @@
 part of 'paywall_cubit.dart';
 
-enum PaywallStatus { initial, loading, success, failure }
+enum PaywallStatus { initial, loading, success, failure, offline }
 
 class PaywallState {
   final PaywallStatus paywallStatus;
@@ -8,7 +8,7 @@ class PaywallState {
   final String errorMsg;
   final bool isPremiumUser;
 
-  PaywallState({
+  const PaywallState({
     required this.paywallStatus,
     required this.offering,
     required this.errorMsg,
@@ -16,7 +16,7 @@ class PaywallState {
   });
 
   factory PaywallState.initial() {
-    return PaywallState(
+    return const PaywallState(
       paywallStatus: PaywallStatus.initial,
       offering: Offering('', '', {}, []),
       errorMsg: '',
@@ -36,5 +36,23 @@ class PaywallState {
       errorMsg: errorMsg ?? this.errorMsg,
       isPremiumUser: isPremiumUser ?? this.isPremiumUser,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is PaywallState &&
+        other.paywallStatus == paywallStatus &&
+        other.offering == offering &&
+        other.errorMsg == errorMsg &&
+        other.isPremiumUser == isPremiumUser;
+  }
+
+  @override
+  int get hashCode {
+    return paywallStatus.hashCode ^
+        offering.hashCode ^
+        errorMsg.hashCode ^
+        isPremiumUser.hashCode;
   }
 }
