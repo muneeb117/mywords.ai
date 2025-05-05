@@ -7,6 +7,7 @@ import 'package:mywords/common/cubits/file_import/file_import_cubit.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
+import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
@@ -63,64 +64,70 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
               Flexible(
                 child: SingleChildScrollView(
                   child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8.cw),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.cr),
-                        border: Border.all(
-                          color: Color(0xffDADADA),
-                        ),
-                      ),
-                      child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
-                        listener: (context, state) {
-                          if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
-                            context.read<AiHumanizerCubit>().saveUserPrompt();
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder: (context, animation, secondaryAnimation) => AiHumanizerOutputPage(),
-                                transitionDuration: Duration.zero,
-                                reverseTransitionDuration: Duration.zero,
-                              ),
-                            );
-                          } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
+                    margin: EdgeInsets.symmetric(horizontal: 8.cw),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.cr),
+                      border: Border.all(color: Color(0xffDADADA)),
+                    ),
+                    child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
+                      listener: (context, state) {
+                        if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
+                          context.read<AiHumanizerCubit>().saveUserPrompt();
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      AiHumanizerOutputPage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
+                          );
+                        } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
+                          if (state.errorMsg ==
+                              'You have 0 words left in the free version. Upgrade to Pro for unlimited access!') {
+                            Navigator.pushNamed(context, RouteManager.payWall);
+                          } else {
                             context.showSnackBar(state.errorMsg);
                           }
-                        },
-                        builder: (context, state) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _TextFieldHeader(wordCount: state.wordCount),
-                              AiTextField(
-                                onChanged: (nextValue) {
-                                  context.read<AiHumanizerCubit>().updateText(nextValue);
-                                },
-                                textEditingController: textController,
-                              ),
-                              LabeledIconsRow(
-                                /// On sample text selection
-                                onSampleTextCallback: () {
-                                  final sampleText = AiSampleText.samplePrompt;
-                                  _putTextOnBoard(sampleText);
-                                },
+                        }
+                      },
+                      builder: (context, state) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _TextFieldHeader(wordCount: state.wordCount),
+                            AiTextField(
+                              onChanged: (nextValue) {
+                                context.read<AiHumanizerCubit>().updateText(nextValue);
+                              },
+                              textEditingController: textController,
+                            ),
+                            LabeledIconsRow(
+                              /// On sample text selection
+                              onSampleTextCallback: () {
+                                final sampleText = AiSampleText.samplePrompt;
+                                _putTextOnBoard(sampleText);
+                              },
 
-                                /// On upload file
-                                onUploadFileCallBack: () {
-                                  context.read<FileImportCubit>().importFile();
-                                },
+                              /// On upload file
+                              onUploadFileCallBack: () {
+                                context.read<FileImportCubit>().importFile();
+                              },
 
-                                /// On paste text
-                                onPasteTextCallBack: () async {
-                                  final clipboardData = await Clipboard.getData('text/plain');
-                                  final text = clipboardData?.text;
-                                  if (text?.isNotEmpty ?? false) {
-                                    _putTextOnBoard(text!);
-                                  }
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      )),
+                              /// On paste text
+                              onPasteTextCallBack: () async {
+                                final clipboardData = await Clipboard.getData('text/plain');
+                                final text = clipboardData?.text;
+                                if (text?.isNotEmpty ?? false) {
+                                  _putTextOnBoard(text!);
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 20.ch),
@@ -140,7 +147,9 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                       return;
                     }
                     if (state.wordCount > 800) {
-                      context.showSnackBar('You have exceeded the maximum word limit of 800. Please shorten your text.');
+                      context.showSnackBar(
+                        'You have exceeded the maximum word limit of 800. Please shorten your text.',
+                      );
                       return;
                     }
 
@@ -182,23 +191,35 @@ class _TextFieldHeader extends StatelessWidget {
             children: [
               Text(
                 'Input',
-                style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, color: context.colorScheme.onSurface),
+                style: context.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: context.colorScheme.onSurface,
+                ),
               ),
               Spacer(),
               Text.rich(
-                TextSpan(text: '${wordCount}', style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange), children: [
-                  TextSpan(
-                    text: '/800 Words',
-                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface),
-                  )
-                ]),
+                TextSpan(
+                  text: '${wordCount}',
+                  style: context.textTheme.bodySmall?.copyWith(color: AppColors.orange),
+                  children: [
+                    TextSpan(
+                      text: '/800 Words',
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
           SizedBox(height: 14.ch),
           Text(
             'Please briefly describe your prompt *',
-            style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.onSurface, height: 1.5),
+            style: context.textTheme.bodySmall?.copyWith(
+              color: context.colorScheme.onSurface,
+              height: 1.5,
+            ),
           ),
         ],
       ),

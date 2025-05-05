@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/iap/iap_service.dart';
@@ -29,7 +28,7 @@ class PaywallCubit extends HydratedCubit<PaywallState> {
     );
   }
 
-  Future<void> markUserPremium(EntitlementInfos entitlements) async {
+  Future<void> updateUserToPremium(EntitlementInfos entitlements) async {
     final isPro = entitlements.all[AppKeys.entitlementKey]?.isActive ?? false;
     emit(state.copyWith(isPremiumUser: isPro));
   }

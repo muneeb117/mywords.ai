@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // context.read<PaywallCubit>().getOfferings();
+    context.read<PaywallCubit>().getOfferings();
     context.read<PaywallCubit>().getEntitlement();
   }
 
@@ -81,11 +81,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 return HomeToolWidget(
                   onTap: () async {
-                    if (state.isPremiumUser) {
-                      Navigator.pushNamed(context, RouteManager.aiHumanizerInput);
-                    } else {
-                      Navigator.pushNamed(context, RouteManager.payWall);
-                    }
+                    Navigator.pushNamed(context, RouteManager.aiHumanizerInput);
                   },
                   title: 'AI Humanizer',
                   description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',

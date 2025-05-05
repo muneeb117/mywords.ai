@@ -96,7 +96,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     listener: (context, state) {
                       if (state.status == PurchaseStatus.success) {
                         if (state.customerInfo != null) {
-                          context.read<PaywallCubit>().markUserPremium(
+                          context.read<PaywallCubit>().updateUserToPremium(
                             state.customerInfo!.entitlements,
                           );
                           Navigator.pop(context);
