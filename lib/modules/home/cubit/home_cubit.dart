@@ -7,15 +7,12 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _homeRepository;
 
-  HomeCubit({required HomeRepository homeRepository}) : _homeRepository = homeRepository, super(HomeState.initial());
+  HomeCubit({required HomeRepository homeRepository})
+    : _homeRepository = homeRepository,
+      super(HomeState.initial());
 
   void fetchDocumentHours() async {
-    // emit(state.copyWith(homeStatus: HomeStatus.loading));
-
     final result = await _homeRepository.getDocumentsCount();
-    // await Future.delayed(Duration(milliseconds: 1500));
-    // final result = Right<ApiError, int>(6);
-
     result.handle(
       onSuccess: (int documentCount) {
         int avgTimeSavedPerDoc = 20;
@@ -28,5 +25,9 @@ class HomeCubit extends Cubit<HomeState> {
         emit(state.copyWith(homeStatus: HomeStatus.failed, errorMsg: error.errorMsg));
       },
     );
+  }
+
+  void resetDocumentHours() {
+    emit(HomeState.initial());
   }
 }

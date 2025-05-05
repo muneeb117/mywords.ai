@@ -16,6 +16,6 @@ class AppBlocProviders {
     BlocProvider<AiDetectorCubit>(create: (_) => AiDetectorCubit(aiDetectorRepository: sl(), analyticsService: sl())),
     BlocProvider<FileImportCubit>(create: (_) => FileImportCubit(fileRepository: sl())),
     BlocProvider<ForgotPasswordCubit>(create: (_) => ForgotPasswordCubit(forgotPasswordRepository: sl(), analyticsService: sl())),
-    BlocProvider<HomeCubit>(create: (_) => HomeCubit(homeRepository: sl())..fetchDocumentHours()),
+    BlocProvider<HomeCubit>(create: (_) => HomeCubit(homeRepository: sl())),
   ];
 }

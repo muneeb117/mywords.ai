@@ -5,6 +5,7 @@ import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart';
 import 'package:mywords/core/di/service_locator.dart' show sl;
+import 'package:mywords/modules/home/cubit/home_cubit.dart';
 import 'package:mywords/modules/home/widgets/current_plan_widget.dart';
 import 'package:mywords/modules/home/widgets/home_header.dart';
 import 'package:mywords/modules/home/widgets/home_tool_widget.dart';
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    context.read<HomeCubit>().fetchDocumentHours();
     context.read<PaywallCubit>().getOfferings();
     context.read<PaywallCubit>().getEntitlement();
   }
