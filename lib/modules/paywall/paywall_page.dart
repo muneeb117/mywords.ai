@@ -141,10 +141,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           );
                           Navigator.pop(context);
                         }
+                      } else if (state.status == PurchaseStatus.failure) {
+                        context.showSnackBar(state.errorMessage);
                       }
                     },
                     builder: (context, state) {
                       return PrimaryButton.gradient(
+                        isLoading: state.status == PurchaseStatus.loading,
                         onTap: () async {
                           if (selectedIndex == -1) {
                             context.showSnackBar('Please choose a plan!');
@@ -153,7 +156,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           context.read<PurchaseCubit>().purchasePackage(
                             productsList[selectedIndex],
                           );
-
                         },
                         title: 'Upgrade To Pro',
                       );
@@ -186,7 +188,7 @@ class FeatureItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
-          Icon(Icons.check_circle, color: AppColors.green),
+          Icon(Icons.check_circle, color: AppColors.primary),
           const SizedBox(width: 10),
           Text(text),
         ],
@@ -215,9 +217,22 @@ class PlanCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: isSelected ? AppColors.primary : null,
+            ),
+          ),
           const SizedBox(height: 4),
-          Text(price, style: const TextStyle(fontSize: 16)),
+          Text(
+            price,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: isSelected ? AppColors.primary : null,
+            ),
+          ),
         ],
       ),
     );

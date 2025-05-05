@@ -3,6 +3,6 @@ class AppKeys {
   static String isLoggedIn = 'isLoggedIn';
   static String token = 'token';
 
-  static String entitlement = 'premium';
+  static String entitlementKey = 'premium';
   static String appleKey = 'appl_JqeraAEuESDVUfUJtcykpdePxIY';
 }

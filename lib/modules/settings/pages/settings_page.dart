@@ -34,13 +34,14 @@ class _SettingsPageState extends State<SettingsPage> {
             dioClient: sl(),
             socialAuthRepository: sl(),
             analyticsService: sl(),
-            iapService: sl()
+            iapService: sl(),
           ),
       child: Builder(
         builder: (context) {
           return BlocConsumer<AccountCubit, AccountState>(
             listener: (context, state) {
-              if (state.accountStatus == AccountStatus.logoutSuccess || state.accountStatus == AccountStatus.deleteSuccess) {
+              if (state.accountStatus == AccountStatus.logoutSuccess ||
+                  state.accountStatus == AccountStatus.deleteSuccess) {
                 Navigator.pushNamedAndRemoveUntil(context, RouteManager.login, (route) => false);
               } else if (state.accountStatus == AccountStatus.failed) {
                 context.showSnackBar(state.errorMsg);
@@ -59,14 +60,16 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: [
                           SettingsTile(
                             onTap: () {
-                              _analytics.logEvent(name: AnalyticsEventNames.accountSettingsInitiated);
+                              _analytics.logEvent(
+                                name: AnalyticsEventNames.accountSettingsInitiated,
+                              );
                               Navigator.pushNamed(context, RouteManager.accountSettings);
                             },
                             title: 'Account Settings',
                             assetPath: 'assets/images/svg/ic_settings.svg',
                           ),
                           Divider(height: 0, color: Color(0xffEEEEEE)),
-                          SettingsTile(onTap: () {}, title: 'Billing', assetPath: 'assets/images/svg/ic_billing.svg'),
+                          // SettingsTile(onTap: () {}, title: 'Billing', assetPath: 'assets/images/svg/ic_billing.svg'),
                           Divider(height: 0, color: Color(0xffEEEEEE)),
                           SettingsTile(
                             onTap: () {
@@ -86,7 +89,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           Divider(height: 0, color: Color(0xffEEEEEE)),
                           SettingsTile(
                             onTap: () {
-                              _analytics.logEvent(name: AnalyticsEventNames.accountSettingsInitiated);
+                              _analytics.logEvent(
+                                name: AnalyticsEventNames.accountSettingsInitiated,
+                              );
                               showDeleteAccountDialog(
                                 context,
                                 onConfirm: () {
@@ -119,7 +124,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   if (isAccountDeleting)
-                    Container(color: Colors.black.withOpacity(0.15), child: LoadingIndicator(bgColor: AppColors.black)),
+                    Container(
+                      color: Colors.black.withOpacity(0.15),
+                      child: LoadingIndicator(bgColor: AppColors.black),
+                    ),
                 ],
               );
             },

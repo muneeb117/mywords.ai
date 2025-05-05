@@ -1,21 +1,21 @@
 part of 'purchase_cubit.dart';
 
-enum PurchaseStatus { initial, loading, success, failure }
+enum PurchaseStatus { initial, loading, success,cancelled, failure }
 
 
 class PurchaseState {
   final PurchaseStatus status;
   final CustomerInfo? customerInfo;
-  final String? errorMessage;
+  final String errorMessage;
 
   PurchaseState({
     required this.status,
     this.customerInfo,
-    this.errorMessage,
+    required this.errorMessage,
   });
 
   factory PurchaseState.initial() {
-    return PurchaseState(status: PurchaseStatus.initial);
+    return PurchaseState(status: PurchaseStatus.initial, errorMessage: '');
   }
 
   PurchaseState copyWith({

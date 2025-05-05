@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<PaywallCubit>().getOfferings();
+    // context.read<PaywallCubit>().getOfferings();
     context.read<PaywallCubit>().getEntitlement();
   }
 

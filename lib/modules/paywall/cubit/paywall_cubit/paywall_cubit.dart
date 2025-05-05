@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
+import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/iap/iap_service.dart';
+import 'package:mywords/utils/extensions/either_extension.dart';
 import 'package:purchases_flutter/models/entitlement_infos_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
@@ -9,7 +9,6 @@ part 'paywall_state.dart';
 
 class PaywallCubit extends Cubit<PaywallState> {
   final IapService _iapService;
-  String _entitlementId = 'premium';
 
   PaywallCubit({required IapService iapService})
     : _iapService = iapService,
@@ -18,38 +17,36 @@ class PaywallCubit extends Cubit<PaywallState> {
   }
 
   Future<void> getEntitlement() async {
-    try {
-      final isPro = await _iapService.isPremiumUser();
-      emit(state.copyWith(isPremiumUser: isPro));
-    } catch (e) {
-      emit(state.copyWith(isPremiumUser: false, errorMsg: 'Failed to verify entitlement: $e'));
-    }
+    final result = await _iapService.isPremiumUser();
+    result.handle(
+      onSuccess: (isPro) {
+        emit(state.copyWith(isPremiumUser: isPro));
+      },
+      onError: (error) {
+        emit(state.copyWith(isPremiumUser: false, errorMsg: error.errorMsg));
+      },
+    );
   }
 
   Future<void> markUserPremium(EntitlementInfos entitlements) async {
-    final isPro = entitlements.all[_entitlementId]?.isActive ?? false;
+    final isPro = entitlements.all[AppKeys.entitlementKey]?.isActive ?? false;
     emit(state.copyWith(isPremiumUser: isPro));
   }
 
   Future<void> getOfferings() async {
     emit(state.copyWith(paywallStatus: PaywallStatus.loading));
-    try {
-      final offering = await _iapService.getOffering();
-      log('offerings :: $offering');
-      if (offering == null) {
-        emit(state.copyWith(paywallStatus: PaywallStatus.failure, errorMsg: 'No offerings found.'));
-        return;
-      }
-
-      emit(state.copyWith(paywallStatus: PaywallStatus.success, offering: offering));
-    } catch (e) {
-      emit(
+    final result = await _iapService.getOffering();
+    result.handle(
+      onSuccess: (Offering offering) {
+        emit(state.copyWith(paywallStatus: PaywallStatus.success, offering: offering));
+      },
+      onError: (error) {
         state.copyWith(
           paywallStatus: PaywallStatus.failure,
-          errorMsg: 'Something went wrong: $e',
+          errorMsg: error.errorMsg,
           isPremiumUser: false,
-        ),
-      );
-    }
+        );
+      },
+    );
   }
 }
