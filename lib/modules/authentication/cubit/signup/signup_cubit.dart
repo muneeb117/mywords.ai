@@ -4,7 +4,6 @@ import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsSer
 import 'package:mywords/core/iap/iap_service.dart';
 import 'package:mywords/modules/authentication/repository/auth_repository.dart';
 import 'package:mywords/modules/authentication/repository/session_repository.dart';
-import 'package:mywords/modules/authentication/repository/social_auth_repository.dart';
 import 'package:mywords/utils/extensions/either_extension.dart';
 
 part 'signup_state.dart';
