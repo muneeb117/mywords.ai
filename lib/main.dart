@@ -27,7 +27,7 @@ void main() async {
   runApp(MultiBlocProvider(providers: AppBlocProviders.providers, child: const MyWordsApp()));
 }
 
-/// Using hydrated bloc/storage to persist in IAP offerings
+/// Using hydrated bloc/storage to persist IAP offerings
 Future<void> _initializeHydratedStorage() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory((await getTemporaryDirectory()).path),

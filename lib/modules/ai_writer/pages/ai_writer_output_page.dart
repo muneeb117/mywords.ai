@@ -9,6 +9,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:mywords/utils/extensions/size_extension.dart';
 
@@ -52,9 +53,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                   margin: EdgeInsets.symmetric(horizontal: 8.cw),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.cw),
-                    border: Border.all(
-                      color: Color(0xffDADADA),
-                    ),
+                    border: Border.all(color: Color(0xffDADADA)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,10 +68,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                           ),
                         ),
                       ),
-                      Divider(
-                        color: Color(0xffDADADA),
-                        height: 0,
-                      ),
+                      Divider(color: Color(0xffDADADA), height: 0),
                       Expanded(
                         child: BlocBuilder<AiWriterCubit, AiWriterState>(
                           builder: (context, state) {
@@ -113,10 +109,7 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
           bottomNavigationBar: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
             listener: (context, state) {
               if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
-                showDialog(
-                  context: context,
-                  builder: (context) => const AiHumanizerDialog(),
-                );
+                showDialog(context: context, builder: (context) => const AiHumanizerDialog());
               } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
                 context.showSnackBar(state.errorMsg);
               }
@@ -125,15 +118,21 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.cw),
                 padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
-                child: PrimaryButton.gradient(
-                  isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
-                  onTap: () {
-                    context.read<AiHumanizerCubit>()
-                      ..setText(aiWriterState.generatedText)
-                      ..humanizeText();
+                child: Builder(
+                  builder: (context) {
+                    final paywallState = context.watch<PaywallCubit>().state;
+
+                    return PrimaryButton.gradient(
+                      isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
+                      onTap: () {
+                        context.read<AiHumanizerCubit>()
+                          ..setText(aiWriterState.generatedText)
+                          ..humanizeText(isPremium: paywallState.isPremiumUser);
+                      },
+                      title: 'Humanize Text',
+                      fontWeight: FontWeight.w700,
+                    );
                   },
-                  title: 'Humanize Text',
-                  fontWeight: FontWeight.w700,
                 ),
               );
             },

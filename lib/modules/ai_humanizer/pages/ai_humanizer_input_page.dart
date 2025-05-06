@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/pages/ai_humanizer_output_page.dart';
 import 'package:mywords/modules/ai_writer/cubit/ai_writer_cubit.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:mywords/utils/extensions/size_extension.dart';
 
@@ -135,37 +138,43 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
           ),
           bottomNavigationBar: BlocBuilder<AiHumanizerCubit, AiHumanizerState>(
             builder: (context, state) {
-              return Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.cw),
-                padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
-                child: PrimaryButton.filled(
-                  isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
-                  onTap: () {
-                    final text = textController.text.trim();
-                    if (text.isEmpty) {
-                      context.showSnackBar('Input field is required');
-                      return;
-                    }
-                    if (state.wordCount > 800) {
-                      context.showSnackBar(
-                        'You have exceeded the maximum word limit of 800. Please shorten your text.',
-                      );
-                      return;
-                    }
+              return Builder(
+                builder: (context) {
+                  final paywallState = context.watch<PaywallCubit>().state;
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16.cw),
+                    padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
+                    child: PrimaryButton.filled(
+                      isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
+                      onTap: () {
+                        final text = textController.text.trim();
+                        if (text.isEmpty) {
+                          context.showSnackBar('Input field is required');
+                          return;
+                        }
+                        if (state.wordCount > 800) {
+                          context.showSnackBar(
+                            'You have exceeded the maximum word limit of 800. Please shorten your text.',
+                          );
+                          return;
+                        }
 
-                    final cubit = context.read<AiHumanizerCubit>();
-                    cubit.setText(text);
-                    cubit
-                      ..setPromptType(fileState.fileName.isNotEmpty ? 'file' : 'text')
-                      ..setFileName(fileState.fileName.isNotEmpty ? fileState.fileName : '');
+                        final cubit = context.read<AiHumanizerCubit>();
+                        cubit.setText(text);
+                        cubit
+                          ..setPromptType(fileState.fileName.isNotEmpty ? 'file' : 'text')
+                          ..setFileName(fileState.fileName.isNotEmpty ? fileState.fileName : '');
 
-                    cubit.humanizeText();
-                  },
-                  title: 'Continue',
-                  textColor: context.colorScheme.primary,
-                  backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
-                  fontWeight: FontWeight.w700,
-                ),
+                        log('is user pro :: ${paywallState.isPremiumUser}');
+                        cubit.humanizeText(isPremium: paywallState.isPremiumUser);
+                      },
+                      title: 'Continue',
+                      textColor: context.colorScheme.primary,
+                      backgroundColor: Color(0xffD24DEE).withOpacity(0.15),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  );
+                },
               );
             },
           ),

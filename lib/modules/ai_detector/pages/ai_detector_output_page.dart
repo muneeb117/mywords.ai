@@ -8,6 +8,7 @@ import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:mywords/utils/extensions/size_extension.dart';
 
@@ -119,15 +120,21 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                 }
               },
               builder: (context, state) {
-                return PrimaryButton.gradient(
-                  title: 'Humanize Text',
-                  fontWeight: FontWeight.w700,
-                  isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
-                  onTap: () {
-                    context.read<AiHumanizerCubit>()
-                      ..setText(aiDetectorState.inputText)
-                      ..humanizeText();
-                  },
+                return Builder(
+                  builder: (context) {
+                    final paywallState = context.watch<PaywallCubit>().state;
+
+                    return PrimaryButton.gradient(
+                      title: 'Humanize Text',
+                      fontWeight: FontWeight.w700,
+                      isLoading: state.aiHumanizeStatus == AiHumanizeStatus.loading,
+                      onTap: () {
+                        context.read<AiHumanizerCubit>()
+                          ..setText(aiDetectorState.inputText)
+                          ..humanizeText(isPremium: paywallState.isPremiumUser);
+                      },
+                    );
+                  }
                 );
               },
             ),

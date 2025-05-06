@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mywords/constants/app_keys.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart' show AnalyticsEventNames;
@@ -16,11 +18,13 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
   String _promptType = ''; // file/text
   String _fileName = ''; // uploadedFile ? uploadedFile.name : ""
 
-  AiHumanizerCubit({required AiHumanizerRepository aiHumanizerRepository, required AnalyticsService analyticsService})
-    : _aiHumanizerRepository = aiHumanizerRepository,
-      _analyticsService = analyticsService,
+  AiHumanizerCubit({
+    required AiHumanizerRepository aiHumanizerRepository,
+    required AnalyticsService analyticsService,
+  }) : _aiHumanizerRepository = aiHumanizerRepository,
+       _analyticsService = analyticsService,
 
-      super(AiHumanizerState.initial());
+       super(AiHumanizerState.initial());
 
   void setText(String value) {
     _text = value;
@@ -34,9 +38,10 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     _fileName = value;
   }
 
-  void humanizeText() async {
+  void humanizeText({required bool isPremium}) async {
     emit(state.copyWith(aiHumanizeStatus: AiHumanizeStatus.loading));
-    final result = await _aiHumanizerRepository.humanize(data: _getMap());
+    final result = await _aiHumanizerRepository.humanize(data: _getMap(isPremium));
+    log('API REQUEST data :: ${_getMap(isPremium)}');
     print('result is :: $result');
 
     result.handle(
@@ -44,7 +49,13 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
         int wordCount = countWords(generatedText);
         _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerSuccess);
 
-        emit(state.copyWith(aiHumanizeStatus: AiHumanizeStatus.success, generatedText: generatedText, generatedOutputWordCount: wordCount));
+        emit(
+          state.copyWith(
+            aiHumanizeStatus: AiHumanizeStatus.success,
+            generatedText: generatedText,
+            generatedOutputWordCount: wordCount,
+          ),
+        );
       },
       onError: (error) {
         _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerFailed);
@@ -60,18 +71,26 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
     result.handle(onSuccess: (result) async {}, onError: (error) {});
   }
 
-  Map<String, dynamic> _getMap() {
+  Map<String, dynamic> _getMap(bool isPremium) {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
-    return {"text": _text, "isProEngine": false, "token": token};
+    return {"text": _text, "isProEngine": false, "token": token, 'isPremium': isPremium};
   }
 
   Map<String, dynamic> _getPromptData() {
-    return {"prompt": _text, "prompt_type": _promptType, "filename": _fileName, "method": 'humanizer', "response": state.generatedText};
+    return {
+      "prompt": _text,
+      "prompt_type": _promptType,
+      "filename": _fileName,
+      "method": 'humanizer',
+      "response": state.generatedText,
+    };
   }
 
   void updateText(String value) {
     int wordCount = countWords(value);
-    emit(state.copyWith(text: value, wordCount: wordCount, aiHumanizeStatus: AiHumanizeStatus.initial));
+    emit(
+      state.copyWith(text: value, wordCount: wordCount, aiHumanizeStatus: AiHumanizeStatus.initial),
+    );
   }
 
   int countWords(String text) {

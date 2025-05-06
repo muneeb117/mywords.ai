@@ -30,6 +30,7 @@ class PaywallCubit extends HydratedCubit<PaywallState> {
 
   Future<void> updateUserToPremium(EntitlementInfos entitlements) async {
     final isPro = entitlements.all[AppKeys.entitlementKey]?.isActive ?? false;
+    print('IS PRO :: $isPro');
     emit(state.copyWith(isPremiumUser: isPro));
   }
 
@@ -42,18 +43,18 @@ class PaywallCubit extends HydratedCubit<PaywallState> {
     final result = await _iapService.getOffering();
     result.handle(
       onSuccess: (Offering offering) {
-        emit(state.copyWith(
-          paywallStatus: PaywallStatus.success,
-          offering: offering,
-          errorMsg: '',
-        ));
+        emit(
+          state.copyWith(paywallStatus: PaywallStatus.success, offering: offering, errorMsg: ''),
+        );
       },
       onError: (error) {
-        emit(state.copyWith(
-          paywallStatus: PaywallStatus.failure,
-          errorMsg: error.errorMsg,
-          isPremiumUser: false,
-        ));
+        emit(
+          state.copyWith(
+            paywallStatus: PaywallStatus.failure,
+            errorMsg: error.errorMsg,
+            isPremiumUser: false,
+          ),
+        );
       },
     );
   }
