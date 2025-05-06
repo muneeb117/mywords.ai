@@ -73,7 +73,11 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
 
   Map<String, dynamic> _getMap(bool isPremium) {
     String token = sl<StorageService>().getString(AppKeys.token) ?? '';
-    return {"text": _text, "isProEngine": false, "token": token, 'isPremium': isPremium};
+
+
+    return {"text": _text, "token": token, 'isPremium': isPremium};
+
+
   }
 
   Map<String, dynamic> _getPromptData() {
