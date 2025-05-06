@@ -4,6 +4,7 @@ import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_humanizer_dialog.dart';
 import 'package:mywords/common/widgets/detect_ai_score_widget.dart';
+import 'package:mywords/common/widgets/show_upgrade_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
@@ -48,60 +49,57 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                 ),
                 SizedBox(height: 16.ch),
                 Container(
-                    height: 300.ch,
-                    margin: EdgeInsets.symmetric(horizontal: 8.cw),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.cr),
-                      border: Border.all(
-                        color: Color(0xffDADADA),
-                      ),
-                    ),
-                    child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 16.ch),
-                              child: Text(
-                                'Output',
-                                style: context.textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: context.colorScheme.onSurface,
-                                ),
+                  height: 300.ch,
+                  margin: EdgeInsets.symmetric(horizontal: 8.cw),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.cr),
+                    border: Border.all(color: Color(0xffDADADA)),
+                  ),
+                  child: BlocConsumer<AiDetectorCubit, AiDetectorState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.cw, vertical: 16.ch),
+                            child: Text(
+                              'Output',
+                              style: context.textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: context.colorScheme.onSurface,
                               ),
                             ),
-                            Divider(
-                              color: Color(0xffDADADA),
-                              height: 0,
+                          ),
+                          Divider(color: Color(0xffDADADA), height: 0),
+                          Expanded(
+                            child: BlocBuilder<AiDetectorCubit, AiDetectorState>(
+                              builder: (context, state) {
+                                return Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.fromLTRB(16.cw, 0, 16.cw, 0),
+                                  child: SingleChildScrollView(
+                                    padding: EdgeInsets.only(top: 16.ch),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 16.ch),
+                                      child: SelectableText(
+                                        state.inputText,
+                                        style: context.textTheme.titleMedium,
+                                      ),
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(),
+                                );
+                              },
                             ),
-                            Expanded(
-                              child: BlocBuilder<AiDetectorCubit, AiDetectorState>(
-                                builder: (context, state) {
-                                  return Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.fromLTRB(16.cw, 0, 16.cw, 0),
-                                    child: SingleChildScrollView(
-                                        padding: EdgeInsets.only(top: 16.ch),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(bottom: 16.ch),
-                                          child: SelectableText(
-                                            state.inputText,
-                                            style: context.textTheme.titleMedium,
-                                          ),
-                                        )),
-                                    decoration: BoxDecoration(),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    )),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
                 SizedBox(height: 16.ch),
-                DetectAiScoreWidget(aiDetectorEntity: aiDetectorState.aiDetectorEntity)
+                DetectAiScoreWidget(aiDetectorEntity: aiDetectorState.aiDetectorEntity),
               ],
             ),
           ),
@@ -111,10 +109,9 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
             child: BlocConsumer<AiHumanizerCubit, AiHumanizerState>(
               listener: (context, state) {
                 if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const AiHumanizerDialog(),
-                  );
+                  showDialog(context: context, builder: (context) => const AiHumanizerDialog());
+                } else if (state.aiHumanizeStatus == AiHumanizeStatus.limitExceeded) {
+                  showUpgradeDialog(context, remainingWords: state.wordsLeft);
                 } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
                   context.showSnackBar(state.errorMsg);
                 }
@@ -134,7 +131,7 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                           ..humanizeText(isPremium: paywallState.isPremiumUser);
                       },
                     );
-                  }
+                  },
                 );
               },
             ),

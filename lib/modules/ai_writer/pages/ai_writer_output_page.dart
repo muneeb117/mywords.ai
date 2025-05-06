@@ -4,6 +4,7 @@ import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_humanizer_dialog.dart';
 import 'package:mywords/common/widgets/detect_ai_score_widget.dart';
+import 'package:mywords/common/widgets/show_upgrade_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
@@ -110,7 +111,11 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
             listener: (context, state) {
               if (state.aiHumanizeStatus == AiHumanizeStatus.success) {
                 showDialog(context: context, builder: (context) => const AiHumanizerDialog());
-              } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
+              }
+              else if (state.aiHumanizeStatus == AiHumanizeStatus.limitExceeded) {
+                showUpgradeDialog(context, remainingWords: state.wordsLeft);
+              }
+              else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
                 context.showSnackBar(state.errorMsg);
               }
             },

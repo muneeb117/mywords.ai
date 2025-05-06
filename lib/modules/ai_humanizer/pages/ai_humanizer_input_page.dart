@@ -8,8 +8,8 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/cubits/file_import/file_import_cubit.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
+import 'package:mywords/common/widgets/show_upgrade_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
-import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
@@ -85,13 +85,10 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                               reverseTransitionDuration: Duration.zero,
                             ),
                           );
+                        } else if (state.aiHumanizeStatus == AiHumanizeStatus.limitExceeded) {
+                          showUpgradeDialog(context, remainingWords: state.wordsLeft);
                         } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
-                          if (state.errorMsg ==
-                              'You have 0 words left in the free version. Upgrade to Pro for unlimited access!') {
-                            Navigator.pushNamed(context, RouteManager.payWall);
-                          } else {
-                            context.showSnackBar(state.errorMsg);
-                          }
+                          context.showSnackBar(state.errorMsg);
                         }
                       },
                       builder: (context, state) {

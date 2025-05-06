@@ -59,9 +59,34 @@ class AiHumanizerCubit extends Cubit<AiHumanizerState> {
       },
       onError: (error) {
         _analyticsService.logEvent(name: AnalyticsEventNames.aiHumanizerFailed);
-        emit(state.copyWith(aiHumanizeStatus: AiHumanizeStatus.failed, errorMsg: error.errorMsg));
+        if (error.errorMsg != null) {
+          if (error.errorMsg!.contains('Upgrade to Pro for unlimited access')) {
+            int wordsLeft = extractWordsLeft(error.errorMsg!);
+            emit(
+              state.copyWith(
+                aiHumanizeStatus: AiHumanizeStatus.limitExceeded,
+                wordsLeft: wordsLeft,
+              ),
+            );
+          } else {
+            emit(
+              state.copyWith(aiHumanizeStatus: AiHumanizeStatus.failed, errorMsg: error.errorMsg),
+            );
+          }
+        }
       },
     );
+  }
+
+  int extractWordsLeft(String message) {
+    final regex = RegExp(r'You have (\d+) words left');
+    final match = regex.firstMatch(message);
+
+    if (match != null && match.groupCount >= 1) {
+      return int.parse(match.group(1)!);
+    }
+
+    return 0;
   }
 
   void saveUserPrompt() async {
