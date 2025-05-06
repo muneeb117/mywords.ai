@@ -101,6 +101,7 @@ class InputField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       autofocus: autofocus,
+
       autocorrect: autocorrect,
       enabled: enabled,
       enableSuggestions: enableSuggestions,

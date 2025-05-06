@@ -31,144 +31,159 @@ class _AiWriterPreferencePageState extends State<AiWriterPreferencePage> {
   Widget build(BuildContext context) {
     double bottomPadding = MediaQuery.of(context).padding.bottom;
     bool hasBottomSafeArea = bottomPadding > 0;
-    return Scaffold(
-      appBar: CustomAppBar(title: 'AI Writer'),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StepIndicator(
-                activeSteps: [1, 2],
-                leftText: 'Prompt',
-                centerText: 'Purpose',
-                rightText: 'Output',
-              ),
-              SizedBox(height: 16.ch),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.cw),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Select writing purpose *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8.ch),
-                    CustomDropdownWithoutIcon(
-                      items: ['Essay', 'Letter', 'Email', 'Story', 'Article', 'Discussion Board/Question Response'],
-                      hint: 'Select Purpose',
-                      value: writingPurpose,
-                      onChanged: (value) {
-                        setState(() {
-                          writingPurpose = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 12.ch),
-                    Text('Select a language *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8.ch),
-                    CustomDropdownWithoutIcon(
-                      items: ['English'],
-                      hint: 'Select Language',
-                      value: selectedLanguage,
-                      onChanged: (val) {},
-                    ),
-                    SizedBox(height: 12.ch),
-                    Text('Minimum Word Count *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8.ch),
-                    InputField(
-                      hintText: 'Enter minimum word count',
-                      hasPrefixIcon: false,
-                      prefixIconPath: '',
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      controller: minWordCountController,
-                    ),
-                    SizedBox(height: 12.ch),
-                    Text('Maximum Word Count *', style: context.textTheme.titleMedium),
-                    SizedBox(height: 8.ch),
-                    InputField(
-                      hintText: 'Enter maximum word count',
-                      hasPrefixIcon: false,
-                      prefixIconPath: '',
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      controller: maxWordCountController,
-                    ),
-                    SizedBox(height: 12.ch),
-                    Text(
-                      'Minimum 350 words, maximum 500 words.',
-                      style: context.textTheme.bodySmall?.copyWith(
-                        color: context.colorScheme.onSurface,
-                      ),
-                    ),
-                    SizedBox(height: 20.ch),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        context.closeKeyboard();
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(title: 'AI Writer'),
+        body: Container(
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StepIndicator(
+                  activeSteps: [1, 2],
+                  leftText: 'Prompt',
+                  centerText: 'Purpose',
+                  rightText: 'Output',
                 ),
-              )
-            ],
+                SizedBox(height: 16.ch),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18.cw),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Select writing purpose *', style: context.textTheme.titleMedium),
+                      SizedBox(height: 8.ch),
+                      CustomDropdownWithoutIcon(
+                        items: [
+                          'Essay',
+                          'Letter',
+                          'Email',
+                          'Story',
+                          'Article',
+                          'Discussion Board/Question Response',
+                        ],
+                        hint: 'Select Purpose',
+                        value: writingPurpose,
+                        onChanged: (value) {
+                          setState(() {
+                            writingPurpose = value;
+                          });
+                        },
+                      ),
+                      SizedBox(height: 12.ch),
+                      Text('Select a language *', style: context.textTheme.titleMedium),
+                      SizedBox(height: 8.ch),
+                      CustomDropdownWithoutIcon(
+                        items: ['English'],
+                        hint: 'Select Language',
+                        value: selectedLanguage,
+                        onChanged: (val) {},
+                      ),
+                      SizedBox(height: 12.ch),
+                      Text('Minimum Word Count *', style: context.textTheme.titleMedium),
+                      SizedBox(height: 8.ch),
+                      InputField(
+                        hintText: 'Enter minimum word count',
+                        hasPrefixIcon: false,
+                        prefixIconPath: '',
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: false,
+                          signed: true,
+                        ),
+                        textInputAction: TextInputAction.next,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        controller: minWordCountController,
+                      ),
+                      SizedBox(height: 12.ch),
+                      Text('Maximum Word Count *', style: context.textTheme.titleMedium),
+                      SizedBox(height: 8.ch),
+                      InputField(
+                        hintText: 'Enter maximum word count',
+                        hasPrefixIcon: false,
+                        prefixIconPath: '',
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: false,
+                          signed: true,
+                        ),
+                        textInputAction: TextInputAction.done,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        controller: maxWordCountController,
+                      ),
+                      SizedBox(height: 12.ch),
+                      Text(
+                        'Minimum 350 words, maximum 500 words.',
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                      SizedBox(height: 20.ch),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.cw),
-        padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
-        child: BlocConsumer<AiWriterCubit, AiWriterState>(
-          listener: (context, state) {
-            if (state.aiWriterStatus == AiWriterStatus.success) {
-              /// Detect AI response
-              context.read<AiDetectorCubit>()
-                ..setText(state.generatedText)
-                ..detectText();
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.symmetric(horizontal: 16.cw),
+          padding: EdgeInsets.only(bottom: hasBottomSafeArea ? bottomPadding : 30.ch),
+          child: BlocConsumer<AiWriterCubit, AiWriterState>(
+            listener: (context, state) {
+              if (state.aiWriterStatus == AiWriterStatus.success) {
+                /// Detect AI response
+                context.read<AiDetectorCubit>()
+                  ..setText(state.generatedText)
+                  ..detectText();
 
-              /// Save user prompt
-              context.read<AiWriterCubit>().saveUserPrompt();
+                /// Save user prompt
+                context.read<AiWriterCubit>().saveUserPrompt();
 
-              /// Navigate to output screen
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => AiWriterOutputPage(),
-                  transitionDuration: Duration.zero,
-                  reverseTransitionDuration: Duration.zero,
-                ),
+                /// Navigate to output screen
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => AiWriterOutputPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              } else if (state.aiWriterStatus == AiWriterStatus.failed) {
+                context.showSnackBar(state.errorMsg);
+              }
+            },
+            builder: (context, state) {
+              return PrimaryButton.gradient(
+                isLoading: state.aiWriterStatus == AiWriterStatus.loading,
+                onTap: () {
+                  final minText = minWordCountController.text.trim();
+                  final maxText = maxWordCountController.text.trim();
+
+                  final min = int.tryParse(minText);
+                  final max = int.tryParse(maxText);
+
+                  if (min == null || max == null || min < 350 || max > 500) {
+                    context.showSnackBar('Please enter valid word limits!', isError: true);
+                    return;
+                  }
+
+                  final aiWriterCubit = context.read<AiWriterCubit>();
+                  aiWriterCubit
+                    ..setWritingPurpose(writingPurpose!)
+                    ..setWritingLanguage(selectedLanguage)
+                    ..setMinWordLimit(min)
+                    ..setMaxWordLimit(max);
+
+                  aiWriterCubit.generateOutput();
+                },
+                title: 'Generate Outline',
+                iconPath: 'assets/images/svg/ic_flag.svg',
+                fontWeight: FontWeight.w700,
               );
-            } else if (state.aiWriterStatus == AiWriterStatus.failed) {
-              context.showSnackBar(state.errorMsg);
-            }
-          },
-          builder: (context, state) {
-            return PrimaryButton.gradient(
-              isLoading: state.aiWriterStatus == AiWriterStatus.loading,
-              onTap: () {
-                final minText = minWordCountController.text.trim();
-                final maxText = maxWordCountController.text.trim();
-
-                final min = int.tryParse(minText);
-                final max = int.tryParse(maxText);
-
-                if (min == null || max == null || min < 350 || max > 500) {
-                  context.showSnackBar('Please enter valid word limits!', isError: true);
-                  return;
-                }
-
-                final aiWriterCubit = context.read<AiWriterCubit>();
-                aiWriterCubit
-                  ..setWritingPurpose(writingPurpose!)
-                  ..setWritingLanguage(selectedLanguage)
-                  ..setMinWordLimit(min)
-                  ..setMaxWordLimit(max);
-
-                aiWriterCubit.generateOutput();
-              },
-              title: 'Generate Outline',
-              iconPath: 'assets/images/svg/ic_flag.svg',
-              fontWeight: FontWeight.w700,
-            );
-          },
+            },
+          ),
         ),
       ),
     );

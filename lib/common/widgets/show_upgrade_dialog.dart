@@ -4,7 +4,6 @@ import 'package:mywords/config/routes/route_manager.dart';
 void showUpgradeDialog(BuildContext context, {required int remainingWords}) {
   showDialog(
     context: context,
-    barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
         title: Text('Limit Exceeded'),
