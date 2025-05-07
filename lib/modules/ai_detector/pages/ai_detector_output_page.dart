@@ -5,7 +5,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_humanizer_dialog.dart';
 import 'package:mywords/common/widgets/detect_ai_score_widget.dart';
 import 'package:mywords/common/widgets/show_upgrade_dialog.dart';
-import 'package:mywords/common/widgets/step_indicator_widget.dart';
+import 'package:mywords/common/widgets/step_indicator_detector_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
 import 'package:mywords/modules/home/cubit/home_cubit.dart';
@@ -41,12 +41,7 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                StepIndicator(
-                  activeSteps: [1, 2, 3],
-                  leftText: 'Input',
-                  centerText: 'Preference',
-                  rightText: 'Output',
-                ),
+                StepIndicatorDetector(activeSteps: [2]),
                 SizedBox(height: 16.ch),
                 Container(
                   height: 300.ch,
