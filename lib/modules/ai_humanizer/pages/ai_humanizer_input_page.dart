@@ -85,8 +85,6 @@ class _AiHumanizerInputPageState extends State<AiHumanizerInputPage> {
                               reverseTransitionDuration: Duration.zero,
                             ),
                           );
-                        } else if (state.aiHumanizeStatus == AiHumanizeStatus.limitExceeded) {
-                          showUpgradeDialog(context, remainingWords: state.wordsLeft);
                         } else if (state.aiHumanizeStatus == AiHumanizeStatus.failed) {
                           context.showSnackBar(state.errorMsg);
                         }
