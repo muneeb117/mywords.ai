@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   title: 'AI Writer',
-                  description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
+                  description: 'Quickly write essays, emails, posts, and more with AI.',
                   imageAssetPath: 'assets/images/png/img_ai_writer.png',
                 ),
                 SizedBox(height: 10.ch),
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   title: 'AI Humanizer',
-                  description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
+                  description: 'Make any AI text sound human bypass detection tools like Turnitin, GPTZero, and others.',
                   imageAssetPath: 'assets/images/png/img_ai_humanizer.png',
                 ),
                 SizedBox(height: 10.ch),
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                   title: 'AI Detector',
-                  description: 'Lorem ipsum is a dummy. Lorem ipsum is a dummy text.',
+                  description: 'Check if your text is AI-written or human-made.',
                   imageAssetPath: 'assets/images/png/img_ai_detector.png',
                 ),
               ],
