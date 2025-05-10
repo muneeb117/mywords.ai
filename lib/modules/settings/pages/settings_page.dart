@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/loading_indicator.dart';
 import 'package:mywords/common/components/primary_button.dart';
@@ -8,6 +9,7 @@ import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart' show AnalyticsEventNames;
 import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
 import 'package:mywords/core/di/service_locator.dart';
+import 'package:mywords/modules/paywall/cubit/paywall_cubit/paywall_cubit.dart';
 import 'package:mywords/modules/settings/cubit/account_cubit/account_cubit.dart';
 import 'package:mywords/modules/settings/widgets/delete_account_dialog.dart';
 import 'package:mywords/modules/settings/widgets/settings_tile.dart';
@@ -58,6 +60,53 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          BlocBuilder<PaywallCubit, PaywallState>(
+                            builder: (context, state) {
+                              return GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  if (!state.isPremiumUser) {
+                                    Navigator.pushNamed(context, RouteManager.payWall);
+                                  }
+                                },
+                                child: Container(
+                                  height: 70,
+                                  padding: EdgeInsets.all(14.cw),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.cr),
+                                    gradient: LinearGradient(
+                                      colors: [Color(0xffCE4AEF), Color(0xff601FBE)],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset('assets/images/svg/ic_pro.svg'),
+                                      SizedBox(width: 8.cw),
+                                      Text(
+                                        state.isPremiumUser
+                                            ? 'You are a subscriber'
+                                            : 'Become a Pro',
+                                        style: context.textTheme.titleLarge?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      if (!state.isPremiumUser)
+                                        SvgPicture.asset(
+                                          'assets/images/svg/ic_paywall_navigation.svg',
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 4.ch),
                           SettingsTile(
                             onTap: () {
                               _analytics.logEvent(
