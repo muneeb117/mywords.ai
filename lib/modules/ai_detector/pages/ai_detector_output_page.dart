@@ -4,6 +4,7 @@ import 'package:mywords/common/components/custom_appbar.dart';
 import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/widgets/ai_humanizer_dialog.dart';
 import 'package:mywords/common/widgets/detect_ai_score_widget.dart';
+import 'package:mywords/common/widgets/feedback_widget.dart';
 import 'package:mywords/common/widgets/step_indicator_detector_widget.dart';
 import 'package:mywords/modules/ai_detector/cubit/ai_detector_cubit.dart';
 import 'package:mywords/modules/ai_humanizer/cubit/ai_humanize_cubit.dart';
@@ -43,7 +44,7 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                 StepIndicatorDetector(activeSteps: [2]),
                 SizedBox(height: 16.ch),
                 Container(
-                  height: 300.ch,
+                  height: 270.ch,
                   margin: EdgeInsets.symmetric(horizontal: 8.cw),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.cr),
@@ -94,6 +95,9 @@ class _AiDetectorOutputPageState extends State<AiDetectorOutputPage> {
                 ),
                 SizedBox(height: 16.ch),
                 DetectAiScoreWidget(aiDetectorEntity: aiDetectorState.aiDetectorEntity),
+                SizedBox(height: 16),
+                FeedbackWidget(),
+                SizedBox(height: 20.ch),
               ],
             ),
           ),

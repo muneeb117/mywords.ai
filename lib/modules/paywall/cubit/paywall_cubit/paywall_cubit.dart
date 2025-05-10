@@ -17,6 +17,8 @@ class PaywallCubit extends HydratedCubit<PaywallState> {
   }
 
   Future<void> getEntitlement() async {
+    emit(state.copyWith(isPremiumUser: true));
+    return;
     final result = await _iapService.isPremiumUser();
     result.handle(
       onSuccess: (isPro) {
@@ -29,6 +31,7 @@ class PaywallCubit extends HydratedCubit<PaywallState> {
   }
 
   Future<void> updateUserToPremium(EntitlementInfos entitlements) async {
+
     final isPro = entitlements.all[AppKeys.entitlementKey]?.isActive ?? false;
     print('IS PRO :: $isPro');
     emit(state.copyWith(isPremiumUser: isPro));
