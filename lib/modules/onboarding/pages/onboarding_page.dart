@@ -52,7 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.white),
                 width: double.infinity,
-                height: 290.ch,
+                height: 300.ch,
                 padding: EdgeInsets.symmetric(horizontal: 24.cw, vertical: 30.ch),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -65,8 +65,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                     SizedBox(height: 16.ch),
                     Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
-                      maxLines: 3,
+                      items[_currentPage].description,
+                      maxLines: 4,
                       textAlign: TextAlign.center,
                       style: context.textTheme.bodyMedium?.copyWith(height: 1.5),
                     ),

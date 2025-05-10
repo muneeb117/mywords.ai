@@ -1,27 +1,27 @@
 class OnboardingModel {
   static final List<OnboardingItem> items = [
     OnboardingItem(
-      title: 'Onboarding One',
+      title: 'Welcome to MyWords.AI',
       description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
+          "Explore powerful AI tools designed to humanize your writing, detect AI content, and create flawless documents in seconds.",
       image: 'assets/images/png/onboarding_mockup_one.png',
     ),
     OnboardingItem(
-      title: 'Onboarding Two',
+      title: 'Detect AI Content Instantly',
       description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
+          "Make AI-written content undetectable by Turnitin, GPTZero, and Originality.AI - perfect for students, writers, and professionals who need natural, human-like text.",
       image: 'assets/images/png/onboarding_mockup_two.png',
     ),
     OnboardingItem(
-      title: 'Onboarding Three',
+      title: 'Write Smarter, Not Harder',
       description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
+          "Use the AI Writer to create essays, emails, and more from a single prompt - fast, easy, and human-like.",
       image: 'assets/images/png/onboarding_mockup_three.png',
     ),
     OnboardingItem(
-      title: 'Onboarding Four',
+      title: 'Humanize Your AI Text',
       description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
+          "Rewrite AI-generated content so it passes detection tools like Turnitin and GPTZero while sounding natural and authentic.",
       image: 'assets/images/png/onboarding_mockup_four.png',
     ),
   ];
