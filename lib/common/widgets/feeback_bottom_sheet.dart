@@ -88,6 +88,7 @@ void showFeedbackBottomSheet(BuildContext context) {
 
                       final feedback = controller.text.trim();
                       Urls.sendFeedbackEmail(context, feedback);
+                      Navigator.pop(context);
                     },
                     title: 'Submit',
                   ),
