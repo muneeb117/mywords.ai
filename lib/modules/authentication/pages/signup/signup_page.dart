@@ -190,13 +190,13 @@ class _SignupPageState extends State<SignupPage> {
                                 listener: (context, state) {
                                   if (state.signupStatus == SignupStatus.success &&
                                       state.isGoogleLoading == false &&
-                                      state.isFromGoogle == false) {
+                                      state.isFromSocialAuth == false) {
                                     Navigator.pushReplacementNamed(
                                       context,
                                       RouteManager.signupConfirmation,
                                     );
                                   } else if (state.signupStatus == SignupStatus.success &&
-                                      state.isFromGoogle == true) {
+                                      state.isFromSocialAuth == true) {
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       RouteManager.home,

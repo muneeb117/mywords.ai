@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:bloc/bloc.dart';
 import 'package:mywords/core/analytics/analytics_event_names.dart';
 import 'package:mywords/core/analytics/analytics_service.dart' show AnalyticsService;
@@ -22,7 +24,7 @@ class SignupCubit extends Cubit<SignupState> {
   }) : _authRepository = authRepository,
        _sessionRepository = sessionRepository,
        _analyticsService = analyticsService,
-        _iapService = iapService,
+       _iapService = iapService,
        super(SignupState.initial());
 
   void togglePassword() {
@@ -57,7 +59,8 @@ class SignupCubit extends Cubit<SignupState> {
 
     result.handle(
       onSuccess: (String token) async {
-        if (state.isFromGoogle) {
+        log('auth token :: $token');
+        if (state.isFromSocialAuth) {
           _analyticsService.logEvent(
             name: AnalyticsEventNames.loginWithGoogleSuccess,
             parameters: {'email': email},
