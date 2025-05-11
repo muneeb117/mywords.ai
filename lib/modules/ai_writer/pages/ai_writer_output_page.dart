@@ -99,11 +99,12 @@ class _AiWriterOutputPageState extends State<AiWriterOutputPage> {
                       return Container();
                     }
                     return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.ch),
+                      padding: EdgeInsets.only(top: 16.ch),
                       child: DetectAiScoreWidget(aiDetectorEntity: state.aiDetectorEntity),
                     );
                   },
                 ),
+                SizedBox(height: 16.ch),
                 FeedbackWidget(),
                 SizedBox(height: 20.ch),
               ],

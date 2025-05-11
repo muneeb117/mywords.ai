@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Urls {
@@ -14,6 +15,22 @@ class Urls {
 
   static void _show(String url) {
     launchUrl(Uri.parse(url));
+  }
+
+  static void sendFeedbackEmail(BuildContext context, String feedback) async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'mywordsaimehdi@gmail.com',
+      query: Uri.encodeFull('subject=App Feedback&body=$feedback'),
+    );
+
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Could not open email app')));
+    }
   }
 
   static navigateToStoreForReview() {

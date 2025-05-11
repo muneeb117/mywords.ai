@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart' show SvgPicture;
+import 'package:mywords/common/widgets/feeback_bottom_sheet.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:mywords/utils/urls/urls.dart';
 
@@ -29,7 +30,9 @@ class FeedbackWidget extends StatelessWidget {
             ),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () {},
+              onTap: () {
+                showFeedbackBottomSheet(context);
+              },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset('assets/images/svg/ic_dislike.svg'),
