@@ -38,6 +38,8 @@ class PaywallCubit extends HydratedCubit<PaywallState> {
   }
 
   Future<void> getOfferings() async {
+    emit(state.copyWith(isPremiumUser: true));
+    return;
     // Only emit loading if we don't have cached data
     if (state.offering.identifier.isEmpty) {
       emit(state.copyWith(paywallStatus: PaywallStatus.loading));

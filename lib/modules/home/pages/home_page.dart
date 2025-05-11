@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<HomeCubit>().fetchDocumentHours();
-    context.read<PaywallCubit>().getOfferings();
     context.read<PaywallCubit>().getEntitlement();
+    context.read<PaywallCubit>().getOfferings();
   }
 
   @override

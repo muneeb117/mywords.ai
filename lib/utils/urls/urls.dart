@@ -17,20 +17,23 @@ class Urls {
     launchUrl(Uri.parse(url));
   }
 
+  static String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map(
+          (MapEntry<String, String> e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+        )
+        .join('&');
+  }
+
   static void sendFeedbackEmail(BuildContext context, String feedback) async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: 'mywordsaimehdi@gmail.com',
-      query: Uri.encodeFull('subject=App Feedback&body=$feedback'),
+      query: encodeQueryParameters(<String, String>{'subject': 'Feedback', 'body': feedback}),
     );
 
-    if (await canLaunchUrl(emailUri)) {
-      await launchUrl(emailUri);
-    } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Could not open email app')));
-    }
+    launchUrl(emailUri);
   }
 
   static navigateToStoreForReview() {
