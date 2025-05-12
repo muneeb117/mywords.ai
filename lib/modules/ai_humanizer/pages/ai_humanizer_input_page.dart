@@ -8,7 +8,6 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/common/cubits/file_import/file_import_cubit.dart';
 import 'package:mywords/common/widgets/ai_text_field.dart';
 import 'package:mywords/common/widgets/labeled_icons_row.dart';
-import 'package:mywords/common/widgets/show_upgrade_dialog.dart';
 import 'package:mywords/common/widgets/step_indicator_humanizer_widget.dart';
 import 'package:mywords/constants/ai_sample_text.dart';
 import 'package:mywords/constants/app_colors.dart';
