@@ -5,6 +5,7 @@ import 'package:mywords/common/components/primary_button.dart';
 import 'package:mywords/config/routes/route_manager.dart';
 import 'package:mywords/constants/app_colors.dart';
 import 'package:mywords/modules/authentication/cubit/forgot_password/forgot_password_cubit.dart';
+import 'package:mywords/modules/authentication/cubit/forgot_password/timer_cubit.dart';
 import 'package:mywords/utils/extensions/extended_context.dart';
 import 'package:mywords/utils/extensions/size_extension.dart';
 import 'package:pinput/pinput.dart';
@@ -21,73 +22,97 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: 'Enter OTP Code'),
-      body: Container(
-        margin: EdgeInsets.all(16.cw),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Check your email inbox or spam folder for a one-time passcode (OTP). Enter the code below.",
-                style: context.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(height: 26.ch),
-              Pinput(
-                defaultPinTheme: defaultPinTheme,
-                focusedPinTheme: focusedPinTheme,
-                controller: otpController,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                onCompleted: (pin) {
-                  final otp = pin.trim();
-                  context.read<ForgotPasswordCubit>().verifyOtp(otp);
-                },
-              ),
-              SizedBox(height: 26.ch),
-              Text("You can resend the code in 56 seconds", style: context.textTheme.bodyMedium),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.ch),
-                child: Text(
-                  "Resend",
-                  style: context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+    return BlocProvider(
+      create: (context) => TimerCubit()..startTimer(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: CustomAppBar(title: 'Enter OTP Code'),
+            body: BlocBuilder<TimerCubit, TimerState>(
+              builder: (context, state) {
+                return Container(
+                  margin: EdgeInsets.all(16.cw),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Check your email inbox or spam folder for a one-time passcode (OTP). Enter the code below.",
+                          style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(height: 26.ch),
+                        Pinput(
+                          defaultPinTheme: defaultPinTheme,
+                          focusedPinTheme: focusedPinTheme,
+                          controller: otpController,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          onCompleted: (pin) {
+                            final otp = pin.trim();
+                            context.read<ForgotPasswordCubit>().verifyOtp(otp);
+                          },
+                        ),
+                        SizedBox(height: 26.ch),
+                        if (state is TimerInProgress)
+                          Text(
+                            "You can resend the code in ${state.secondsRemaining} seconds",
+                            style: context.textTheme.bodyMedium,
+                          ),
+
+                        if (state is TimerCompleted)
+                          GestureDetector(
+                            onTap: () {
+                              final email = context.read<ForgotPasswordCubit>().state.email;
+                              context.read<ForgotPasswordCubit>().submitEmail(email);
+                              context.read<TimerCubit>().startTimer();
+                            },
+                            child: Text(
+                              "Resend",
+                              style: context.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        SizedBox(height: 22.ch),
+                        BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+                          listener: (context, state) {
+                            if (state.step == ForgotPasswordStep.otpInput) {
+                              if (state.status == ForgotPasswordStatus.success) {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  RouteManager.forgotPasswordReset,
+                                );
+                              } else if (state.status == ForgotPasswordStatus.failure) {
+                                context.showSnackBar(state.errorMessage);
+                              }
+                            }
+                          },
+                          builder: (context, state) {
+                            return PrimaryButton.filled(
+                              title: 'Confirm',
+                              isLoading:
+                                  state.step == ForgotPasswordStep.otpInput &&
+                                  state.status == ForgotPasswordStatus.loading,
+                              onTap: () {
+                                final otp = otpController.text.trim();
+                                if (otp.isEmpty) {
+                                  context.showSnackBar('Otp is required');
+                                  return;
+                                }
+                                context.closeKeyboard();
+                                context.read<ForgotPasswordCubit>().verifyOtp(otp);
+                              },
+                              fontWeight: FontWeight.bold,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(height: 10.ch),
-              BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
-                listener: (context, state) {
-                  if (state.step == ForgotPasswordStep.otpInput) {
-                    if (state.status == ForgotPasswordStatus.success) {
-                      Navigator.pushReplacementNamed(context, RouteManager.forgotPasswordReset);
-                    } else if (state.status == ForgotPasswordStatus.failure) {
-                      context.showSnackBar(state.errorMessage);
-                    }
-                  }
-                },
-                builder: (context, state) {
-                  return PrimaryButton.filled(
-                    title: 'Confirm',
-                    isLoading: state.step == ForgotPasswordStep.otpInput && state.status == ForgotPasswordStatus.loading,
-                    onTap: () {
-                      final otp = otpController.text.trim();
-                      if (otp.isEmpty) {
-                        context.showSnackBar('Otp is required');
-                        return;
-                      }
-                      context.closeKeyboard();
-                      context.read<ForgotPasswordCubit>().verifyOtp(otp);
-                    },
-                    fontWeight: FontWeight.bold,
-                  );
-                },
-              )
-            ],
-          ),
-        ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
