@@ -9,7 +9,7 @@ class OnboardingModel {
     OnboardingItem(
       title: 'Detect AI Content Instantly',
       description:
-          "Make AI-written content undetectable by Turnitin, GPTZero, and Originality.AI - perfect for students, writers, and professionals who need natural, human-like text.",
+          "Make AI-written content undetectable by Turnitin, GPTZero, and Originality.AI - perfect for students who need natural, human-like text.",
       image: 'assets/images/png/onboarding_mockup_two.png',
     ),
     OnboardingItem(
