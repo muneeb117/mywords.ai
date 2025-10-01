@@ -1,5 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart'
-    show FirebaseAuth, FirebaseAuthException, OAuthProvider, User, UserCredential;
+    show
+        FirebaseAuth,
+        FirebaseAuthException,
+        OAuthProvider,
+        User,
+        UserCredential;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mywords/core/exceptions/apple_failure.dart';
 import 'package:mywords/core/exceptions/google_failure.dart';
@@ -34,7 +39,10 @@ class SocialAuthRepository {
   Future<({String name, String email})> loginWithApple() async {
     try {
       final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
       );
 
       final oAuthProvider = OAuthProvider('apple.com');
@@ -42,10 +50,13 @@ class SocialAuthRepository {
         idToken: appleCredential.identityToken,
         accessToken: appleCredential.authorizationCode,
       );
-      UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
+      UserCredential userCredential = await _firebaseAuth.signInWithCredential(
+        credential,
+      );
       User? user = userCredential.user;
       String userName = '';
-      if (appleCredential.givenName != null && appleCredential.familyName != null) {
+      if (appleCredential.givenName != null &&
+          appleCredential.familyName != null) {
         userName = '${appleCredential.givenName} ${appleCredential.familyName}';
       } else if (appleCredential.givenName != null) {
         userName = appleCredential.givenName!;
